@@ -1,0 +1,59 @@
+.container-dangnhap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .v1-dangnhap {
+    height: 400px;
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    margin-top: 100px;
+  }
+
+  .h2-dangnhap {
+    color: #007bff;
+  }
+  
+  .inputContainer-dangnhap {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    font-family: arial;
+  }
+  
+  .input-dangnhap {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }
+  
+  .button-dangnhap {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: arial;
+    margin-left: 90px;
+  }
+  
+  .h1-dangnhap {
+    color: #007bff;
+    margin-right: 200px;
+    padding: 50px;
+  }
+  
+  .forgot-dangnhap {
+    color: #007bff;
+    margin-left: 100px;
+  }
+  

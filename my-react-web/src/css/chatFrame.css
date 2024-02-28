@@ -1,0 +1,17 @@
+.chatFrame {
+    width: 100%;
+    height: 800px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-y: auto;
+    margin-right: 10px;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .title {
+    /* margin-left: 400px; */
+  }
+  
