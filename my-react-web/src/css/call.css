@@ -1,0 +1,24 @@
+/* call.css */
+
+.container{
+    /* display: flex; */
+    flex-direction: row;
+}
+.row1{
+    height: 870px;
+    width: 370px;
+    background-color: white;
+    border: 1px solid gray; 
+}
+.clock {
+    height: 170px;
+    width: 370px;
+    background-color: rgb(28, 28, 205);
+    margin-bottom: 0; /* Thêm dòng này để loại bỏ khoảng trống dưới phần .clock */
+}
+.ds {
+    height: 70px;
+    width: 370px;
+    background-color: brown;
+    margin-top: 0; /* Thêm dòng này để loại bỏ khoảng trống trên phần .ds */
+}

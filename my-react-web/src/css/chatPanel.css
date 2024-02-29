@@ -1,33 +1,38 @@
 .chatPanel {
-    width: 100%;
-    height: 800px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow-y: auto;
-    margin-right: 10px;
-    border: none;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: 900px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-y: auto;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chatItem {
-    display: flex;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .message {
-    color: #333;
+  color: #333;
+}
+.searchBarInput{
+  
+}
+.search-bar{
+  background-color: #007bff;
 }
