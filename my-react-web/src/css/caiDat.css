@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+  }
+  
+  .row1 {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .row2 {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .chat-list h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .chat-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .chat-list li {
+    cursor: pointer;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .chat-list li:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .title2 {
+    font-size: 18px;
+    color: #555;
+  }
+  .cai-dat ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cai-dat li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .cai-dat li:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .cai-dat li.active {
+    font-weight: bold;
+  }
+  
+  /* Phần CSS cho nội dung của mỗi tab */
+  /* .thong-tin,
+  .cai-dat,
+  .ngon-ngu,
+  .dang-xuat {
+    display: none;
+  } */
+  
+  
