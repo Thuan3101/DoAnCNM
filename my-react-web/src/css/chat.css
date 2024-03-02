@@ -3,7 +3,7 @@
     flex-direction: row;
 }
 .row1{
-    height: 870px;
+    height:700px;
     width: 370px;
     background-color: white;
     border: 1px solid gray; 
@@ -13,6 +13,7 @@
     background-color: #f2f2f2;
     border-radius: 8px;
     padding: 10px;
+    height:700px;
   }
   
   .chat-list h2 {
@@ -38,25 +39,31 @@
   }
   
   .chat-list ul li:not(:last-child) {
-    border-bottom: 1px solid #ccc; /* Tạo đường viền giữa các mục trong danh sách */
+    border-bottom: 1px solid #ccc; 
   }
   
-  /* Tạo hiệu ứng khi di chuột qua một mục trong danh sách */
+
   .chat-list ul li:hover {
     background-color: #e6e6e6;
   }
   
-  /* Tùy chỉnh kiểu con trỏ khi di chuột vào một mục trong danh sách */
+  
   .chat-list ul li:hover {
     cursor: pointer;
   }
   
-  /* Tùy chỉnh kiểu con trỏ khi di chuột vào một mục trong danh sách */
+  
   .chat-list ul li:hover {
     cursor: pointer;
   }
   
-  /* Tạo hiệu ứng khi một mục trong danh sách được chọn */
+ 
   .chat-list ul li.active {
     background-color: #d9edf7;
+  }
+  .avt{
+    height: 50px;
+    width: 50px;
+    background-color: aqua;
+    border-radius: 25px;
   }

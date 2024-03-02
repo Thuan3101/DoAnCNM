@@ -17,6 +17,7 @@ const Home = () => {
   return (
     <div className="container1">
       <div className="tabs">
+      <div className='avt'></div>
         <div onClick={() => handleTabChange('chat')}>
           <div className="tab">Chat</div>
         </div>
@@ -38,8 +39,11 @@ const Home = () => {
       </div>
 
       <div className='container2'>
-        <div className='tabtop'></div>
+        <div className='tabtop'>
+         
+        </div>
         <div className="tab-content">
+        
          
           {currentTab === 'chat' ? <Chat /> :
            (currentTab === 'call' ? <Call /> :

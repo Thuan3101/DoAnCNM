@@ -1,6 +1,7 @@
 import React from 'react';
-
-import '../css/call.css'
+import '../css/call.css';
+import patition from '../image/partition.PNG';
+import video from '../image/video.PNG';
 
 const Call = () => {
   return (
@@ -10,16 +11,28 @@ const Call = () => {
            <h1>Time</h1>
         </div>
         <div className='ds'>
-          <p>Danh sách cuộc họp</p>
+          <p className='dsch'>Danh sách cuộc họp</p>
         </div>
-       
-         
       </div>
-      <div className='row2'></div>
-      <h1 className='h1'>Chưa có cuộc họp nào hôm nay !</h1>
+      <div className='row2'>
+        <div className='img'>
+          <figure>
+            <img src={patition} alt='Logo1' />
+            <figcaption>Tham dự cuộc họp</figcaption>
+          </figure>
+          
+          <figure>
+            <img src={video} alt='Logo2' />
+            <figcaption>Tạo cuộc họp</figcaption>
+          </figure>
+        </div>
+        <h1 className='h1'>Chưa có cuộc họp nào hôm nay !</h1>
       </div>
-
+    </div>
   );
 };
 
 export default Call;
+
+
+

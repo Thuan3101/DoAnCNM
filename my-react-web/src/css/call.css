@@ -1,11 +1,14 @@
 /* call.css */
+body{
+  
+}
 
 .container{
     /* display: flex; */
     flex-direction: row;
 }
 .row1{
-    height: 870px;
+    height:700px;
     width: 370px;
     background-color: white;
     border: 1px solid gray; 
@@ -13,12 +16,46 @@
 .clock {
     height: 170px;
     width: 370px;
-    background-color: rgb(28, 28, 205);
+    background-color: #007bff;
     margin-bottom: 0; /* Thêm dòng này để loại bỏ khoảng trống dưới phần .clock */
 }
 .ds {
     height: 70px;
     width: 370px;
-    background-color: brown;
-    margin-top: 0; /* Thêm dòng này để loại bỏ khoảng trống trên phần .ds */
+    background-color: rgb(172, 201, 210);
+    margin-top: 0; 
 }
+.dsch{
+    font-weight: bold;
+}
+.img {
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; /* Tạo khoảng cách giữa các thẻ figure */
+    margin-left: 200px;
+  }
+  
+  figure {
+    text-align: center; /* Căn giữa nội dung của từng figure */
+  }
+  
+  .row2 {
+    display: flex;
+    flex-direction: column; /* Sắp xếp các child elements theo hướng dọc */
+    align-items: center; /* Căn giữa theo trục ngang */
+   
+  }
+  
+  .row2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+  }
+  
+  .h1 {
+   margin-right: 100px;
+   color: #0056b3;
+   font-weight: bold;
+  }
+  

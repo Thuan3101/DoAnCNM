@@ -18,6 +18,7 @@ const Chat = () => {
           <ul>
             {chatList.map(chat => (
               <li key={chat.id}>
+            
                 <span className="name">{chat.name}</span>
                 <br></br>
                 <span className="text">{chat.text}</span>
