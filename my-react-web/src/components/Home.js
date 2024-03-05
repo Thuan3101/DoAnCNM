@@ -15,6 +15,7 @@ import tool6 from '../image/tool6.png';
 import avatar from '../image/avatar.png';
 import Avatar from './Avatar';
 
+
 const Home = () => {
   const [currentTab, setCurrentTab] = useState('chat'); // 'chat', 'call', 'cloud', 'congcu', 'caidat', 'danhba'
 
@@ -49,6 +50,8 @@ const Home = () => {
 
       <div className='container2'>
         <div className='tabtop'>
+        {/* <div onClick={() => handleTabChange('Avatar')}>
+          <img src={avatar} alt="Avatar" className="avatar-home" /></div> */}
         </div>
         <div className="tab-content">
           {currentTab === 'chat' ? <Chat /> :

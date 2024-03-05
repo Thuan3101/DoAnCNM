@@ -1,21 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/caiDat.css';
 import '../components/dangnhap.js';
 
 const CaiDatLayout = ({ currentTab, handleTabChange }) => {
   const navigate = useNavigate();
+  const [selectedLanguage, setSelectedLanguage] = useState('vn');
+  const [userData, setUserData] = useState(null);
 
-  const handleLogout = () => {
-    // Xử lý đăng xuất ở đây, ví dụ xoá thông tin đăng nhập, xoá token xác thực, vv.
-    // Sau đó, chuyển hướng người dùng về trang đăng nhập
-    navigate("/dangnhap");
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch('https://6556d664bd4bcef8b611b193.mockapi.io/projects');
+      const data = await response.json();
+      setUserData(data[0]); // Lấy dữ liệu người dùng đầu tiên từ danh sách
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+    }
   };
 
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  const handleUpdateUserInfo = () => {
+    // Thực hiện các hành động cần thiết khi nhấn nút cập nhật
+    console.log("Nút cập nhật đã được nhấn!");
+  };
+  
+  const handleLogout = () => {
+    // Hiển thị hộp thoại xác nhận trước khi đăng xuất
+    const confirmLogout = window.confirm("Bạn có chắc muốn đăng xuất?");
+    if (confirmLogout) {
+      // Xử lý đăng xuất nếu người dùng đồng ý
+      // Sau đó, chuyển hướng người dùng về trang đăng nhập
+      navigate("/");
+    }
+  };
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+    // Bạn có thể thực hiện các hành động bổ sung ở đây, như thay đổi cài đặt ngôn ngữ trong ứng dụng của bạn
+  };
   return (
     <div className='container'>
       <div className='row1'>
-        <div className='chat-list'>
+        <div className='chat-list'> 
           <h2>Cài đặt</h2>
           <ul>
             <li onClick={() => handleTabChange('thongTin')}>Thông tin</li>
@@ -30,8 +57,46 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
    
       {currentTab === 'thongTin' && (
         <div className='thong-tin'>
-          <text className='title'>Hiển thị</text> <br></br>
-          <text className='title2'>Nội dung cho tab Thông tin</text>
+          <div className="header">
+        <h1>Thông tin cá nhân</h1>
+        <div className="avatar"></div>
+        <p>{userData?.nd || ''}</p>
+      </div>
+
+      <div className="content">
+        <div className="userInfo">
+          {userData && (
+            <>
+              <div className="userInfoRow">
+                <span>Bio:</span>
+                <span>{userData.bio}</span>
+              </div>
+
+              <div className="userInfoRow">
+                <span>Giới tính:</span>
+                <span>{userData.gioiTinh}</span>
+              </div>
+
+              <div className="userInfoRow">
+                <span>Ngày sinh:</span>
+                <span>{userData.ngaySinh}</span>
+              </div>
+
+              <div className="userInfoRow">
+                <span>Số điện thoại:</span>
+                <span>{userData.soDienThoai}</span>
+              </div>
+
+              <div className="userInfoRow">
+                <span>Nơi sinh:</span>
+                <span>{userData.noiSinh}</span>
+              </div>
+
+              <button className="updateBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
+            </>
+          )}
+        </div>
+      </div>
         </div>
       )}
 
@@ -49,11 +114,16 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
       )}
 
       {currentTab === 'ngonNgu' && (
-        <div className='ngon-ngu'>
-          <text className='title'>Hiển thị</text> <br></br>
-          <text className='title2'>Nội dung cho tab Ngôn ngữ</text>
-        </div>
-      )}
+          <div className='ngon-ngu'>
+            <h2>Ngôn ngữ</h2>
+            <p>Chọn ngôn ngữ:</p>
+            <select value={selectedLanguage} onChange={(e) => handleLanguageChange(e.target.value)}>
+              <option value="vn">Tiếng Việt</option>
+              <option value="en">English</option>
+              {/* Thêm các tùy chọn ngôn ngữ khác nếu cần */}
+            </select>
+          </div>
+        )}
 
       {currentTab === 'dangXuat' && (
         <div className='dang-xuat'>

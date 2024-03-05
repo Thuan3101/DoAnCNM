@@ -14,7 +14,7 @@
   }
   
   .chat-list h2 {
-    font-size: 18px;
+    font-size: 30px;
     margin-bottom: 10px;
   }
   
@@ -62,7 +62,115 @@
   .cai-dat li.active {
     font-weight: bold;
   }
-  
+  .header {
+  flex-direction: column;
+  height: 200px;
+  width: 390px;
+  background-color: #047bfd;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  margin-left: 140px;
+  margin-top: 20px;
+  border-radius: 100px;
+}
+
+.header h1, .header p {
+  margin-left: 110px;
+  margin-top: 10px;
+  font-size: 17px;
+  color: white;
+}
+
+.content {
+  flex-direction: column;
+}
+
+.userInfoRow {
+  flex-direction: row;
+  margin-left: 10px;
+  border-bottom-color: gray;
+  border-width: 1px;
+  border-color: white;
+  padding: 20px;
+  width: 360px;
+}
+
+.userInfoRow span:nth-child(2) {
+  margin-left: 70px;
+}
+
+.logoutBtn {
+  height: 60px;
+  width: 330px;
+  background-color: #047bfd;
+  margin-left: 30px;
+  margin-top: 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 20px;
+}
+/* thông tin  */
+.header {
+  flex-direction: column;
+  height: 200px;
+  width: 390px;
+  background-color: #047bfd;
+  border-bottom: 10px;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  margin-left: 140px;
+  margin-top: 20px;
+  border-radius: 100px;
+}
+
+.header h1, .header p {
+  margin-left: 110px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+.content {
+  flex-direction: column;
+}
+
+.userInfoRow {
+  flex-direction: row;
+  margin-left: 10px;
+  border-bottom-color: gray;
+  border-width: 1px;
+  border-color: white;
+  padding: 20px;
+  width: 360px;
+}
+
+.userInfoRow span:nth-child(2) {
+  margin-left: 70px;
+}
+.updateBtn {
+  height: 60px;
+  width: 330px;
+  background-color: #047bfd;
+  margin-left: 30px;
+  margin-top: 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 20px;
+}
+
+
   /* Phần CSS cho nội dung của mỗi tab */
   /* .thong-tin,
   .cai-dat,
