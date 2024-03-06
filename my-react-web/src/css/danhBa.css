@@ -1,0 +1,59 @@
+.header {
+    height: 50px;
+    width: 420px;
+    background-color: darkgrey;
+}
+.headerText{
+    margin-left: 30px;
+    color: azure;
+    margin-top: 0px;
+    
+}
+.row2{
+    background-color: rgb(251, 251, 251);
+}
+.inputName{
+    margin-top: 20px;
+}
+.userInfoRow{
+    margin-top: 5px;
+   /* border-bottom: 1px solid gray; */
+}
+.name{
+    border-bottom: 1px gray solid;
+   
+   
+}
+.dsBanBe{
+    background-color: rgb(246, 246, 246);
+}
+.userInfoRow:hover {
+    color: rgb(114, 114, 131);
+  }
+.content{
+    margin-top: 50px;
+}  
+.az{
+    margin-left: 30px;
+}
+.loc{
+    margin-left: 50px;
+}
+.headerTextLM{
+    
+    
+}
+.hd3{
+    flex: 1;
+    flex-direction: row;
+}
+.kb{
+    
+    height: 100px;
+    width: 200px;
+    background-color: rgb(241, 247, 247);
+    margin-top: 50px;
+    border-radius: 25px;
+    border: 1px gray solid;
+    margin-left: 100px;
+}
