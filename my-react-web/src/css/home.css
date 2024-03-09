@@ -1,11 +1,11 @@
-/* File: ../css/home.css */
+
 
 .container1 {
   display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử con */
 }
 
 .tabs {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   background-color: #007bff;
   width: 100px;

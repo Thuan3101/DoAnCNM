@@ -1,182 +1,57 @@
-.container {
-    display: flex;
-  }
-  
-  .row1 {
-    width: 200px;
-    background-color: #f0f0f0;
-    padding: 20px;
-  }
-  
-  .row2 {
-    flex: 1;
-    padding: 20px;
-  }
-  
-  .chat-list h2 {
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-  
-  .chat-list ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .chat-list li {
-    cursor: pointer;
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .chat-list li:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .title2 {
-    font-size: 18px;
-    color: #555;
-  }
-  .cai-dat ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .cai-dat li {
-    cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .cai-dat li:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .cai-dat li.active {
-    font-weight: bold;
-  }
-  .header {
+.thong-tin {
+  display: flex;
   flex-direction: column;
-  height: 200px;
-  width: 390px;
-  background-color: #047bfd;
+  align-items: center;
+  margin-left: 300px;
+  background-color: rgb(246, 245, 245);
+
 }
 
-.avatar {
-  height: 100px;
-  width: 100px;
-  background-color: white;
-  margin-left: 140px;
-  margin-top: 20px;
-  border-radius: 100px;
+.header, .content {
+  width: 100%; 
+  margin: 0;
+  padding: 0;
 }
 
-.header h1, .header p {
-  margin-left: 110px;
-  margin-top: 10px;
-  font-size: 17px;
-  color: white;
+
+.header h1, .header p, .userInfoRow span {
+  margin: 0;
+  padding: 0;
 }
 
-.content {
-  flex-direction: column;
-}
 
 .userInfoRow {
+  margin-bottom: 10px; 
+}
+.row2{
   flex-direction: row;
-  margin-left: 10px;
-  border-bottom-color: gray;
-  border-width: 1px;
-  border-color: white;
-  padding: 20px;
-  width: 360px;
 }
-
-.userInfoRow span:nth-child(2) {
-  margin-left: 70px;
-}
-
-.logoutBtn {
-  height: 60px;
-  width: 330px;
-  background-color: #047bfd;
-  margin-left: 30px;
-  margin-top: 20px;
-  border-radius: 20px;
-  text-align: center;
-  margin-top: 20px;
-  color: white;
-  font-size: 20px;
-}
-/* thông tin  */
-.header {
-  flex-direction: column;
-  height: 200px;
-  width: 390px;
-  background-color: #047bfd;
-  border-bottom: 10px;
-}
-
-.avatar {
-  height: 100px;
-  width: 100px;
-  background-color: white;
-  margin-left: 140px;
-  margin-top: 20px;
-  border-radius: 100px;
-}
-
-.header h1, .header p {
-  margin-left: 110px;
-  margin-top: 10px;
-  font-size: 20px;
-  color: white;
-}
-
-.content {
-  flex-direction: column;
-}
-
-.userInfoRow {
-  flex-direction: row;
-  margin-left: 10px;
-  border-bottom-color: gray;
-  border-width: 1px;
-  border-color: white;
-  padding: 20px;
-  width: 360px;
-}
-
-.userInfoRow span:nth-child(2) {
-  margin-left: 70px;
-}
-.updateBtn {
-  height: 60px;
-  width: 330px;
-  background-color: #047bfd;
-  margin-left: 30px;
-  margin-top: 20px;
-  border-radius: 20px;
-  text-align: center;
-  margin-top: 20px;
-  color: white;
-  font-size: 20px;
-}
-
-
-  /* Phần CSS cho nội dung của mỗi tab */
-  /* .thong-tin,
-  .cai-dat,
-  .ngon-ngu,
-  .dang-xuat {
-    display: none;
-  } */
+.avatar{
+  height: 80px;
+  width: 80px;
+  background-color: rgb(195, 205, 221);
+  border-radius: 40px;
+  margin-left: 200px;
   
+
+}
+.header{
   
+  height: 200px !important;
+  width: 500px !important;
+  background-color: rgb(20, 5, 192) !important;
+
+}
+.title{
+  margin-left: 100px !important;
+  color: white;
+}
+.btn{
+  height: 60px;
+  width: 150px;
+  background-color: rgb(20, 5, 192);
+  margin-left: 170px;
+  color: white;
+  border-radius: 30px;
+  border-color: white;
+}

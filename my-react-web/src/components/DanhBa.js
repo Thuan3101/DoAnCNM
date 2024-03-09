@@ -44,8 +44,8 @@ const DanhBaTab = ({ currentTab, handleTabChange }) => {
         <div className='titleAria'></div>
 
         {currentTab === 'dsBanBe' && (
-          <div className='dsBanBe'>
-            <div className="header">
+          <div className='dsbb'>
+            <div className="h">
               <h5 className='headerText'>Bạn bè</h5>
               <input className='inputName' type="text" placeholder="Tìm kiếm bạn bè" />
 
@@ -71,8 +71,8 @@ const DanhBaTab = ({ currentTab, handleTabChange }) => {
         )}
 
         {currentTab === 'dsNhom' && (
-          <div className='dsNhom'>
-            <div className="header">
+          <div className='dsn'>
+            <div className="h">
               <h5 className='headerText'>Danh Sách Nhóm</h5>
               <input className='inputName' type="text" placeholder="Tìm kiếm nhóm" />
               <select className='az' value={selected} onChange={(e) => handleshortChange(e.target.value)}>
@@ -92,7 +92,7 @@ const DanhBaTab = ({ currentTab, handleTabChange }) => {
 
         {currentTab === 'loiMoiKB' && (
           <div className='lmKB'>
-             <div className="header">
+             <div className="h">
              <h5 className='headerTextLM'>Lời Mời Đã Nhận</h5>
               <div className="hd3">
                 <div className='kb'></div>

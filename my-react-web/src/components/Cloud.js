@@ -31,7 +31,7 @@ return (
       <div className='titleAria'></div>
    
       <div className='mycloud'>
-        <text className='title'>Cloud của tôi</text> <br></br>
+        <text className='tit'>Cloud của tôi</text> <br></br>
         <text className='title2'>Lưu trữ các dữ liệu giữa các thiết bị</text>
 
       </div>

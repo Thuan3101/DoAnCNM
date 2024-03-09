@@ -1,4 +1,4 @@
-.header {
+.h{
     height: 50px;
     width: 420px;
     background-color: darkgrey;
@@ -16,7 +16,7 @@
     margin-top: 20px;
 }
 .userInfoRow{
-    margin-top: 5px;
+    margin-top: 40px;
    /* border-bottom: 1px solid gray; */
 }
 .name{
@@ -39,10 +39,7 @@
 .loc{
     margin-left: 50px;
 }
-.headerTextLM{
-    
-    
-}
+
 .hd3{
     flex: 1;
     flex-direction: row;
@@ -57,3 +54,14 @@
     border: 1px gray solid;
     margin-left: 100px;
 }
+.dsbb ,
+.dsn ,
+.lmKB{
+    margin-left: 300px !important;
+}
+.chat-list {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 10px;
+    height:700px;
+  }
