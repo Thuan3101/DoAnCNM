@@ -27,7 +27,7 @@ const Chat = () => {
           </ul>
         </div>
       </div>
-      <div className='row2'></div>
+     
     </div>
   );
 };

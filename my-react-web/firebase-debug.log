@@ -1,0 +1,21 @@
+[debug] [2024-03-13T07:32:03.998Z] ----------------------------------------------------------------------
+[debug] [2024-03-13T07:32:04.001Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-03-13T07:32:04.001Z] CLI Version:   13.4.1
+[debug] [2024-03-13T07:32:04.001Z] Platform:      win32
+[debug] [2024-03-13T07:32:04.002Z] Node Version:  v20.10.0
+[debug] [2024-03-13T07:32:04.002Z] Time:          Wed Mar 13 2024 14:32:04 GMT+0700 (Indochina Time)
+[debug] [2024-03-13T07:32:04.002Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-13T07:32:04.008Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-13T07:32:04.008Z] > authorizing via signed-in user (ngominhthuan4519@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Tai Lieu\DOAN_CNM\DoAnCNM (1)\DoAnCNM\my-react-web
+

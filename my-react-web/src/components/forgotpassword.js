@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/ForgotPassScreen.css';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPassScreen = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
+  const [email, setEmail] = useState('');
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
-  const handleZaloRegister = () => {
-    // Xử lý đăng ký tại đây
+  const handleResetPassword = () => {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        // Gửi email xác nhận thành công
+        setIsEmailSent(true);
+        setError(null);
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        setError(error.message);
+      });
   };
+
   
   return (
     <div className="container-forgotpassword">
       <div className="v1-forgotpassword">
-        <h4 className="h2-forgotpassword">Vui lòng nhập lại số điện thoại của bạn</h4>
+        <h4 className="h2-forgotpassword">Vui lòng nhập lại email của bạn</h4>
         <div className="inputContainer">
-          <label>Số điện thoại:</label>
-          <input type="text-forgotpassword" value={phoneNumber} onChange={handlePhoneNumberChange} className="input-forgotpassword" />
+          <label>Email:</label>
+          <input type="email" value={email} onChange={handleEmailChange} className="input-forgotpassword" />
         </div>
-        <button className="button-forgotpassword" onClick={handleZaloRegister}>Gửi</button>
-        <h6 className="h6-forgotpassword">Quay lại</h6>
+        <button className="button-forgotpassword" onClick={handleResetPassword}>Gửi</button>
+        {error && <p className="error-message">{error}</p>}
+        {isEmailSent && <p className="success-message">Email xác nhận đã được gửi.</p>}
+        <Link to="/">Quay lại</Link>
       </div>
     </div>
   );

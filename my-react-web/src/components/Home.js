@@ -28,23 +28,25 @@ const Home = () => {
         <div onClick={() => handleTabChange("avatar")}>
           <img src={avatar} alt="Avatar" className="avatar-home" />
         </div>
-        <div onClick={() => handleTabChange("chat")}>
-          <img src={tool1} alt="Chat" className="tab-icon" />
-        </div>
-        <div onClick={() => handleTabChange("call")}>
-          <img src={tool2} alt="Call" className="tab-icon" />
-        </div>
-        <div onClick={() => handleTabChange("danhba")}>
-          <img src={tool3} alt="Danh bạ" className="tab-icon" />
-        </div>
-        <div onClick={() => handleTabChange("cloud")}>
-          <img src={tool5} alt="My Cloud" className="tab-icon" />
-        </div>
-        <div onClick={() => handleTabChange("congcu")}>
-          <img src={tool6} alt="Công cụ" className="tab-icon" />
+        <div className="group-home-task">
+          <div onClick={() => handleTabChange("chat")}>
+            <img src={tool1} alt="Chat" className="tab-icon" />
+          </div>
+          <div onClick={() => handleTabChange("call")}>
+            <img src={tool2} alt="Call" className="tab-icon" />
+          </div>
+          <div onClick={() => handleTabChange("danhba")}>
+            <img src={tool3} alt="Danh bạ" className="tab-icon" />
+          </div>
+          <div onClick={() => handleTabChange("cloud")}>
+            <img src={tool5} alt="My Cloud" className="tab-icon" />
+          </div>
+          <div onClick={() => handleTabChange("congcu")}>
+            <img src={tool6} alt="Công cụ" className="tab-icon" />
+          </div>
         </div>
         <div onClick={() => handleTabChange("caidat")}>
-          <img src={tool7} alt="Cài đặt" className="tab-icon" />
+          <img src={tool7} alt="Cài đặt" className="tab-icon-setting" />
         </div>
       </div>
 

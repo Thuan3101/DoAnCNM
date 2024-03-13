@@ -1,61 +1,51 @@
 /* call.css */
-body{
-  
+.container-call {
+  display: flex;
+  flex-direction: row;
 }
 
-.container{
-    /* display: flex; */
-    flex-direction: row;
+.row1-call {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
-.row1{
-    height:700px;
-    width: 370px;
-    background-color: white;
-    border: 1px solid gray; 
-}
+
 .clock {
-    height: 170px;
-    width: 370px;
-    background-color: #007bff;
-    margin-bottom: 0; /* Thêm dòng này để loại bỏ khoảng trống dưới phần .clock */
+  height: 170px;
+  width: 370px;
+  background-color: #007bff;
+  margin-bottom: 0; /* Thêm dòng này để loại bỏ khoảng trống dưới phần .clock */
 }
 .ds {
-    height: 70px;
-    width: 370px;
-    background-color: rgb(172, 201, 210);
-    margin-top: 0; 
+  height: 70px;
+  width: 370px;
+  background-color: rgb(172, 201, 210);
+  margin-top: 0;
 }
-.dsch{
-    font-weight: bold;
+.dsch {
+  font-weight: bold;
+  padding: 10px;
 }
 .img {
-    display: flex; 
-    justify-content: center; 
-    gap: 20px; /* Tạo khoảng cách giữa các thẻ figure */
-    margin-left: 200px;
-  }
-  
-  figure {
-    text-align: center; /* Căn giữa nội dung của từng figure */
-  }
-  
-  .row2 {
-    display: flex;
-    flex-direction: column; /* Sắp xếp các child elements theo hướng dọc */
-    align-items: center; /* Căn giữa theo trục ngang */
-   
-  }
-  
-  .row2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   
-  }
-  
-  .h1 {
-   margin-right: 100px;
-   color: #0056b3;
-   font-weight: bold;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+figure {
+  text-align: center; /* Căn giữa nội dung của từng figure */
+}
+
+.row2-call {
+  display: flex;
+  flex-direction: column; /* Sắp xếp các child elements theo hướng dọc */
+  align-items: center; /* Căn giữa theo trục ngang */
+  justify-content: center;
+  height: 100vh;
+  width: 100vh;
+}
+
+.h1-call {
+  color: #0056b3;
+  font-weight: bold;
+}

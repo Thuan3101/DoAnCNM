@@ -1,76 +1,19 @@
 
-.container{
-    display: flex;
-    flex-direction: row;
+.container-cloud {
+  display: flex;
+  height: 100vh;
+  width: 100%;
 }
-.row1{
-    height: 700px;;
-    width: 370px;
-    background-color: white;
-    border: 1px solid gray; 
-  
-}
-.chat-list {
-    background-color: #f2f2f2;
-    border-radius: 8px;
-    padding: 10px;
-  }
-  
-  .chat-list h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .chat-list ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  .name{
-    font-weight: bold;
-  }
-  
-  .chat-list ul li {
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-  
-  .chat-list ul li:hover {
-    background-color: #e6e6e6;
-  }
-  
-  .chat-list ul li:not(:last-child) {
-    border-bottom: 1px solid #ccc; 
-  }
-  
-  
-  .chat-list ul li:hover {
-    background-color: #e6e6e6;
-  }
-  
-  
-  .chat-list ul li:hover {
-    cursor: pointer;
-  }
-  
-  
-  .chat-list ul li:hover {
-    cursor: pointer;
-  }
-  
-  
-  .chat-list ul li.active {
-    background-color: #d9edf7;
-  }
+
   .titelAria{
     display: flex;
   align-items: center;
 
   }
-  
 
   .mycloud{
     height: 60px;
-    width: 1070px;
+    width: 150vh;
     background-color: rgb(240, 239, 238);
   }
   .tit{

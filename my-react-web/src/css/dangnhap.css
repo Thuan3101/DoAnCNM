@@ -1,8 +1,17 @@
 .container-dangnhap {
-    flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .container-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
   }
   
   .v1-dangnhap {
@@ -12,7 +21,6 @@
     padding: 20px;
     border: 2px solid #007bff;
     border-radius: 10px;
-    margin-top: 100px;
   }
 
   .h2-dangnhap {
@@ -48,7 +56,7 @@
   
   .h1-dangnhap {
     color: #007bff;
-    margin-right: 200px;
+    margin-right: 30px;
     padding: 50px;
   }
   
