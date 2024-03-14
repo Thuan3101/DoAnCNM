@@ -51,7 +51,7 @@ const Home = () => {
       </div>
 
       <div className="container2">
-        <div className="tabtop">
+        <div className="top">
           {/* <div onClick={() => handleTabChange('Avatar')}>
           <img src={avatar} alt="Avatar" className="avatar-home" /></div> */}
         </div>

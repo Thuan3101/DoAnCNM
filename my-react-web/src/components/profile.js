@@ -1,33 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, firestore } from "../config/firebase"; // Thay đổi import
-import { doc, getFirestore } from "firebase/firestore";
+import { auth } from "../config/firebase";
+import "../css/profile.css";
 
 const Profile = () => {
-  // const auth = getAuth();
-   const user = auth.currentUser;
-   const db = getFirestore;
+  const user = auth.currentUser;
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
     dateOfBirth: "",
     profileImage: null,
+    profileImageUrl: "", 
   });
 
   const navigate = useNavigate();
-  console.log("userID",user.uid);
-  
-  useEffect(() => {
-    const checkUserProfile = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        // 
-        console.log(user);
-      }
-    };
-
-    checkUserProfile();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,47 +25,84 @@ const Profile = () => {
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      profileImage: imageFile,
-    }));
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      setFormData((prevData) => ({
+        ...prevData,
+        profileImage: imageFile,
+        profileImageUrl: imageUrl, 
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = auth.currentUser;
       if (user) {
-        // Lưu thông tin profile vào Firestore
-        
+    
         navigate("/home");
       }
     } catch (error) {
-      console.error("Error creating user profile:", error);
+      console.error("Error updating user profile:", error);
     }
   };
 
   return (
-    <div>
-      <h2>Complete Your Profile</h2>
+    <div className="container-pf">
+      <h2 className="titlePf">HOÀN TẤT HỒ SƠ</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
-        </label>
-        <label>
-          Gender:
-          <input type="text" name="gender" value={formData.gender} onChange={handleChange} />
-        </label>
-        <label>
-          Date of Birth:
-          <input type="text" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
-        </label>
-        <label>
-          Profile Image:
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </label>
-        <button type="submit">Submit</button>
+        <div className="form-group">
+          <input
+            className="input-field nameIp"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+           
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="input-field genderIp"
+            type="text"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            placeholder="Gender"
+           
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="input-field birthIp"
+            type="text"
+            name="dateOfBirth"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+            placeholder="Date of Birth"
+            
+          />
+        </div>
+        <div className="form-group">
+          <div
+            className="avt-pf"
+            style={{
+              backgroundImage: `url(${formData.profileImageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <input
+            className="input-field imgIp"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+        </div>
+        <button className="btnSm" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

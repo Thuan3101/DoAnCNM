@@ -1,6 +1,12 @@
 .container1 {
-  display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử con */
+  display: flex;
   height: 100vh;
+  margin: auto;
+}
+.top{
+  height: 50px;
+  width: 200vh;
+  background-color: #007bff;
 }
 
 .tabs {
@@ -15,6 +21,8 @@
 .tab-container {
   display: flex;
   align-items: center;
+  width: 100px;
+  height: 100%;
 }
 
 .tab {
