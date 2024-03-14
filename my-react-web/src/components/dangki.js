@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link,useNavigate} from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-//import { auth } from '../config/firebase'; 
+
 import '../components/dangnhap.js';
 import "../css/dangki.css";
 
@@ -9,7 +9,8 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -28,6 +29,7 @@ const RegisterScreen = () => {
         // Hiển thị thông báo và chuyển hướng đến trang đăng nhập
         alert('Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
         navigate("/"); // Chuyển hướng đến trang đăng nhập
+        console.log(user);
       })
       .catch((error) => {
         console.error('Đăng ký không thành công:', error);

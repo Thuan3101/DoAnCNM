@@ -1,5 +1,4 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-
 import RegisterScreen from "./components/dangki";
 import LoginScreen from "./components/dangnhap";
 import ForgotPassScreen from "./components/forgotpassword";

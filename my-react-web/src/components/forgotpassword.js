@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import '../css/ForgotPassScreen.css';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
@@ -7,7 +7,7 @@ const ForgotPassScreen = () => {
   const [email, setEmail] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
