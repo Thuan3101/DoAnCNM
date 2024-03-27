@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../config/firebase";
+import { auth} from "../config/firebase";
+import { setDoc, doc, getFirestore } from "firebase/firestore";
 import "../css/profile.css";
 
 const Profile = () => {
   const user = auth.currentUser;
+  const db = getFirestore();
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
@@ -38,12 +40,30 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (user) {
-    
-        navigate("/home");
+      if (!user) {
+        throw new Error("No user is logged in");
       }
+  
+      // Kiểm tra xem tất cả các trường đã được điền đầy đủ hay không
+      if (!formData.name || !formData.gender || !formData.dateOfBirth || !formData.profileImage) {
+        throw new Error("Please fill in all fields");
+      }
+  
+      // Lưu dữ liệu vào Firestore với userID là email
+      setDoc(doc(db, "users", auth.currentUser.uid), {
+
+        name: formData.name,
+        gender: formData.gender,
+        dateOfBirth: formData.dateOfBirth,
+        profileImageUrl: formData.profileImageUrl,
+        // Các trường dữ liệu khác bạn muốn lưu vào đây...
+      });
+      
+      // Điều hướng đến trang "/home" sau khi lưu thành công
+      navigate("/home");
     } catch (error) {
       console.error("Error updating user profile:", error);
+      // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo lỗi cho người dùng)
     }
   };
 
@@ -60,7 +80,6 @@ const Profile = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="Name"
-           
           />
         </div>
         <div className="form-group">
@@ -71,7 +90,6 @@ const Profile = () => {
             value={formData.gender}
             onChange={handleChange}
             placeholder="Gender"
-           
           />
         </div>
         <div className="form-group">
@@ -82,7 +100,6 @@ const Profile = () => {
             value={formData.dateOfBirth}
             onChange={handleChange}
             placeholder="Date of Birth"
-            
           />
         </div>
         <div className="form-group">
