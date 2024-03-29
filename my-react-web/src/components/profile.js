@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth} from "../config/firebase";
-import { setDoc, doc, getFirestore } from "firebase/firestore";
+import { auth } from "../config/firebase";
+import { setDoc, doc, getFirestore, getDoc } from "firebase/firestore";
 import "../css/profile.css";
 
 const Profile = () => {
@@ -12,10 +12,28 @@ const Profile = () => {
     gender: "",
     dateOfBirth: "",
     profileImage: null,
-    profileImageUrl: "", 
+    profileImageUrl: "",
   });
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkUserProfile = async () => {
+      try {
+        if (!user) {
+          throw new Error("No user is logged in");
+        }
+        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if (userDoc.exists()) {
+          navigate("/home");
+        }
+      } catch (error) {
+        console.error("Error checking user profile:", error);
+        // Handle error here
+      }
+    };
+
+    checkUserProfile();
+  }, [db, navigate, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +50,7 @@ const Profile = () => {
       setFormData((prevData) => ({
         ...prevData,
         profileImage: imageFile,
-        profileImageUrl: imageUrl, 
+        profileImageUrl: imageUrl,
       }));
     }
   };
@@ -43,34 +61,32 @@ const Profile = () => {
       if (!user) {
         throw new Error("No user is logged in");
       }
-  
-      // Kiểm tra xem tất cả các trường đã được điền đầy đủ hay không
+
+      // Check if all fields are filled
       if (!formData.name || !formData.gender || !formData.dateOfBirth || !formData.profileImage) {
         throw new Error("Please fill in all fields");
       }
-  
-      // Lưu dữ liệu vào Firestore với userID là email
-      setDoc(doc(db, "users", auth.currentUser.uid), {
 
+      // Save data to Firestore with userID as email
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
         name: formData.name,
         gender: formData.gender,
         dateOfBirth: formData.dateOfBirth,
         profileImageUrl: formData.profileImageUrl,
-        // Các trường dữ liệu khác bạn muốn lưu vào đây...
+        // Add other fields you want to save here...
       });
-      
-      // Điều hướng đến trang "/home" sau khi lưu thành công
+
+      // Navigate to "/home" page after successful save
       navigate("/home");
     } catch (error) {
       console.error("Error updating user profile:", error);
-      // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo lỗi cho người dùng)
+      // Handle error here (e.g., display error message to the user)
     }
   };
 
-
   return (
     <div className="container-pf">
-      <h2 className="titlePf">HOÀN TẤT HỒ SƠ</h2>
+      <h2 className="titlePf">COMPLETE PROFILE</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input

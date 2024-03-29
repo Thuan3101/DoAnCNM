@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import '../css/caiDat.css';
-import '../components/dangnhap.js';
 
 const CaiDatLayout = ({ currentTab, handleTabChange }) => {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('vn');
-  const [userData, setUserData] = useState(null);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch('https://6556d664bd4bcef8b611b193.mockapi.io/projects');
-      const data = await response.json();
-      setUserData(data[0]); // Lấy dữ liệu người dùng đầu tiên từ danh sách
-    } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu người dùng:', error);
-    }
-  };
-
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const db = getFirestore();
+        const userRef = doc(db, "users", "userInfoId"); // Thay "userInfoId" bằng ID của người dùng
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setUserInfo(userData);
+        } else {
+          console.log("Không tìm thấy thông tin người dùng");
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu người dùng:", error);
+      }
+    };
+
     fetchUserData();
   }, []);
 
@@ -29,20 +35,20 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
     // Thực hiện các hành động cần thiết khi nhấn nút cập nhật
     console.log("Nút cập nhật đã được nhấn!");
   };
-  
+
   const handleLogout = () => {
     // Hiển thị hộp thoại xác nhận trước khi đăng xuất
     const confirmLogout = window.confirm("Bạn có chắc muốn đăng xuất?");
     if (confirmLogout) {
       // Xử lý đăng xuất nếu người dùng đồng ý
-      // Sau đó, chuyển hướng người dùng về trang đăng nhập
+      //  chuyển hướng người dùng về trang đăng nhập
       navigate("/");
     }
   };
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
-    // Bạn có thể thực hiện các hành động bổ sung ở đây, như thay đổi cài đặt ngôn ngữ trong ứng dụng của bạn
+    // Thực hiện các hành động bổ sung ở đây, như thay đổi cài đặt ngôn ngữ trong ứng dụng của bạn
   };
 
   const handleChangePassword = () => {
@@ -68,48 +74,47 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
             <li onClick={() => handleTabChange('thongTin')}>Thông tin</li>
             <li onClick={() => handleTabChange('caiDat')}>Cài đặt</li>
             <li onClick={() => handleTabChange('ngonNgu')}>Ngôn ngữ</li>
-            <li onClick={handleLogout}>Đăng xuất</li> {/* Thêm xử lý cho nút đăng xuất */}
+            <li onClick={handleLogout}>Đăng xuất</li>
           </ul>
         </div>
       </div>
       <div className='row2'>
         <div className='titleAria'></div>
-     
         {currentTab === 'thongTin' && (
           <div className='thong-tin'>
             <div className="header">
               <h1>Thông tin cá nhân</h1>
               <div className="avatar"></div>
-              <p>{userData?.nd || ''}</p>
+              <p>{userInfo?.name || ''}</p>
             </div>
     
             <div className="content">
               <div className="userInfo">
-                {userData && (
+                {userInfo && (
                   <>
                     <div className="userInfoRow">
                       <span>Bio:</span>
-                      <span>{userData.bio}</span>
+                      <span>{userInfo.bio}</span>
                     </div>
     
                     <div className="userInfoRow">
                       <span>Giới tính:</span>
-                      <span>{userData.gioiTinh}</span>
+                      <span>{userInfo.gioiTinh}</span>
                     </div>
     
                     <div className="userInfoRow">
                       <span>Ngày sinh:</span>
-                      <span>{userData.ngaySinh}</span>
+                      <span>{userInfo.ngaySinh}</span>
                     </div>
     
                     <div className="userInfoRow">
                       <span>Số điện thoại:</span>
-                      <span>{userData.soDienThoai}</span>
+                      <span>{userInfo.soDienThoai}</span>
                     </div>
     
                     <div className="userInfoRow">
                       <span>Nơi sinh:</span>
-                      <span>{userData.noiSinh}</span>
+                      <span>{userInfo.noiSinh}</span>
                     </div>
     
                     <button className="updateBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
@@ -119,7 +124,6 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
             </div>
           </div>
         )}
-    
         {currentTab === 'caiDat' && (
           <div className='cai-dat'>
             <text className='title'>Hiển thị</text> <br></br>
@@ -168,8 +172,6 @@ const CaiDatLayout = ({ currentTab, handleTabChange }) => {
           </div>
         )}
 
-
-        {/* Thêm các tab và nội dung của chúng ở đây */}
       </div>
     </div>
   );
