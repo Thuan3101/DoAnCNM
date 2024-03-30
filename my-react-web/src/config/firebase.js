@@ -2,8 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyAkTWTUcA5mlxqZn7Q5bDySigdpQ3fr_uI",
   authDomain: "chat-abe2f.firebaseapp.com",
@@ -16,8 +17,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const firestore = getFirestore(app);
+initializeApp(firebaseConfig); 
+const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
 
-export { auth, firestore };
+export { auth, db,storage };

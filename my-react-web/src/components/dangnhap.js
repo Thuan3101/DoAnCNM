@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/dangnhap.css"; 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
-
+import { doc, getFirestore, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const db = getFirestore();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,10 +21,17 @@ const LoginScreen = () => {
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Đăng nhập thành công
-        
-        navigate("/Profile");
+        const user = userCredential.user;
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          // Nếu có profile thì chuyển người dùng sang home
+          navigate("/home");
+        } else {
+          // Nếu chưa có hồ sơ, chuyển người dùng sang trang Profile
+          navigate("/profile");
+        }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi trong quá trình xác thực

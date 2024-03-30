@@ -15,7 +15,7 @@ import tool6 from "../image/tool6.png";
 import avatar from "../image/avatar.png";
 import Avatar from "./Avatar";
 
-const Home = () => {
+const Home = ({ profileImageUrl }) => {
   const [currentTab, setCurrentTab] = useState("chat"); // 'chat', 'call', 'cloud', 'congcu', 'caidat', 'danhba'
 
   const handleTabChange = (tab) => {
@@ -27,6 +27,7 @@ const Home = () => {
       <div className="tabs">
         <div onClick={() => handleTabChange("avatar")}>
           <img src={avatar} alt="Avatar" className="avatar-home" />
+          {/* <img src={profileImageUrl || Avatar} alt="Avatar" className="avatar-home" /> */}
         </div>
         <div className="group-home-task">
           <div onClick={() => handleTabChange("chat")}>

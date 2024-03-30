@@ -1,17 +1,27 @@
-
 /* avatar.css */
+
+/* Đảm bảo div chứa avatar được căn giữa */
 .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    resize: inherit;
-  }
-  
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* resize: inherit; */
-  }
-  
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto; /* Căn giữa */
+}
+
+/* Tăng kích thước của chữ */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tăng kích thước của chữ */
+.thong-tin h1 {
+  font-size: 24px; 
+  text-align: center; 
+}
+
+/* .content{
+  font-size: 20px;
+} */
