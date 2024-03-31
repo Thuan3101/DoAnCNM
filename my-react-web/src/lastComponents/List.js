@@ -10,6 +10,7 @@ import { db } from '../config/firebase';
 
 const List = ({ setCurrentTab }) => {
   const [userData, setUserData] = useState({});
+  
 
   useEffect(() => {
     const fetchDataFromFirebase = async () => {
@@ -36,7 +37,7 @@ const List = ({ setCurrentTab }) => {
     <div className="list">
       <div className="listContainer">
       <div onClick={() => setCurrentTab("avatar")}>
-      <img src={userData.profileImageUrl} className="avatar" />
+      <img src={userData.profileImageUrl} alt=""  className="avatar" />
     </div>
         <div onClick={() => setCurrentTab("chat")}>
           <img src={chat} alt="chat" className="chat" />

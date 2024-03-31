@@ -9,7 +9,7 @@ import Messages from "../lastComponents/Messages";
 
 const  Home=() => {
   const [currentTab, setCurrentTab] = useState("chat");
-  const [userData, setUserId] = useState("user123"); 
+  const [userData] = useState("user123"); 
   
 
   return (

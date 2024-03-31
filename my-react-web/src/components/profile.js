@@ -36,11 +36,6 @@ const Profile = () => {
     }
   };
 
-  const handleImageClick = () => {
-    // Triggers the file input click when the image is clicked
-    document.getElementById("fileInput").click();
-  };
-
   const uploadImageAsync = async (imageFile, userId) => {
     try {
       if (!imageFile) {
@@ -129,15 +124,13 @@ const Profile = () => {
             placeholder="Ngày sinh"
           />
         </div>
-        <div className="form-group" onClick={handleImageClick}>
-          <img className="avt-pf"  src={formData.profileImageUrl} alt="Hình ảnh" />   
+        <div className="form-group">
+          <img className="avt-pf"  src = {formData.profileImageUrl} alt="Hình ảnh"/>          
           <input
-            id="fileInput"
             className="input-field imgIp"
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            style={{ display: "none" }}
           />
         </div>
         <button className="btnSm" type="submit">
