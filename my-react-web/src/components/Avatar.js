@@ -5,6 +5,7 @@ import { getDoc, getFirestore, doc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import "../css/avatar.css";
 
+
 const Avatar = () => {
   const user = auth.currentUser;
   const db = getFirestore();
@@ -103,59 +104,63 @@ const Avatar = () => {
   };
 
   return (
-    <div className='row2'>
-      <div className='titleAria'></div>
+    <div className='row22222'>
+      
       {userData && (
-        <div className='thong-tin'>
-          <div className="header">
-            <h1>Thông tin cá nhân</h1>
-            <div className="avatar">
+        <div className='avatarContainer'>
+          <div className="avatarHeader">
+            <h4 className="ttAvatar">Thông tin cá nhân</h4>
+            <div className="avt">
               {isEditing ? (
-                <div>
-                  <input type="file" onChange={handleImageChange} accept="image/*" />
+                <div className="fit">
+                  <input type="file" id="file" className="inputFileHidden" onChange={handleImageChange} accept="image/*" />
                   {newProfileImage ? (
-                    <img src={URL.createObjectURL(newProfileImage)} alt="Avatar" />
+                    <img className="imgAvt" src={URL.createObjectURL(newProfileImage)} alt="Avatar" />
                   ) : (
-                    <img src={tempProfileImage || userData.profileImageUrl} alt="Avatar" />
+                    <img className="imgAvt" src={tempProfileImage || userData.profileImageUrl} alt="Avatar" />
                   )}
+                  <label htmlFor="file" className="customFileUpload">Choose file</label>
                 </div>
               ) : (
                 <img src={userData.profileImageUrl} alt="Avatar" />
               )}
             </div>
+
+
           </div>
 
-          <div className="content">
-            <div className="userInfo">
-              <>
-                <div className="userInfoRow">
-                  <span>Bio:</span>
+          <div className="contentEdit">
+            <div className="headerEdit">
+              
+                <div className="bio">
+                  <span>Bio : </span>
                   {isEditing ? (
                     <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
                   ) : (
                     <span>{userData.name}</span>
                   )}
                 </div>
-
-                <div className="userInfoRow">
-                  <span>Giới tính:</span>
+                   
+                <div className="gioiTinh">
+                  <span>Giới tính :</span>  
                   {isEditing ? (
                     <input type="text" value={newGender} onChange={(e) => setNewGender(e.target.value)} />
                   ) : (
                     <span>{userData.gender}</span>
                   )}
                 </div>
-
-                <div className="userInfoRow">
-                  <span>Ngày sinh:</span>
+               
+                <div className="ngaySinh">
+                  <span>Ngày sinh  : </span>
                   {isEditing ? (
                     <input type="text" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
                   ) : (
                     <span>{userData.dateOfBirth}</span>
                   )}
                 </div>
+                
 
-                <div className="userInfoRow">
+                {/* <div className="userInfoRow">
                   <span>Số điện thoại:</span>
                   {isEditing ? (
                     <input type="text" value={newSoDienThoai} onChange={(e) => setNewSoDienThoai(e.target.value)} />
@@ -171,14 +176,14 @@ const Avatar = () => {
                   ) : (
                     <span>{userData.noiSinh}</span>
                   )}
-                </div>
+                </div> */}
 
                 {isEditing ? (
-                  <button className="updateBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
+                  <button className="editBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
                 ) : (
                   <button className="editBtn" onClick={handleEditClick}>Chỉnh sửa thông tin</button>
                 )}
-              </>
+              
             </div>
           </div>
         </div>

@@ -43,7 +43,7 @@ const LoginScreen = () => {
   return (
     <div className="container-dangnhap">
       <div className="container-1">
-        <h1 className="h1-dangnhap">WELCOME BACK YOU !!!!!</h1>
+        <h1 className="h1-dangnhap">WELCOME BACK !!!!!</h1>
         <div className="v1-dangnhap">
           <h2 className="h2-dangnhap">Đăng Nhập </h2>
           <div className="inputContainer-dangnhap">

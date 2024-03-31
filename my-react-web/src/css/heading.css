@@ -1,0 +1,20 @@
+.heading{
+      display: flex;
+      height: 50px;
+      width: 100%;
+      border: none;
+      background-color: rgb(7, 161, 43);
+      flex-direction: column;
+}
+.input{
+      input{
+            height: 20px;
+            width: 23%;
+            background-color:  rgb(82, 175, 83);
+            border: none;
+            color: white;
+            padding: 10px;
+            margin-top: 3px;
+      }
+    
+}

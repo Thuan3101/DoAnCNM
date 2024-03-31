@@ -38,7 +38,7 @@ const RegisterScreen = () => {
 
   return (
     <div className="container-dangki">
-    <h1 className="h1-dangki">WELCOME YOU !!!!!</h1>
+    <h1 className="h1-dangki">WELCOME!!!!!</h1>
     
     <div className="v1-dangki">
       <h2 className="h2-dangki">Đăng ký </h2>
@@ -51,7 +51,7 @@ const RegisterScreen = () => {
         <label>Nhập mật khẩu :</label>
         <input type="text-dangki" value={password} onChange={handlePasswordChange} className="input-dangki" />
       </div>
-      <button  onClick={handleRegister}>Đăng ký </button>
+      <button className='button-dangki'  onClick={handleRegister}>Đăng ký </button>
       <Link to="/" className="link-dangnhap">Đã có tài khoản</Link>
 
     </div>

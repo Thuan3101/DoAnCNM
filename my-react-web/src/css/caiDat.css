@@ -1,57 +1,44 @@
-.thong-tin {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 300px;
-  background-color: rgb(246, 245, 245);
-
-}
-
-.header, .content {
-  width: 100%; 
-  margin: 0;
-  padding: 0;
-}
-
-
-.header h1, .header p, .userInfoRow span {
-  margin: 0;
-  padding: 0;
-}
-
-
-.userInfoRow {
-  margin-bottom: 10px; 
-}
-.row2{
-  flex-direction: row;
-}
-.avatar{
-  height: 80px;
-  width: 80px;
-  background-color: rgb(195, 205, 221);
-  border-radius: 40px;
-  margin-left: 200px;
+.container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      color: white;
+    }
+   
+    
+    .row2 {
+      display: flex;
+      flex: 1;
+    }
+    
+    
+    .chat-list h2 {
+      margin-bottom: 20px;
+    }
+    
+    .chat-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .chat-list ul li {
+      padding: 10px;
+      cursor: pointer;
+    }
+    
+    .chat-list ul li:hover {
+      background-color: #4ed459;
+    }
+    
+    
+    
+    
+    
   
-
-}
-.header{
-  
-  height: 200px !important;
-  width: 500px !important;
-  background-color: rgb(20, 5, 192) !important;
-
-}
-.title{
-  margin-left: 100px !important;
-  color: white;
-}
-.btn{
-  height: 60px;
-  width: 150px;
-  background-color: rgb(20, 5, 192);
-  margin-left: 170px;
-  color: white;
-  border-radius: 30px;
-  border-color: white;
-}
+    
+    
+    
+ 
+    
+   
+    

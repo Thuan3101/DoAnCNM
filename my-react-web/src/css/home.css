@@ -1,77 +1,31 @@
-.container1 {
-  display: flex;
+body{
+  font-family:'Times New Roman', Times, serif;
+}
+.homeContainer{
+  flex: 1;
   height: 100vh;
-  margin: auto;
-}
-.top{
-  height: 50px;
-  width: 200vh;
-  background-color: #007bff;
-}
-
-.tabs {
-  display: flex;
-  flex-direction: column;
-  background-color: #007bff;
-  width: 100px;
-  height: 100%;
+  width: 100%;
   align-items: center;
-}
-
-.tab-container {
+  justify-content: center;
   display: flex;
-  align-items: center;
-  width: 100px;
-  height: 100%;
+  background-color: rgb(237, 247, 240) ;
+  
 }
 
-.tab {
-  color: white;
+.home{
+  height: 85%;
+  width: 90%;
+  border: 1px solid rgb(189, 255, 195);
+  background-color: rgb(104, 240, 149);
+  padding: 10px;
   border-radius: 10px;
-  padding: 10px 20px;
-  height: 30px;
-  width: 30px;
-  margin-top: 40px;
-}
-.avatar-home {
-  width: 60px;
-  height: 60px;
-  margin-top: 20px;
-}
-.tab:hover {
-  background-color: #0056b3;
-}
-
-.tab-icon {
-  width: 40px;
-  height: 40px;
-  margin-top: 30px;
+  box-shadow:  10px 20px 50px #06d306;
   
+ 
 }
-
-.tab-icon-setting {
-  width: 40px;
-  height: 40px;
-  margin-top: 80px;
-  
-}
-.h1 {
-  margin-top: 50px;
-  margin-left: 400px;
-}
-.avt {
-  height: 40px;
-  width: 40px;
-  background-color: antiquewhite;
-  border-radius: 25px;
-  margin-left: 12px;
-  margin-top: 20px;
-}
-
-.group-home-task{
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+.home2{
+  display: flex;
+  flex-direction: row;
+  height: 90%;
+  padding: 5px;
 }

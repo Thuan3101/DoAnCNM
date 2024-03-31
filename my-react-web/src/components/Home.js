@@ -1,81 +1,29 @@
 import React, { useState } from "react";
-import Cloud from "./Cloud";
-import CongCu from "./CongCu";
-import CaiDat from "./CaiDat";
-import Chat from "./Chat";
-import Call from "./Call";
-import DanhBa from "./DanhBa";
 import "../css/home.css";
-import tool1 from "../image/tool1.png";
-import tool2 from "../image/tool2.png";
-import tool3 from "../image/tool3.png";
-import tool7 from "../image/tool7.png";
-import tool5 from "../image/tool5.png";
-import tool6 from "../image/tool6.png";
-import avatar from "../image/avatar.png";
-import Avatar from "./Avatar";
+import Heading from "../lastComponents/Heading";
+import List from "../lastComponents/List";
+import ListChat from "../lastComponents/ListChat";
+import Messages from "../lastComponents/Messages";
 
-const Home = ({ profileImageUrl }) => {
-  const [currentTab, setCurrentTab] = useState("chat"); // 'chat', 'call', 'cloud', 'congcu', 'caidat', 'danhba'
 
-  const handleTabChange = (tab) => {
-    setCurrentTab(tab);
-  };
+
+const  Home=() => {
+  const [currentTab, setCurrentTab] = useState("chat");
+  const [userData, setUserId] = useState("user123"); 
+  
 
   return (
-    <div className="container1">
-      <div className="tabs">
-        <div onClick={() => handleTabChange("avatar")}>
-          <img src={avatar} alt="Avatar" className="avatar-home" />
-          {/* <img src={profileImageUrl || Avatar} alt="Avatar" className="avatar-home" /> */}
-        </div>
-        <div className="group-home-task">
-          <div onClick={() => handleTabChange("chat")}>
-            <img src={tool1} alt="Chat" className="tab-icon" />
-          </div>
-          <div onClick={() => handleTabChange("call")}>
-            <img src={tool2} alt="Call" className="tab-icon" />
-          </div>
-          <div onClick={() => handleTabChange("danhba")}>
-            <img src={tool3} alt="Danh bạ" className="tab-icon" />
-          </div>
-          <div onClick={() => handleTabChange("cloud")}>
-            <img src={tool5} alt="My Cloud" className="tab-icon" />
-          </div>
-          <div onClick={() => handleTabChange("congcu")}>
-            <img src={tool6} alt="Công cụ" className="tab-icon" />
-          </div>
-        </div>
-        <div onClick={() => handleTabChange("caidat")}>
-          <img src={tool7} alt="Cài đặt" className="tab-icon-setting" />
-        </div>
-      </div>
-
-      <div className="container2">
-        <div className="top">
-          {/* <div onClick={() => handleTabChange('Avatar')}>
-          <img src={avatar} alt="Avatar" className="avatar-home" /></div> */}
-        </div>
-        <div className="tab-content">
-          {currentTab === "avatar" ? (
-            <Avatar />
-          ) : currentTab === "chat" ? (
-            <Chat />
-          ) : currentTab === "call" ? (
-            <Call />
-          ) : currentTab === "danhba" ? (
-            <DanhBa />
-          ) : currentTab === "cloud" ? (
-            <Cloud />
-          ) : currentTab === "congcu" ? (
-            <CongCu />
-          ) : (
-            <CaiDat />
-          )}
+    <div className="homeContainer">
+      <div className="home">
+        <Heading />
+        <div className="home2">
+         <List userId={userData} setCurrentTab={setCurrentTab} />
+          <ListChat currentTab={currentTab} />
+          <Messages></Messages>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Home;

@@ -1,0 +1,43 @@
+body{
+  height: 100vh;
+  width: 100%;
+}
+.top {
+      
+      background-color: rgb(25, 165, 48);
+      color: white;
+      height: 7vh;
+      
+     
+    }
+    
+    .center {
+      
+      background-color: rgb(105, 253, 129);
+      color: white;
+      height: 62vh;
+     
+      
+    }
+    
+    .bottom {
+      
+      background-color: rgb(25, 165, 48);
+      color: white;
+      height: 7vh;
+     
+      
+
+      .inpT{
+           
+            width: 60%;
+            height: 40px;
+            border: none;
+            margin-top: 5px;
+            background-color: rgb(25, 165, 48);
+            color: aliceblue;
+
+      }
+     
+    }
+    

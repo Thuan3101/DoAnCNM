@@ -1,27 +1,103 @@
-/* avatar.css */
+/* 
+.Avt{
+    
+      img{
+            margin-left:80px;
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;   
+      }
 
-/* Đảm bảo div chứa avatar được căn giữa */
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto; /* Căn giữa */
+}
+.tt{
+      color: aliceblue;
+      padding: 10px;
+      height: 30px;
+      width: 90%;
+      background-color: rgb(30, 97, 49);
+      border-radius: 10px 10px  10px 10px;
+      
+
+}
+.content{
+      height:170px ;
+      width: 96%;
+      align-items: center;
+      margin-left: 15px;
+
+}
+.userInfo{
+      border-bottom: 1px solid gray;
+
+            
+}
+.editBtn{
+    
+            height: 30px;
+            border: none;
+            background-color:  rgb(30, 97, 49);
+            color: white;
+            border-radius: 10px ;
+           
+
+        
+}   
+ 
+
+ */
+ body{
+      height: 25%;
+      width: 90%;
+      color:  white;
+      
+ }
+ .avatarContainer{
+      background-color: rgb(6, 187, 60);
+      border-radius:10px;
+      color:  white;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      img{
+            height: 70px;
+            width: 70px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            margin-left: 15px;
+      
+      }
+      .bio{
+            margin-top: 20px;
+      }
+      
+    
+ 
 }
 
-/* Tăng kích thước của chữ */
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.inputFileHidden {
+      display: none;
+    }
+    
+.customFileUpload {
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #55c02b;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+.editBtn{
+      background-color: #55c02b;
+      border: none;
+      color: white;
+      height: 30px;
+      width: 150px;
+      border-radius: 20px;
 }
 
-/* Tăng kích thước của chữ */
-.thong-tin h1 {
-  font-size: 24px; 
-  text-align: center; 
-}
 
-/* .content{
-  font-size: 20px;
-} */
+    
+
+
