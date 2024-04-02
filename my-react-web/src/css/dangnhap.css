@@ -19,14 +19,14 @@
     width: 300px;
     background-color: white;
     padding: 20px;
-    border: 2px solid #54e796;
+    border: 2px solid #418df8;
     border-radius: 10px;
-    box-shadow: 15px 20px 20px 20px rgb(61, 231, 61);
+    /* box-shadow: 15px 20px 20px 20px rgb(61, 231, 61); */
 
   }
 
   .h2-dangnhap {
-    color: #0e8a45;
+    color:  #418df8;
   }
   
   .inputContainer-dangnhap {
@@ -45,7 +45,7 @@
   }
   
   .button-dangnhap {
-    background-color: #0e8a45;
+    background-color:  #418df8;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -57,14 +57,14 @@
   }
   
   .h1-dangnhap {
-    color: #0e8a45;
+    color:  #418df8;
     margin-right: 30px;
     padding: 50px;
     
   }
   
   .forgot-dangnhap {
-    color: #0e8a45;
+    color: #418df8;
     margin-left: 100px;
   }
   

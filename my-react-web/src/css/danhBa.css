@@ -2,10 +2,11 @@
      
       div{
             height: 35px;
-            width: 100%;
+            width: 90%;
             border: none;
-            background-color: rgb(52, 152, 74);
+            background-color: #418df8;
             margin-top: 5px;
+            margin-left: 5px;
             padding: 10px;
             text-align: center;
             color: white;

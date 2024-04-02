@@ -4,7 +4,7 @@ body{
 }
 .top {
       
-      background-color: rgb(25, 165, 48);
+      background-color: #418df8;
       color: white;
       height: 7vh;
       
@@ -13,7 +13,7 @@ body{
     
     .center {
       
-      background-color: rgb(105, 253, 129);
+      background-color: rgb(245, 250, 249);
       color: white;
       height: 62vh;
      
@@ -22,7 +22,7 @@ body{
     
     .bottom {
       
-      background-color: rgb(25, 165, 48);
+      background-color:#418df8;
       color: white;
       height: 7vh;
      
@@ -34,8 +34,9 @@ body{
             height: 40px;
             border: none;
             margin-top: 5px;
-            background-color: rgb(25, 165, 48);
+            background-color: white;
             color: aliceblue;
+            margin-left: 5px;
 
       }
      

@@ -15,11 +15,11 @@ body{
 .home{
   height: 85%;
   width: 90%;
-  border: 1px solid rgb(189, 255, 195);
-  background-color: rgb(104, 240, 149);
+  border: 1px solid #418df8;
+  background-color: #d9f1fb;
   padding: 10px;
   border-radius: 10px;
-  box-shadow:  10px 20px 50px #06d306;
+  box-shadow:  10px 20px 50px rgb(83, 147, 236)8;
   
  
 }

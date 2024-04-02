@@ -10,14 +10,14 @@
     width: 300px;
     background-color: white;
     padding: 20px;
-    border: 2px solid #39f18c;
+    border: 2px solid#418df8;
     border-radius: 10px;
     margin-top: 100px;
-    box-shadow: 15px 20px 20px 20px rgb(61, 231, 61);
+    /* box-shadow: 15px 20px 20px 20px #3366FF; */
   }
   
   .h2-dangki {
-    color:#0e8a45;
+    color:#418df8;
   }
   
   .inputContainer-dangki {
@@ -36,7 +36,7 @@
   }
   
   .button-dangki {
-    background-color:#0e8a45;
+    background-color:#418df8;
     color: rgb(248, 238, 238);
     padding: 10px 20px;
     border: none;
@@ -47,7 +47,7 @@
   }
   
   .h1-dangki {
-    color: #0e8a45;
+    color:#418df8;
     margin-right: 200px;
     padding: 50px;
   }
