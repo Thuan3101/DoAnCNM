@@ -47,23 +47,22 @@ const Avatar = () => {
       if (!user) {
         throw new Error("No user is logged in");
       }
-      // Mặc định sử dụng URL cũ
-      let downloadURL = userData.profileImageUrl; 
-  
+
+      let downloadURL = null;
+
       if (newProfileImage) {
-        // Tải ảnh mới lên storage
-        const storageRef = ref(storage, `profileImages/${user.uid}/${newProfileImage.name}`);
-        await uploadBytes(storageRef, newProfileImage);
-        downloadURL = await getDownloadURL(storageRef);
-  
         // Xóa ảnh cũ trên storage nếu tồn tại
         if (userData.profileImageUrl) {
           const oldImageRef = ref(storage, userData.profileImageUrl);
           await deleteObject(oldImageRef);
         }
+
+        // Tải ảnh mới lên storage
+        const storageRef = ref(storage, `profileImages/${user.uid}/${newProfileImage.name}`);
+        await uploadBytes(storageRef, newProfileImage);
+        downloadURL = await getDownloadURL(storageRef);
       }
-  
-      // Cập nhật thông tin người dùng trong Firestore
+
       const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         name: newName,
@@ -71,10 +70,9 @@ const Avatar = () => {
         dateOfBirth: newDateOfBirth,
         soDienThoai: newSoDienThoai,
         noiSinh: newNoiSinh,
-        profileImageUrl: downloadURL,
+        profileImageUrl: downloadURL || userData.profileImageUrl,
       });
-  
-      // Cập nhật state với thông tin mới của người dùng
+
       setUserData({
         ...userData,
         name: newName,
@@ -82,20 +80,17 @@ const Avatar = () => {
         dateOfBirth: newDateOfBirth,
         soDienThoai: newSoDienThoai,
         noiSinh: newNoiSinh,
-        profileImageUrl: downloadURL,
+        profileImageUrl: newProfileImage ? downloadURL : userData.profileImageUrl,
       });
-  
-      // Thông báo cập nhật thành công và chuyển sang chế độ chỉnh sửa
+
       alert("Thông tin đã được cập nhật thành công!");
+
       setIsEditing(false);
+
     } catch (error) {
       console.error("Error updating user info:", error);
     }
   };
-  
-
-
-  
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -165,7 +160,7 @@ const Avatar = () => {
                 </div>
                 
 
-                <div className="userInfoRow">
+                {/* <div className="userInfoRow">
                   <span>Số điện thoại:</span>
                   {isEditing ? (
                     <input type="text" value={newSoDienThoai} onChange={(e) => setNewSoDienThoai(e.target.value)} />
@@ -181,7 +176,7 @@ const Avatar = () => {
                   ) : (
                     <span>{userData.noiSinh}</span>
                   )}
-                </div>
+                </div> */}
 
                 {isEditing ? (
                   <button className="editBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
