@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../css/dangnhap.css"; 
-import { signInWithEmailAndPassword, signInWithPopup,FacebookAuthProvider,GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
+import "../css/dangnhap.css";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const db = getFirestore();
 
@@ -19,22 +20,22 @@ const LoginScreen = () => {
     setPassword(e.target.value);
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
-        // Đăng nhập thành công
         const user = userCredential.user;
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
-          // Nếu có profile thì chuyển người dùng sang home
           navigate("/home");
         } else {
-          // Nếu chưa có hồ sơ, chuyển người dùng sang trang Profile
           navigate("/profile");
         }
       })
       .catch((error) => {
-        // Xử lý lỗi nếu có lỗi trong quá trình xác thực
         console.error("Error during login:", error);
         alert("Đăng nhập không thành công. Vui lòng thử lại.");
       });
@@ -47,20 +48,17 @@ const LoginScreen = () => {
         const user = result.user;
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
-          // Nếu có hồ sơ thì chuyển người dùng sang trang Home
           navigate("/home");
         } else {
-          // Nếu chưa có hồ sơ, chuyển người dùng sang trang Profile
           navigate("/profile");
         }
       })
       .catch((error) => {
-        // Xử lý lỗi nếu có lỗi trong quá trình xác thực
         console.error("Error during Google login:", error);
         alert("Đăng nhập bằng Google không thành công. Vui lòng thử lại.");
       });
   };
-  
+
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
     try {
@@ -68,46 +66,44 @@ const LoginScreen = () => {
       const user = result.user;
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
-        // Nếu có hồ sơ thì chuyển người dùng sang trang Home
-        console.log(await userDoc.data());
         navigate("/home");
       } else {
-        // Nếu chưa có hồ sơ, chuyển người dùng sang trang Profile
         navigate("/profile");
       }
     } catch (error) {
-      // Xử lý lỗi nếu có lỗi trong quá trình xác thực
       console.error("Error during Facebook login:", error);
       alert("Đăng nhập bằng Facebook không thành công. Vui lòng thử lại.");
     }
   };
-  
-  
-  
-  
+
   return (
     <div className="container-dangnhap">
       <div className="container-1">
         <h1 className="h1-dangnhap">WELCOME BACK !!!!!</h1>
         <div className="v1-dangnhap">
           <h2 className="h2-dangnhap">Đăng Nhập </h2>
-          <div className="inputContainer-dangnhap">
+          <div className="inputContainer-dangnhap input-container">
             <label>Email:</label>
             <input
+              placeholder="Tài khoản"
               type="email"
               value={email}
               onChange={handleEmailChange}
               className="input-dangnhap"
             />
           </div>
-          <div className="inputContainer">
+          <div className="inputContainer input-container">
             <label>Mật khẩu :</label>
             <input
-              type="password"
+              placeholder="Mật khẩu"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={handlePasswordChange}
               className="input-dangnhap"
             />
+            <span className="password-toggle" onClick={handleTogglePasswordVisibility}>
+              {showPassword ? "Ẩn" : "Hiện"}
+            </span>
           </div>
           <button className="button-dangnhap" onClick={handleLogin}>
             Đăng Nhập
@@ -118,13 +114,14 @@ const LoginScreen = () => {
           <Link to="/register">
             <h7 className="forgot-dangnhap">Đăng ký</h7>
           </Link>
-          <button className="button-dangnhap" onClick={handleGoogleLogin}>
-             Google
-          </button>
-          <button className="button-dangnhap" onClick={handleFacebookLogin}>
-             Facebook
-          </button>
-
+          <div className="social-login-container">
+            <button className="button-dangnhap google" onClick={handleGoogleLogin}>
+              Google
+            </button>
+            <button className="button-dangnhap facebook" onClick={handleFacebookLogin}>
+              Facebook
+            </button>
+          </div>
         </div>
       </div>
     </div>

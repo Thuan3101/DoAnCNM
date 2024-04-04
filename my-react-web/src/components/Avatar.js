@@ -18,6 +18,7 @@ const Avatar = () => {
   const [newSoDienThoai, setNewSoDienThoai] = useState("");
   const [newNoiSinh, setNewNoiSinh] = useState("");
   const [newProfileImage, setNewProfileImage] = useState(null);
+  const [newEmail, setNewEmail] = useState(""); // Thêm state mới cho email
   const [isEditing, setIsEditing] = useState(false);
   const [tempProfileImage, setTempProfileImage] = useState(null); 
 
@@ -34,6 +35,7 @@ const Avatar = () => {
           setNewDateOfBirth(userData.dateOfBirth || "");
           setNewSoDienThoai(userData.soDienThoai || "");
           setNewNoiSinh(userData.noiSinh || "");
+          setNewEmail(userData.email || ""); // Set email từ dữ liệu người dùng
         } else {
           navigate("/profile");
         }
@@ -71,6 +73,7 @@ const Avatar = () => {
         soDienThoai: newSoDienThoai,
         noiSinh: newNoiSinh,
         profileImageUrl: downloadURL || userData.profileImageUrl,
+        email: newEmail // Cập nhật email mới
       });
 
       setUserData({
@@ -81,6 +84,7 @@ const Avatar = () => {
         soDienThoai: newSoDienThoai,
         noiSinh: newNoiSinh,
         profileImageUrl: newProfileImage ? downloadURL : userData.profileImageUrl,
+        email: newEmail // Cập nhật email trong state
       });
 
       alert("Thông tin đã được cập nhật thành công!");
@@ -144,7 +148,12 @@ const Avatar = () => {
                 <div className="gioiTinh">
                   <span>Giới tính :</span>  
                   {isEditing ? (
-                    <input type="text" value={newGender} onChange={(e) => setNewGender(e.target.value)} />
+                    <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
+                      <option value="">Chọn giới tính</option>
+                      <option value="nam">Nam</option>
+                      <option value="nữ">Nữ</option>
+                      <option value="khác">Khác</option>
+                    </select>
                   ) : (
                     <span>{userData.gender}</span>
                   )}
@@ -153,14 +162,22 @@ const Avatar = () => {
                 <div className="ngaySinh">
                   <span>Ngày sinh  : </span>
                   {isEditing ? (
-                    <input type="text" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
+                    <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
                   ) : (
                     <span>{userData.dateOfBirth}</span>
                   )}
                 </div>
-                
 
-                {/* <div className="userInfoRow">
+                <div className="userInfoRow">
+                  <span>Email:</span>
+                  {isEditing ? (
+                    <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                  ) : (
+                    <span>{userData.email}</span>
+                  )}
+                </div>
+
+                <div className="userInfoRow">
                   <span>Số điện thoại:</span>
                   {isEditing ? (
                     <input type="text" value={newSoDienThoai} onChange={(e) => setNewSoDienThoai(e.target.value)} />
@@ -176,7 +193,7 @@ const Avatar = () => {
                   ) : (
                     <span>{userData.noiSinh}</span>
                   )}
-                </div> */}
+                </div> 
 
                 {isEditing ? (
                   <button className="editBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>

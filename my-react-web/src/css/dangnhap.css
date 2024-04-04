@@ -51,7 +51,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 10px; 
     font-family: arial;
     margin-left: 90px;
   }
@@ -62,9 +62,43 @@
     padding: 50px;
     
   }
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 98%; /* Đảm bảo cùng chiều rộng */
+  }
+  
+  .input-dangnhap {
+    width: 98%; /* Đảm bảo cùng chiều rộng */
+  }
   
   .forgot-dangnhap {
     color: #418df8;
     margin-left: 100px;
   }
+  .button-dangnhap.google {
+    background-color: #db4437; /* Màu của Google */
+    color: white;
+    width: 48%; /* Độ rộng của nút */
+  }
   
+  .button-dangnhap.facebook {
+    background-color: #3b5998; /* Màu của Facebook */
+    color: white;
+    width: 48%; /* Độ rộng của nút */
+  }
+  
+  .button-dangnhap.google:hover,
+  .button-dangnhap.facebook:hover {
+    opacity: 0.8; /* Thay đổi độ mờ khi rê chuột vào nút */
+  }
+  .password-toggle {
+    color: #418df8; 
+    cursor: pointer;
+    font-size: 14px; 
+  }
+  
+  .password-toggle:hover {
+    text-decoration: underline; 
+  }

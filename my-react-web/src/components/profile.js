@@ -18,6 +18,15 @@ const Profile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Kiểm tra giá trị của trường giới tính
+    if (name === "gender") {
+      if (value !== "nam" && value !== "nữ" && value !== "khác") {
+        // Nếu giá trị không hợp lệ, không cập nhật state
+        return;
+      }
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -90,6 +99,7 @@ const Profile = () => {
       // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo lỗi cho người dùng)
     }
   };
+
   return (
     <div className="container-pf">
       <h2 className="titlePf">HOÀN THIỆN HỒ SƠ</h2>
@@ -105,27 +115,31 @@ const Profile = () => {
           />
         </div>
         <div className="form-group">
-          <input
+          <select
             className="input-field genderIp"
-            type="text"
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            placeholder="Giới tính"
-          />
+          >
+            <option value="">Chọn giới tính</option>
+            <option value="nam">Nam</option>
+            <option value="nữ">Nữ</option>
+            <option value="khác">Khác</option>
+          </select>
         </div>
         <div className="form-group">
           <input
             className="input-field birthIp"
-            type="text"
+            type="date"
             name="dateOfBirth"
             value={formData.dateOfBirth}
             onChange={handleChange}
-            placeholder="Ngày sinh"
+            min="1900-01-01"
+            max="2024-12-31" 
           />
         </div>
         <div className="form-group">
-          <img className="avt-pf"  src = {formData.profileImageUrl} alt="Hình ảnh"/>          
+          <img className="avt-pf" src={formData.profileImageUrl} alt="Hình ảnh" />
           <input
             className="input-field imgIp"
             type="file"
