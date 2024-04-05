@@ -112,7 +112,7 @@ const LoginScreen = () => {
             <h6 className="forgot-dangnhap">Quên mật khẩu?</h6>
           </Link>
           <Link to="/register">
-            <h7 className="forgot-dangnhap">Đăng ký</h7>
+          <span className="forgot-dangnhap">Đăng ký</span>
           </Link>
           <div className="social-login-container">
             <button className="button-dangnhap google" onClick={handleGoogleLogin}>
