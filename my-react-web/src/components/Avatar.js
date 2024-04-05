@@ -18,7 +18,7 @@ const Avatar = () => {
   const [newSoDienThoai, setNewSoDienThoai] = useState("");
   const [newNoiSinh, setNewNoiSinh] = useState("");
   const [newProfileImage, setNewProfileImage] = useState(null);
-  const [newEmail, setNewEmail] = useState(""); // Thêm state mới cho email
+  const [newEmail, setNewEmail] = useState(""); 
   const [isEditing, setIsEditing] = useState(false);
   const [tempProfileImage, setTempProfileImage] = useState(null); 
 
@@ -35,7 +35,7 @@ const Avatar = () => {
           setNewDateOfBirth(userData.dateOfBirth || "");
           setNewSoDienThoai(userData.soDienThoai || "");
           setNewNoiSinh(userData.noiSinh || "");
-          setNewEmail(userData.email || ""); // Set email từ dữ liệu người dùng
+          setNewEmail(userData.email || ""); 
         } else {
           navigate("/profile");
         }
@@ -177,7 +177,7 @@ const Avatar = () => {
                   )}
                 </div>
 
-                <div className="userInfoRow">
+                {/* <div className="userInfoRow">
                   <span>Số điện thoại:</span>
                   {isEditing ? (
                     <input type="text" value={newSoDienThoai} onChange={(e) => setNewSoDienThoai(e.target.value)} />
@@ -193,7 +193,7 @@ const Avatar = () => {
                   ) : (
                     <span>{userData.noiSinh}</span>
                   )}
-                </div> 
+                </div>  */}
 
                 {isEditing ? (
                   <button className="editBtn" onClick={handleUpdateUserInfo}>Cập nhật thông tin</button>
