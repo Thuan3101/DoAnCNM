@@ -1,58 +1,67 @@
 .container-dangki {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .v1-dangki {
-    height: 400px;
-    width: 300px;
-    background-color: white;
-    padding: 20px;
-    border: 2px solid#418df8;
-    border-radius: 10px;
-    margin-top: 100px;
-    /* box-shadow: 15px 20px 20px 20px #3366FF; */
-  }
-  
-  .h2-dangki {
-    color:#418df8;
-  }
-  
-  .inputContainer-dangki {
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    font-family: Arial;
-  }
-  
-  .input-dangki {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-  }
-  
-  .button-dangki {
-    background-color:#418df8;
-    color: rgb(248, 238, 238);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-family: Arial;
-  }
-  
-  .h1-dangki {
-    color:#418df8;
-    margin-right: 200px;
-    padding: 50px;
-  }
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .link-dangnhap{
-    margin-top: 10px;
-  }
-  
+.v1-dangki {
+  height: 400px;
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border: 2px solid#418df8;
+  border-radius: 10px;
+  margin-top: 100px;
+  /* box-shadow: 15px 20px 20px 20px #3366FF; */
+}
+
+.h2-dangki {
+  color:#418df8;
+}
+
+.inputContainer-dangki {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial;
+}
+
+.input-dangki {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+
+.button-dangki {
+  background-color:#418df8;
+  color: rgb(248, 238, 238);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: Arial;
+}
+
+.h1-dangki {
+  color:#418df8;
+  margin-right: 200px;
+  padding: 50px;
+}
+
+.link-dangnhap{
+  margin: 50px;
+  margin-top: 10px;
+}
+.password-toggle {
+  color: #418df8; 
+  cursor: pointer;
+  font-size: 14px; 
+}
+
+.password-toggle:hover {
+  text-decoration: underline; 
+}

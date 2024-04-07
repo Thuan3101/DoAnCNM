@@ -1,70 +1,98 @@
+/* body{
+  background-color: pink;
+} */
 .container-dangnhap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .container-1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-  }
-  
-  .v1-dangnhap {
-    height: 400px;
-    width: 300px;
-    background-color: white;
-    padding: 20px;
-    border: 2px solid #418df8;
-    border-radius: 10px;
-    /* box-shadow: 15px 20px 20px 20px rgb(61, 231, 61); */
+.container-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
 
-  }
+.v1-dangnhap {
+  height: 400px;
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border: 2px solid #418df8;
+  border-radius: 10px;
+  /* box-shadow: 15px 20px 20px 20px rgb(61, 231, 61); */
 
-  .h2-dangnhap {
-    color:  #418df8;
-  }
+}
+
+.h2-dangnhap {
+  color:  #418df8;
+}
+
+.inputContainer-dangnhap {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: arial;
+}
+
+.input-dangnhap {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+
+.button-dangnhap {
+  background-color:  #418df8;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px; 
+  font-family: arial;
+  margin-left: 90px;
+}
+
+.h1-dangnhap {
+  color:  #418df8;
+  margin-right: 30px;
+  padding: 50px;
   
-  .inputContainer-dangnhap {
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    font-family: arial;
-  }
-  
-  .input-dangnhap {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-  }
-  
-  .button-dangnhap {
-    background-color:  #418df8;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-family: arial;
-    margin-left: 90px;
-  }
-  
-  .h1-dangnhap {
-    color:  #418df8;
-    margin-right: 30px;
-    padding: 50px;
-    
-  }
-  
-  .forgot-dangnhap {
-    color: #418df8;
-    margin-left: 100px;
-  }
-  
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 98%; 
+}
+
+.input-dangnhap {
+  width: 98%; 
+}
+
+.forgot-dangnhap {
+  color: #418df8;
+  margin-left: 100px;
+}
+.button-dangnhap.google {
+  background-color: #db4437;
+  color: white;
+  width: 48%; 
+}
+
+.button-dangnhap.facebook {
+  background-color: #3b5998; 
+  color: white;
+  width: 48%; 
+}
+
+.button-dangnhap.google:hover,
+.button-dangnhap.facebook:hover {
+  opacity: 0.8; 
+}
