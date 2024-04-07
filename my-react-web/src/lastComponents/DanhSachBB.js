@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, query, where, getDocs, doc, updateDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection,  getDocs, doc,  getDoc } from "firebase/firestore"; //query, where,updateDoc,
 import { getAuth } from "firebase/auth";
 import "../css/DanhSachBB.css";
 import ChatBox from "../lastComponents/ChatBox"; // Import phần chatbox mới

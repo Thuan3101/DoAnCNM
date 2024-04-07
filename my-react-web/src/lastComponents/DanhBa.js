@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import LoiMoiGui from "../lastComponents/LoimoiGui";
 import LoimoiNhan from "../lastComponents/LoimoiNhan";
-import DanhSachMain from "../lastComponents/DanhSachMain";
+//import DanhSachMain from "../lastComponents/DanhSachMain";
 import "../css/danhBa.css";
 import DanhSachBB from "../lastComponents/DanhSachBB";
 
 
 function DanhBa() {
   const [currentPage, setCurrentPage] = useState("danhSachBanBe"); // Mặc định là "Danh sách bạn bè"
-  const [friendsMap, setFriendsMap] = useState({}); // Thêm state để lưu danh sách bạn bè
+  //const [friendsMap, setFriendsMap] = useState({}); // Thêm state để lưu danh sách bạn bè
 
   const changePage = (page) => {
     setCurrentPage(page);

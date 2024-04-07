@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
 
 const ChatBox = ({ friendId }) => {
@@ -9,6 +10,7 @@ const ChatBox = ({ friendId }) => {
   const [messageInput, setMessageInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -84,13 +86,19 @@ const ChatBox = ({ friendId }) => {
 
   const sendMessage = async () => {
     try {
-      if (!messageInput.trim() || !userId || !friendId) return;
+      if ((!messageInput.trim() && !file) || !userId || !friendId) return;
+
+      let fileUrl = "";
+      if (file) {
+        fileUrl = await uploadImageAsync(file);
+      }
 
       const newMessage = {
         text: messageInput,
         sender: userId,
         receiver: friendId,
         time: new Date().toLocaleTimeString(),
+        fileUrl: fileUrl,
       };
 
       const db = getFirestore();
@@ -107,8 +115,47 @@ const ChatBox = ({ friendId }) => {
       }
 
       setMessageInput("");
+      setFile(null);
     } catch (error) {
       console.error("Error sending message:", error);
+    }
+  };
+
+  const handleFileUpload = async () => {
+    try {
+      if (!file) {
+        throw new Error("Không có tệp hình ảnh được chọn");
+      }
+
+      const fileUrl = await uploadImageAsync(file);
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  };
+
+  const uploadImageAsync = async (imageFile) => {
+    try {
+      if (!imageFile) {
+        throw new Error("Không có tệp hình ảnh được chọn");
+      }
+
+      const imageUrl = URL.createObjectURL(imageFile);
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      const storageRef = storage;
+      const filename = `chatFiles/${userId}_${friendId}/${Date.now()}_${imageFile.name}`;
+      const imageRef = ref(storageRef, filename);
+
+      await uploadBytes(imageRef, blob);
+      const fileUrl = await getDownloadURL(imageRef);
+      
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
     }
   };
 
@@ -121,12 +168,18 @@ const ChatBox = ({ friendId }) => {
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender === userId ? "sender" : "receiver"}`}>
             <span className="message-text">{msg.text}</span>
+            {msg.fileUrl && (
+              <div className={`chat-image-container ${msg.sender === userId ? "sender" : "receiver"}`}>
+                <img src={msg.fileUrl} alt="Hình ảnh" className="chat-image" />
+              </div>
+            )}
             <span className="message-time">{msg.time}</span>
           </div>
         ))}
       </div>
       <div className="chat-input">
         <input type="text" placeholder="Nhập tin nhắn..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={sendMessage}>Gửi</button>
       </div>
     </div>

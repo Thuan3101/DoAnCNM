@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection,  query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import "../css/loimoiGui.css";
 

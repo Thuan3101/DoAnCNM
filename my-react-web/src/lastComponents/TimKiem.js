@@ -7,6 +7,7 @@ const TimKiem = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [invitationSentMessage, setInvitationSentMessage] = useState("");
   const auth = getAuth();
 
   useEffect(() => {
@@ -16,10 +17,10 @@ const TimKiem = () => {
         setCurrentUser(user);
       }
     };
-
+  
     getCurrentUser();
-  }, []);
-
+  }, [auth.currentUser]);
+  
   const checkIfFriends = async (userId) => {
     const db = getFirestore();
     const friendsRef = collection(db, "friends");
@@ -59,7 +60,7 @@ const TimKiem = () => {
     try {
       const friends = await checkIfFriends(userId);
       if (friends) {
-        console.log("Hai người dùng đã là bạn bè.");
+        setInvitationSentMessage("Hai người dùng đã là bạn bè.");
         return;
       }
 
@@ -67,7 +68,7 @@ const TimKiem = () => {
       const querySnapshot = await getDocs(query(invitationsRef, where("senderId", "==", auth.currentUser.uid), where("receiverId", "==", userId)));
 
       if (!querySnapshot.empty) {
-        console.log("Lời mời đã được gửi đến người dùng này trước đó.");
+        setInvitationSentMessage("Lời mời đã được gửi đến người dùng này trước đó.");
         return;
       }
 
@@ -77,11 +78,10 @@ const TimKiem = () => {
         sentAt: new Date(),
         status: "pending"
       });
-      console.log("Lời mời đã được gửi đến người dùng có ID:", userId);
+      setInvitationSentMessage("Lời mời đã được gửi thành công!");
 
-      const updatedResults = [...searchResults];
-      updatedResults[index].invitationSent = true;
-      setSearchResults(updatedResults);
+      // Reload search results after sending invitation
+      handleSearch();
     } catch (error) {
       console.error("Error sending invitation to user:", error);
     }
@@ -97,6 +97,7 @@ const TimKiem = () => {
       />
       <button onClick={handleSearch}>Tìm kiếm</button>
       <div className="search-results">
+        {invitationSentMessage && <p>{invitationSentMessage}</p>}
         {searchResults.map((user, index) => (
           <div key={user.id} className="user-item" style={{borderBottom: '1px gray'}}>
             <img src={user.profileImageUrl} alt="Avatar" style={{ width: '40px', height: '40px', marginTop: '10px', marginLeft: '10px', borderRadius:'50%' }} />
