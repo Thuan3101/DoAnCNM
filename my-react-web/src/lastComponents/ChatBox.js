@@ -121,20 +121,6 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
-  const handleFileUpload = async () => {
-    try {
-      if (!file) {
-        throw new Error("Không có tệp hình ảnh được chọn");
-      }
-
-      const fileUrl = await uploadImageAsync(file);
-      return fileUrl;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      throw error;
-    }
-  };
-
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
