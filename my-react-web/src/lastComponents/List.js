@@ -11,12 +11,12 @@ import { db } from '../config/firebase';
 const List = ({ setCurrentTab }) => {
   const [userData, setUserData] = useState({});
   
-  useEffect(() => {
-    const auth = getAuth();
-    const user = auth.currentUser;
 
+  useEffect(() => {
     const fetchDataFromFirebase = async () => {
       try {
+        const auth = getAuth();
+        const user = auth.currentUser;
         if (user) {
           const userDocRef = doc(db, 'users', user.uid);
           const userDocSnapshot = await getDoc(userDocRef);
@@ -31,26 +31,26 @@ const List = ({ setCurrentTab }) => {
     };
 
     fetchDataFromFirebase();
-  }, []); // Không có dependency, sử dụng một lần khi component được render
+  }, []);
 
   return (
     <div className="list">
       <div className="listContainer">
       <div onClick={() => setCurrentTab("avatar")}>
-        <img src={userData.profileImageUrl} alt=""  className="avatar" />
-      </div>
-      <div onClick={() => setCurrentTab("chat")}>
-        <img src={chat} alt="chat" className="chat" />
-      </div>
-      <div onClick={() => setCurrentTab("danhBa")}>
-        <img src={danhBa} alt="" className="danhBa" />
-      </div>
-      <div onClick={() => setCurrentTab("timKiem")}>
-        <img src={timKiem} alt="" className="timKiem" />
-      </div>
-      <div onClick={() => setCurrentTab("caiDat")}>
-        <img src={caiDat} alt="" className="caiDat" />
-      </div>
+      <img src={userData.profileImageUrl} alt=""  className="avatar" />
+    </div>
+        <div onClick={() => setCurrentTab("chat")}>
+          <img src={chat} alt="chat" className="chat" />
+        </div>
+        <div onClick={() => setCurrentTab("danhBa")}>
+          <img src={danhBa} alt="" className="danhBa" />
+        </div>
+        <div onClick={() => setCurrentTab("timKiem")}>
+          <img src={timKiem} alt="" className="timKiem" />
+        </div>
+        <div onClick={() => setCurrentTab("caiDat")}>
+          <img src={caiDat} alt="" className="caiDat" />
+        </div>
       </div>
     </div>
   );

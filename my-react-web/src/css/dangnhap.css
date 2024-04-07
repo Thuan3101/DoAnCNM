@@ -51,7 +51,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 5px; 
+    margin-top: 10px;
     font-family: arial;
     margin-left: 90px;
   }
@@ -62,35 +62,9 @@
     padding: 50px;
     
   }
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    width: 98%; 
-  }
-  
-  .input-dangnhap {
-    width: 98%; 
-  }
   
   .forgot-dangnhap {
     color: #418df8;
     margin-left: 100px;
-  }
-  .button-dangnhap.google {
-    background-color: #db4437;
-    color: white;
-    width: 48%; 
-  }
-  
-  .button-dangnhap.facebook {
-    background-color: #3b5998; 
-    color: white;
-    width: 48%; 
-  }
-  
-  .button-dangnhap.google:hover,
-  .button-dangnhap.facebook:hover {
-    opacity: 0.8; 
   }
   

@@ -1,14 +1,14 @@
+
 import React from "react";
-import "../css/messages.css";
-import MessDetail from "../lastComponents/MessDetail";
+
+
 function Messages() {
       return(
-          <div className="messages">
+           <div>
 
-          <MessDetail></MessDetail>
-
-          </div>
+     
+          
+           </div>
       )
-      
-}
-export default Messages;
+  
+}export default Messages;

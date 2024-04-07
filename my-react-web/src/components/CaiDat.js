@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import "../css/caiDat.css";
 
 const CaiDatLayout = ({ currentTab, handleTabChange, userData }) => {
   const navigate = useNavigate();
@@ -68,9 +69,9 @@ const CaiDatLayout = ({ currentTab, handleTabChange, userData }) => {
       <div>
         <h2>Cài đặt</h2>
         <ul>
-          <li onClick={() => handleTabChange('ngonNgu')}>Ngôn ngữ</li>
+          <li className='nn' onClick={() => handleTabChange('ngonNgu')}>Ngôn ngữ</li>
           {/* <li onClick={() => handleTabChange('baoMat')}>Bảo mật</li> */}
-          <li onClick={handleLogout}>Đăng xuất</li>
+          <li className='dx' onClick={handleLogout}>Đăng xuất</li>
         </ul>
       </div>
       <div>

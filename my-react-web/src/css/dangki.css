@@ -53,16 +53,6 @@
   }
 
   .link-dangnhap{
-    margin: 50px;
     margin-top: 10px;
-  }
-  .password-toggle {
-    color: #418df8; 
-    cursor: pointer;
-    font-size: 14px; 
-  }
-  
-  .password-toggle:hover {
-    text-decoration: underline; 
   }
   

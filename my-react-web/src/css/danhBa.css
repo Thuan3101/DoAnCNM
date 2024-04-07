@@ -1,15 +1,36 @@
-.danhBa{
-     
-      div{
-            height: 35px;
-            width: 90%;
-            border: none;
-            background-color: #418df8;
-            margin-top: 5px;
-            margin-left: 5px;
-            padding: 10px;
-            text-align: center;
-            color: white;
-
-      }
+.danhBa {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .danhBa > div {
+      flex-grow: 1;
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+    }
+    
+    .navBar {
+      display: flex;
+      justify-content: space-around; 
+      border-bottom: 2px solid #ccc; 
+      padding-bottom: 10px;
+    }
+.lmDaGui{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
 }
+.lmDaNhan{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
+  margin-left:1px ;
+
+}
+.dsBanBe{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
+  margin-left:1px ;
+} 

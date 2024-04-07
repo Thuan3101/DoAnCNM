@@ -1,14 +1,17 @@
 body{
   font-family:'Times New Roman', Times, serif;
+  background-color: rgb(237, 247, 240);
+ 
 }
 .homeContainer{
   flex: 1;
-  height: 100vh;
+  height:100vh;
   width: 100%;
-  align-items: center;
+  margin-top: 30px;
   justify-content: center;
   display: flex;
-  background-color: rgb(237, 247, 240) ;
+ 
+  margin-left: 50px;
   
 }
 
