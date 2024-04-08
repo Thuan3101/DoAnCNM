@@ -1,25 +1,19 @@
-/* Thêm lớp CSS mới cho hình ảnh */
-.chat-image {
-  max-width: 100%;
-  max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
-  display: block;
-  margin: auto;
-}
-
-/* Cập nhật CSS hiện tại */
+/* CSS cho khung chat */
 .chat-box {
   position: absolute;
-  margin-left: 370px;
+  margin-left: 310px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   z-index: 999;
-  height: 40%;
-  width: 40%;
+  height: 77%;
+  width: 52%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 0px;
+  margin-top: -260px;
 }
 
+/* CSS cho phần header của khung chat */
 .chat-header {
   background-color: #4267b2;
   color: #fff;
@@ -28,28 +22,34 @@
   border-top-right-radius: 8px;
 }
 
+/* CSS cho tiêu đề trong phần header của khung chat */
 .chat-header h3 {
   margin: 0;
 }
 
+/* CSS cho phần chứa tin nhắn trong khung chat */
 .chat-messages {
   overflow-y: auto;
-  height: calc(100% - 120px);
+  height: calc(100% - 150px);
   padding: 10px;
 }
 
+/* CSS cho mỗi tin nhắn */
 .message {
   margin-bottom: 10px;
 }
 
+/* CSS cho tin nhắn gửi đi */
 .message.sender {
   text-align: right;
 }
 
+/* CSS cho tin nhắn nhận được */
 .message.receiver {
   text-align: left;
 }
 
+/* CSS cho nội dung của tin nhắn */
 .message-text {
   background-color: #e1ffc7;
   padding: 8px;
@@ -57,29 +57,49 @@
   display: inline-block;
 }
 
+/* CSS cho thời gian của tin nhắn */
 .message-time {
   font-size: 12px;
   color: #666;
 }
 
+/* CSS cho phần nhập tin nhắn */
 .chat-input {
-  padding: 7px;
+  padding: 5px; /* Điều chỉnh padding */
   border-top: 1px solid #ccc;
 }
 
+/* CSS cho ô nhập tin nhắn */
 .chat-input input[type="text"] {
-  width: calc(100% - 80px);
-  padding: 8px;
+  width: calc(90% - 80px);
+  padding: 5px; /* Điều chỉnh padding */
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+/* CSS cho nút gửi tin nhắn */
 .chat-input button {
   background-color: #4267b2;
   color: #fff;
   border: none;
-  padding: 6px 12px;
+  padding: 4px 20px; /* Điều chỉnh padding */
   border-radius: 4px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+/* CSS cho hình ảnh trong tin nhắn */
+.chat-image {
+  max-width: 100%;
+  max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+  display: block;
+  margin: auto;
+}
+
+/* CSS cho video trong tin nhắn */
+.chat-image video {
+  max-width: 50%; /* Sử dụng chiều rộng của viewport */
+  max-height: 30vh; /* Điều chỉnh chiều cao tối đa của video */
+  display: block;
+  margin: auto;
 }
