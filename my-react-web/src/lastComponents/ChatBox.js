@@ -10,8 +10,8 @@ const ChatBox = ({ friendId }) => {
   const [messageInput, setMessageInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
-  const [file, setFile] = useState(null);
-  const [fileType, setFileType] = useState("");
+  const [files, setFiles] = useState([]);
+  //const [fileUrls, setFileUrls] = useState([]);
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -86,42 +86,59 @@ const ChatBox = ({ friendId }) => {
 
   const sendMessage = async () => {
     try {
-      if ((!messageInput.trim() && !file) || !userId || !friendId) return;
+      if ((!messageInput.trim() && files.length === 0) || !userId || !friendId) return;
 
-      let fileUrl = "";
-      if (file) {
-        if (fileType === "image" || fileType === "video") {
-          fileUrl = await uploadImageAsync(file);
-        } else {
-          fileUrl = await uploadFileAsync(file);
-        }
+      let fileUrls = [];
+      if (files.length > 0) {
+        fileUrls = await Promise.all(files.map(async (file) => {
+          const fileType = file.type.split("/")[0];
+          let url = "";
+          if (fileType === "image" || fileType === "video") {
+            url = await uploadImageAsync(file);
+          } else {
+            url = await uploadFileAsync(file);
+          }
+          return { url, fileType };
+        }));
       }
 
-      const newMessage = {
-        text: messageInput,
-        sender: userId,
-        receiver: friendId,
-        time: new Date().toLocaleTimeString(),
-        fileUrl: fileUrl,
-        fileType: fileType, // Thêm fileType vào message
-      };
+      const newMessages = [];
+      if (messageInput.trim()) {
+        const newMessage = {
+          text: messageInput,
+          sender: userId,
+          receiver: friendId,
+          time: new Date().toLocaleTimeString(),
+        };
+        newMessages.push(newMessage);
+      }
+
+      fileUrls.forEach(({ url, fileType }) => {
+        const newMessage = {
+          sender: userId,
+          receiver: friendId,
+          time: new Date().toLocaleTimeString(),
+          fileUrl: url,
+          fileType: fileType,
+        };
+        newMessages.push(newMessage);
+      });
 
       const db = getFirestore();
       const messagesRef = doc(db, "chats", `${userId}_${friendId}`);
       const messagesDoc = await getDoc(messagesRef);
       if (messagesDoc.exists()) {
         await updateDoc(messagesRef, {
-          messages: arrayUnion(newMessage)
+          messages: arrayUnion(...newMessages)
         });
-        setMessages(prevMessages => [...prevMessages, newMessage]);
+        setMessages(prevMessages => [...prevMessages, ...newMessages]);
       } else {
-        await setDoc(messagesRef, { messages: [newMessage] });
-        setMessages([newMessage]);
+        await setDoc(messagesRef, { messages: newMessages });
+        setMessages(newMessages);
       }
 
       setMessageInput("");
-      setFile(null);
-      setFileType("");
+      setFiles([]);
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -172,11 +189,9 @@ const ChatBox = ({ friendId }) => {
   };
 
   const handleFileInputChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const fileType = selectedFile.type.split("/")[0];
-      setFile(selectedFile);
-      setFileType(fileType);
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      setFiles(Array.from(selectedFiles));
     }
   };
 
@@ -206,7 +221,7 @@ const ChatBox = ({ friendId }) => {
       </div>
       <div className="chat-input">
         <input type="text" placeholder="Nhập tin nhắn..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
-        <input type="file" onChange={handleFileInputChange} />
+        <input type="file" multiple onChange={handleFileInputChange} />
         <button onClick={sendMessage}>Gửi</button>
       </div>
     </div>
