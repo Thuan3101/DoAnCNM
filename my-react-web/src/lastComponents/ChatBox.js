@@ -11,6 +11,7 @@ const ChatBox = ({ friendId }) => {
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
   const [file, setFile] = useState(null);
+  const [fileType, setFileType] = useState("");
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -24,7 +25,7 @@ const ChatBox = ({ friendId }) => {
           setFriendName(userDoc.data().name);
         }
       } catch (error) {
-        console.error("Lỗi khi lấy tên bạn:", error);
+        console.error("Error fetching friend's name:", error);
       }
     };
 
@@ -60,12 +61,11 @@ const ChatBox = ({ friendId }) => {
         
         const allMessages = senderReceiverMessages.concat(receiverSenderMessages);
         
-        // Sắp xếp tin nhắn theo thời gian
         allMessages.sort((a, b) => new Date(a.time) - new Date(b.time));
         
         setMessages(allMessages);
       } catch (error) {
-        console.error("Lỗi khi lấy tin nhắn:", error);
+        console.error("Error fetching messages:", error);
       }
     };
 
@@ -90,7 +90,11 @@ const ChatBox = ({ friendId }) => {
 
       let fileUrl = "";
       if (file) {
-        fileUrl = await uploadFileAsync(file);
+        if (fileType === "image" || fileType === "video") {
+          fileUrl = await uploadImageAsync(file);
+        } else {
+          fileUrl = await uploadFileAsync(file);
+        }
       }
 
       const newMessage = {
@@ -99,6 +103,7 @@ const ChatBox = ({ friendId }) => {
         receiver: friendId,
         time: new Date().toLocaleTimeString(),
         fileUrl: fileUrl,
+        fileType: fileType, // Thêm fileType vào message
       };
 
       const db = getFirestore();
@@ -116,43 +121,62 @@ const ChatBox = ({ friendId }) => {
 
       setMessageInput("");
       setFile(null);
+      setFileType("");
     } catch (error) {
-      console.error("Lỗi khi gửi tin nhắn:", error);
+      console.error("Error sending message:", error);
     }
   };
 
   const uploadFileAsync = async (file) => {
     try {
       if (!file) {
-        throw new Error("Không có tệp được chọn");
+        throw new Error("No file selected");
       }
-
-      const fileUrl = await uploadToStorage(file);
-
-      return fileUrl;
-    } catch (error) {
-      console.error("Lỗi khi tải lên tệp:", error);
-      throw error;
-    }
-  };
-
-  const uploadToStorage = async (file) => {
-    try {
-      const imageUrl = URL.createObjectURL(file);
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
 
       const storageRef = storage;
       const filename = `chatFiles/${userId}_${friendId}/${Date.now()}_${file.name}`;
       const fileRef = ref(storageRef, filename);
 
-      await uploadBytes(fileRef, blob);
+      await uploadBytes(fileRef, file);
       const fileUrl = await getDownloadURL(fileRef);
       
       return fileUrl;
     } catch (error) {
-      console.error("Lỗi khi tải lên tệp:", error);
+      console.error("Error uploading file:", error);
       throw error;
+    }
+  };
+
+  const uploadImageAsync = async (imageFile) => {
+    try {
+      if (!imageFile) {
+        throw new Error("No image file selected");
+      }
+
+      const imageUrl = URL.createObjectURL(imageFile);
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      const storageRef = storage;
+      const filename = `chatFiles/${userId}_${friendId}/${Date.now()}_${imageFile.name}`;
+      const imageRef = ref(storageRef, filename);
+
+      await uploadBytes(imageRef, blob);
+      const fileUrl = await getDownloadURL(imageRef);
+      
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
+    }
+  };
+
+  const handleFileInputChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileType = selectedFile.type.split("/")[0];
+      setFile(selectedFile);
+      setFileType(fileType);
     }
   };
 
@@ -167,10 +191,9 @@ const ChatBox = ({ friendId }) => {
             <span className="message-text">{msg.text}</span>
             {msg.fileUrl && (
               <div className={`chat-image-container ${msg.sender === userId ? "sender" : "receiver"}`}>
-                {msg.fileUrl.includes("image") ? (
-                  <img src={msg.fileUrl} alt="Hình ảnh" className="chat-image" />
-                ) : (
-                  <video controls className="chat-video">
+                {msg.fileType === "image" && <img src={msg.fileUrl} alt="Hình ảnh" className="chat-image" />}
+                {msg.fileType === "video" && (
+                  <video controls>
                     <source src={msg.fileUrl} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
@@ -183,7 +206,7 @@ const ChatBox = ({ friendId }) => {
       </div>
       <div className="chat-input">
         <input type="text" placeholder="Nhập tin nhắn..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
-        <input type="file" accept="image/*, video/*" onChange={(e) => setFile(e.target.files[0])} />
+        <input type="file" onChange={handleFileInputChange} />
         <button onClick={sendMessage}>Gửi</button>
       </div>
     </div>

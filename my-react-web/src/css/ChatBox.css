@@ -1,7 +1,9 @@
 /* CSS cho khung chat */
 .chat-box {
   position: absolute;
-  margin-left: 310px;
+  top: 52%;
+  left: 63%;
+  transform: translate(-50%, -50%);
   background-color: #ffffff;
   border: 1px solid #cccccc;
   z-index: 999;
@@ -9,9 +11,8 @@
   width: 52%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0px;
-  margin-top: -260px;
 }
+
 
 /* CSS cho phần header của khung chat */
 .chat-header {
@@ -37,6 +38,7 @@
 /* CSS cho mỗi tin nhắn */
 .message {
   margin-bottom: 10px;
+  position: relative;
 }
 
 /* CSS cho tin nhắn gửi đi */
@@ -61,18 +63,21 @@
 .message-time {
   font-size: 12px;
   color: #666;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
 }
 
 /* CSS cho phần nhập tin nhắn */
 .chat-input {
-  padding: 5px; /* Điều chỉnh padding */
+  padding: 5px;
   border-top: 1px solid #ccc;
 }
 
 /* CSS cho ô nhập tin nhắn */
 .chat-input input[type="text"] {
   width: calc(90% - 80px);
-  padding: 5px; /* Điều chỉnh padding */
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -82,24 +87,38 @@
   background-color: #4267b2;
   color: #fff;
   border: none;
-  padding: 4px 20px; /* Điều chỉnh padding */
+  padding: 4px 10px;
   border-radius: 4px;
   margin-left: 10px;
   cursor: pointer;
 }
 
+/* CSS cho nút chọn tệp */
+.file-label {
+  background-color: #4267b2;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* CSS cho tên tệp đã chọn */
+.selected-file {
+  margin-left: 10px;
+}
+
 /* CSS cho hình ảnh trong tin nhắn */
 .chat-image {
   max-width: 100%;
-  max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+  max-height: 200px;
   display: block;
-  margin: auto;
+  margin: 5px 0;
 }
 
 /* CSS cho video trong tin nhắn */
 .chat-image video {
-  max-width: 50%; /* Sử dụng chiều rộng của viewport */
-  max-height: 30vh; /* Điều chỉnh chiều cao tối đa của video */
+  max-width: 100%;
+  max-height: 200px;
   display: block;
-  margin: auto;
+  margin: 5px 0;
 }
