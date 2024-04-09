@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
@@ -11,7 +11,8 @@ const ChatBox = ({ friendId }) => {
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
   const [files, setFiles] = useState([]);
-  //const [fileUrls, setFileUrls] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState(null); // Trạng thái lưu trữ tin nhắn được chọn
+  const [selectedFriendsIds] = useState([]); // Khai báo và khởi tạo selectedFriendsIds
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -25,7 +26,7 @@ const ChatBox = ({ friendId }) => {
           setFriendName(userDoc.data().name);
         }
       } catch (error) {
-        console.error("Error fetching friend's name:", error);
+        console.error("Lỗi khi lấy tên bạn:", error);
       }
     };
 
@@ -65,7 +66,7 @@ const ChatBox = ({ friendId }) => {
         
         setMessages(allMessages);
       } catch (error) {
-        console.error("Error fetching messages:", error);
+        console.error("Lỗi khi lấy tin nhắn:", error);
       }
     };
 
@@ -140,14 +141,14 @@ const ChatBox = ({ friendId }) => {
       setMessageInput("");
       setFiles([]);
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Lỗi khi gửi tin nhắn:", error);
     }
   };
 
   const uploadFileAsync = async (file) => {
     try {
       if (!file) {
-        throw new Error("No file selected");
+        throw new Error("Không có tệp nào được chọn");
       }
 
       const storageRef = storage;
@@ -159,7 +160,7 @@ const ChatBox = ({ friendId }) => {
       
       return fileUrl;
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error("Lỗi khi tải lên tệp:", error);
       throw error;
     }
   };
@@ -167,7 +168,7 @@ const ChatBox = ({ friendId }) => {
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
-        throw new Error("No image file selected");
+        throw new Error("Không có tệp hình ảnh nào được chọn");
       }
 
       const imageUrl = URL.createObjectURL(imageFile);
@@ -183,7 +184,7 @@ const ChatBox = ({ friendId }) => {
       
       return fileUrl;
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Lỗi khi tải lên hình ảnh:", error);
       throw error;
     }
   };
@@ -195,6 +196,68 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+// Xử lý hàm xóa tin nhắn
+const deleteMessage = async () => {
+  try {
+    if (!selectedMessage) return;
+
+    const db = getFirestore();
+    const messagesRef = doc(db, "chats", `${friendId}_${userId}`);
+    await updateDoc(messagesRef, {
+      messages: messages.filter(msg => msg !== selectedMessage)
+    });
+
+    setSelectedMessage(null);
+  } catch (error) {
+    console.error("Error recalling message:", error);
+  }
+};
+
+// Xử lý hàm thu hồi tin nhắn
+const recallMessage = async () => {
+  try {
+    if (!userId || !selectedMessage) return;
+
+    const db = getFirestore();
+    const senderReceiverMessagesRef = doc(db, "chats", `${userId}_${friendId}`);
+    const receiverSenderMessagesRef = doc(db, "chats", `${friendId}_${userId}`);
+
+    await updateDoc(senderReceiverMessagesRef, {
+      messages: arrayRemove(selectedMessage)
+    });
+    await updateDoc(receiverSenderMessagesRef, {
+      messages: arrayRemove(selectedMessage)
+    });
+
+    // Xóa tin nhắn khỏi cả hai hộp thư của người gửi và người nhận
+    setMessages(messages.filter(msg => msg !== selectedMessage));
+    setSelectedMessage(null); // Đặt lại tin nhắn được chọn về null sau khi thu hồi
+  } catch (error) {
+    console.error("Lỗi khi thu hồi tin nhắn:", error);
+  }
+};
+
+  // Xử lý hàm chia sẻ tin nhắn
+  const shareMessage = async () => {
+    try {
+      if (!userId || !selectedMessage) return;
+
+      const db = getFirestore();
+      const shareTasks = selectedFriendsIds.map(async (friendId) => {
+        const receiverSenderMessagesRef = doc(db, "chats", `${friendId}_${userId}`);
+        await updateDoc(receiverSenderMessagesRef, {
+          messages: arrayUnion(selectedMessage)
+        });
+      });
+
+      await Promise.all(shareTasks);
+
+      console.log("Tin nhắn đã được chia sẻ thành công cho bạn bè.");
+    } catch (error) {
+      console.error("Lỗi khi chia sẻ tin nhắn:", error);
+    }
+  };
+
   return (
     <div className="chat-box">
       <div className="chat-header">
@@ -202,7 +265,7 @@ const ChatBox = ({ friendId }) => {
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender === userId ? "sender" : "receiver"}`}>
+          <div key={index} className={`message ${msg.sender === userId ? "sender" : "receiver"}`} onClick={() => setSelectedMessage(msg)}>
             <span className="message-text">{msg.text}</span>
             {msg.fileUrl && (
               <div className={`chat-image-container ${msg.sender === userId ? "sender" : "receiver"}`}>
@@ -210,7 +273,7 @@ const ChatBox = ({ friendId }) => {
                 {msg.fileType === "video" && (
                   <video controls>
                     <source src={msg.fileUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    Trình duyệt của bạn không hỗ trợ video.
                   </video>
                 )}
               </div>
@@ -219,6 +282,14 @@ const ChatBox = ({ friendId }) => {
           </div>
         ))}
       </div>
+      {/* Hiển thị nút xóa, thu hồi và chia sẻ khi có tin nhắn được chọn */}
+      {selectedMessage && (
+        <div className="selected-message-options">
+          {(selectedMessage.sender === userId || selectedMessage.receiver === userId) && <button onClick={deleteMessage}>Xóa</button>}  
+          {selectedMessage.sender === userId  && <button onClick={recallMessage}>Thu hồi</button>}
+          {(selectedMessage.sender === userId || selectedMessage.receiver === userId) && <button onClick={shareMessage}>Chia sẻ</button>}
+        </div>
+      )}
       <div className="chat-input">
         <input type="text" placeholder="Nhập tin nhắn..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
         <input type="file" multiple onChange={handleFileInputChange} />

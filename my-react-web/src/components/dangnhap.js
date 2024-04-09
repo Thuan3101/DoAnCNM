@@ -37,9 +37,16 @@ const LoginScreen = () => {
       })
       .catch((error) => {
         console.error("Error during login:", error);
-        alert("Đăng nhập không thành công. Vui lòng thử lại.");
+        if (error.code === "auth/user-not-found") {
+          alert("Sai email. Vui lòng kiểm tra lại.");
+        } else if (error.code === "auth/wrong-password") {
+          alert("Sai mật khẩu. Vui lòng kiểm tra lại.");
+        } else {
+          alert("Đăng nhập không thành công do sai email hoặc mật khẩu. Vui lòng thử lại.");
+        }
       });
   };
+  
 
   const handleGoogleLogin = () => {
     const provider = new GoogleAuthProvider();
@@ -112,7 +119,7 @@ const LoginScreen = () => {
             <h6 className="forgot-dangnhap">Quên mật khẩu?</h6>
           </Link>
           <Link to="/register">
-          <span className="forgot-dangnhap">Đăng ký</span>
+            <span className="forgot-dangnhap">Đăng ký</span>
           </Link>
           <div className="social-login-container">
             <button className="button-dangnhap google" onClick={handleGoogleLogin}>
