@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
+import EmojiPicker from 'emoji-picker-react';
 
 const ChatBox = ({ friendId }) => {
   const [friendName, setFriendName] = useState("");
@@ -13,7 +14,7 @@ const ChatBox = ({ friendId }) => {
   const [files, setFiles] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null); // Trạng thái lưu trữ tin nhắn được chọn
   const [selectedFriendsIds] = useState([]); // Khai báo và khởi tạo selectedFriendsIds
-
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   useEffect(() => {
     const fetchFriendName = async () => {
       try {
@@ -257,7 +258,14 @@ const recallMessage = async () => {
       console.error("Lỗi khi chia sẻ tin nhắn:", error);
     }
   };
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(prevState => !prevState);
+  };
+  
 
+  const handleEmojiSelect = emoji => {
+    setMessageInput(prevMessageInput => prevMessageInput + emoji.emoji); // Use emoji.emoji to get the actual emoji character
+  };
   return (
     <div className="chat-box">
       <div className="chat-header">
@@ -291,7 +299,12 @@ const recallMessage = async () => {
         </div>
       )}
       <div className="chat-input">
+      <button onClick={toggleEmojiPicker}>😀</button> {/* Nút để chuyển đổi trạng thái hiển thị của bảng chọn biểu tượng cảm xúc */}
+        {showEmojiPicker && ( // Hiển thị bảng chọn biểu tượng cảm xúc nếu showEmojiPicker là true
+          <EmojiPicker className="emoji-picker-container" onEmojiClick={handleEmojiSelect} />
+        )}
         <input type="text" placeholder="Nhập tin nhắn..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
+        
         <input type="file" multiple onChange={handleFileInputChange} />
         <button onClick={sendMessage}>Gửi</button>
       </div>
