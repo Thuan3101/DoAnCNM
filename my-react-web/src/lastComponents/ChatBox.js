@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
+import {
+ getFirestore, doc, getDoc, setDoc,updateDoc,arrayUnion,arrayRemove,onSnapshot,} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
 import EmojiPicker from "emoji-picker-react";
+import { useRef } from "react";
 
 const ChatBox = ({ friendId }) => {
   const [friendName, setFriendName] = useState("");
@@ -121,7 +123,8 @@ const ChatBox = ({ friendId }) => {
             } else if (
               fileType === "application" ||
               fileType === "text" ||
-              fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              fileType ===
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             ) {
               url = await uploadOtherFileAsync(file);
             }
@@ -136,7 +139,13 @@ const ChatBox = ({ friendId }) => {
           text: messageInput,
           sender: userId,
           receiver: friendId,
-          time: new Date().toLocaleTimeString(),
+          time: new Date().toLocaleString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         };
         newMessages.push(newMessage);
       }
@@ -145,7 +154,13 @@ const ChatBox = ({ friendId }) => {
         const newMessage = {
           sender: userId,
           receiver: friendId,
-          time: new Date().toLocaleTimeString(),
+          time: new Date().toLocaleString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
           fileUrl: url,
           fileType: fileType,
           fileName: fileName,
@@ -178,44 +193,45 @@ const ChatBox = ({ friendId }) => {
       if (!otherFile) {
         throw new Error("Không có tệp nào được chọn");
       }
-
+  
       const storageRef = storage;
-      const filename = `chatFiles/${userId}_${friendId}/${Date.now()}_${otherFile.name}`;
+      const filename = `chatFiles/${userId}_${friendId}/${otherFile.name}`; // Sửa đổi ở đây
       const otherFileRef = ref(storageRef, filename);
-
+  
       await uploadBytes(otherFileRef, otherFile);
       const otherFileUrl = await getDownloadURL(otherFileRef);
-
+  
       return otherFileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên tệp khác:", error);
       throw error;
     }
   };
-
+  
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
         throw new Error("Không có tệp hình ảnh nào được chọn");
       }
-
+  
       const imageUrl = URL.createObjectURL(imageFile);
       const response = await fetch(imageUrl);
       const blob = await response.blob();
-
+  
       const storageRef = storage;
-      const filename = `chatFiles/${userId}_${friendId}/${Date.now()}_${imageFile.name}`;
+      const filename = `chatFiles/${userId}_${friendId}/${imageFile.name}`; // Sửa đổi ở đây
       const imageRef = ref(storageRef, filename);
-
+  
       await uploadBytes(imageRef, blob);
       const fileUrl = await getDownloadURL(imageRef);
-
+  
       return fileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên hình ảnh:", error);
       throw error;
     }
   };
+  
 
   const handleFileInputChange = (e) => {
     const selectedFiles = e.target.files;
@@ -302,12 +318,18 @@ const ChatBox = ({ friendId }) => {
     setMessageInput((prevMessageInput) => prevMessageInput + emoji.emoji);
   };
 
+  const chatMessagesRef = useRef(null);
+
+  useEffect(() => {
+    chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+  }, [messages]);
+
   return (
     <div className="chat-box">
       <div className="chat-header">
         <h3>Chat với {friendName}</h3>
       </div>
-      <div className="chat-messages">
+      <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -316,6 +338,7 @@ const ChatBox = ({ friendId }) => {
             }`}
             onClick={() => setSelectedMessage(msg)}
           >
+            <span className="message-time">{msg.time}</span>
             <span className="message-text">{msg.text}</span>
             {msg.fileUrl && (
               <div
@@ -347,7 +370,6 @@ const ChatBox = ({ friendId }) => {
                 )}
               </div>
             )}
-            <span className="message-time">{msg.time}</span>
           </div>
         ))}
         {showEmojiPicker && (
