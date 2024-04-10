@@ -15,16 +15,18 @@ const DanhSachBB = () => {
     const fetchUserFriends = async () => {
       try {
         const db = getFirestore();
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        const userDoc = await getDoc(userRef);
-        if (userDoc.exists()) {
-          setUserFriends(userDoc.data().friends || {});
+        if (auth.currentUser) { // Kiểm tra nếu currentUser không phải là null
+          const userRef = doc(db, "users", auth.currentUser.uid);
+          const userDoc = await getDoc(userRef);
+          if (userDoc.exists()) {
+            setUserFriends(userDoc.data().friends || {});
+          }
         }
       } catch (error) {
-        console.error("Error fetching user friends:", error);
+        console.error("Lỗi khi lấy danh sách bạn bè:", error);
       }
     };
-
+  
     const fetchSenders = async () => {
       try {
         const db = getFirestore();
@@ -36,13 +38,14 @@ const DanhSachBB = () => {
         });
         setSenders(sendersData);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Lỗi khi lấy danh sách người dùng:", error);
       }
     };
-
+  
     fetchUserFriends();
     fetchSenders();
-  }, [auth.currentUser.uid]);
+  }, [auth.currentUser]); // Bao gồm auth.currentUser trong mảng phụ thuộc
+  
 
   const handleFriendClick = (friendId) => {
     setSelectedFriend(friendId);
@@ -50,7 +53,7 @@ const DanhSachBB = () => {
 
   return (
     <div className="danh-sach-bb">
-      <h2>Danh sách bạn bè:</h2>
+      <h2>Bạn bè:</h2>
       {Object.keys(userFriends).length === 0 ? (
         <p>Bạn không có bạn bè nào</p>
       ) : (

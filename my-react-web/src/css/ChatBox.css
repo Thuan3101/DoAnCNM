@@ -13,7 +13,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 /* CSS cho phần header của khung chat */
 .chat-header {
   background-color: #4267b2;
@@ -111,23 +110,15 @@
 .chat-image {
   max-width: 100%;
   max-height: 200px;
-  display: block;
+  /*display: block;*/
   margin: 5px 0;
 }
 
 /* CSS cho video trong tin nhắn */
-.chat-image video {
-  max-width: 100%;
-  max-height: 200px;
-  display: block;
-  margin: 5px 0;
-}
+
 .emoji-picker-container {
-  position: absolute;
-  bottom: calc(100% + 10px); /* Đặt bottom để đặt emoji picker lên trên input */
-  left: 50%;
-  transform: translateX(-50%); /* Để căn giữa theo chiều ngang */
+  bottom: 10px; /*Đặt bottom để đặt emoji picker lên trên input */
+  /*left: 50%;*/
+  /* transform: translateX(-50%);  Để căn giữa theo chiều ngang */
   z-index: 999; /* Đảm bảo emoji picker hiển thị trên tất cả các phần khác */
 }
-
-
