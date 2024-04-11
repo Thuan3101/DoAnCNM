@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import {
- getFirestore, doc, getDoc, setDoc,updateDoc,arrayUnion,arrayRemove,onSnapshot,} from "firebase/firestore";
+import React, { useState, useEffect,useRef } from "react";
+import {getFirestore, doc, getDoc, setDoc,updateDoc,arrayUnion,arrayRemove,onSnapshot,} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
 import EmojiPicker from "emoji-picker-react";
-import { useRef } from "react";
+
 
 const ChatBox = ({ friendId }) => {
   const [friendName, setFriendName] = useState("");
