@@ -114,6 +114,11 @@
   margin: 5px 0;
 }
 
+.chat-videos{
+ max-width: 50%;
+ max-height: 60%;
+ margin: 5px 0;
+}
 /* CSS cho video trong tin nhắn */
 
 .emoji-picker-container {

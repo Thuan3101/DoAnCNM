@@ -6,7 +6,7 @@ import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
 import EmojiPicker from "emoji-picker-react";
 
-
+// Hàm ChatBox nhận một prop friendId
 const ChatBox = ({ friendId }) => {
   const [friendName, setFriendName] = useState("");
   const [messageInput, setMessageInput] = useState("");
@@ -17,6 +17,7 @@ const ChatBox = ({ friendId }) => {
   const [selectedFriendsIds] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+  //hàm useEffect sẽ chạy mỗi khi friendId thay đổi
   useEffect(() => {
     const fetchFriendName = async () => {
       try {
@@ -36,6 +37,7 @@ const ChatBox = ({ friendId }) => {
     fetchFriendName();
   }, [friendId]);
 
+  //hàm useEffect sẽ chạy mỗi khi component được render
   useEffect(() => {
     const fetchUserId = () => {
       const auth = getAuth();
@@ -48,6 +50,7 @@ const ChatBox = ({ friendId }) => {
     fetchUserId();
   }, []);
 
+  //hàm useEffect sẽ chạy mỗi khi userId hoặc friendId thay đổi
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -91,6 +94,7 @@ const ChatBox = ({ friendId }) => {
       }
     };
 
+    // Gọi hàm fetchMessages
     fetchMessages();
 
     const db = getFirestore();
@@ -106,6 +110,7 @@ const ChatBox = ({ friendId }) => {
     return () => unsubscribe();
   }, [userId, friendId]);
 
+  //hàm gửi tin nhắn
   const sendMessage = async () => {
     try {
       if ((!messageInput.trim() && files.length === 0) || !userId || !friendId)
@@ -131,7 +136,7 @@ const ChatBox = ({ friendId }) => {
           })
         );
       }
-
+      // Tạo mảng mới để chứa tin nhắn mới
       const newMessages = [];
       if (messageInput.trim()) {
         const newMessage = {
@@ -149,6 +154,7 @@ const ChatBox = ({ friendId }) => {
         newMessages.push(newMessage);
       }
 
+      // Thêm tin nhắn chứa file vào mảng tin nhắn mới
       fileUrls.forEach(({ url, fileType, fileName }) => {
         const newMessage = {
           sender: userId,
@@ -167,6 +173,7 @@ const ChatBox = ({ friendId }) => {
         newMessages.push(newMessage);
       });
 
+      // Lưu tin nhắn vào Firestore
       const db = getFirestore();
       const messagesRef = doc(db, "chats", `${userId}_${friendId}`);
       const messagesDoc = await getDoc(messagesRef);
@@ -187,6 +194,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+    // Hàm tải lên tệp khác
   const uploadOtherFileAsync = async (otherFile) => {
     try {
       if (!otherFile) {
@@ -207,6 +215,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
   
+  // Hàm tải lên hình ảnh
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
@@ -231,7 +240,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
   
-
+  // Hàm xử lý sự kiện khi người dùng chọn tệp
   const handleFileInputChange = (e) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
@@ -239,6 +248,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+  // Hàm xử xóa tin nhắn 1 bên người gửi hoặc người nhận
   const deleteMessage = async () => {
     try {
       if (!selectedMessage) return;
@@ -255,6 +265,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+  // Hàm thu hồi tin nhắn cả 2 bên người gui và người nhận
   const recallMessage = async () => {
     try {
       if (!userId || !selectedMessage) return;
@@ -285,6 +296,7 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+  // Hàm chia sẻ tin nhắn
   const shareMessage = async () => {
     try {
       if (!userId || !selectedMessage) return;
@@ -309,16 +321,19 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
+  // Hàm hiển thị hoặc ẩn Emoji Picker
   const toggleEmojiPicker = () => {
     setShowEmojiPicker((prevState) => !prevState);
   };
 
+  // Hàm xử lý sự kiện khi người dùng chọn emoji
   const handleEmojiSelect = (emoji) => {
     setMessageInput((prevMessageInput) => prevMessageInput + emoji.emoji);
   };
 
+  // Ref để scroll xuống cuối cùng khi có tin nhắn mới
   const chatMessagesRef = useRef(null);
-
+  // Hàm useEffect sẽ chạy mỗi khi messages thay đổi
   useEffect(() => {
     chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
   }, [messages]);
@@ -329,6 +344,22 @@ const ChatBox = ({ friendId }) => {
         <h3>Chat với {friendName}</h3>
       </div>
       <div className="chat-messages" ref={chatMessagesRef}>
+         {/* Hiển thị các tùy chọn tin nhắn khi người dùng chọn tin nhắn xóa thu hồi hoặc chia sẻ */}
+      {selectedMessage && (
+        <div className="selected-message-options">
+          {(selectedMessage.sender === userId ||
+            selectedMessage.receiver === userId) && (
+            <button onClick={deleteMessage}>Xóa</button>
+          )}
+          {selectedMessage.sender === userId && (
+            <button onClick={recallMessage}>Thu hồi</button>
+          )}
+          {(selectedMessage.sender === userId ||
+            selectedMessage.receiver === userId) && (
+            <button onClick={shareMessage}>Chia sẻ</button>
+          )}
+        </div>
+      )}
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -353,8 +384,8 @@ const ChatBox = ({ friendId }) => {
                   />
                 )}
                 {msg.fileType === "video" && (
-                  <video controls>
-                    <source src={msg.fileUrl} type="video/mp4" />
+                  <video controls className="chat-videos">
+                    <source src={msg.fileUrl} type="video/mp4"  />
                     Trình duyệt của bạn không hỗ trợ video.
                   </video>
                 )}
@@ -380,22 +411,7 @@ const ChatBox = ({ friendId }) => {
           />
         )}
       </div>
-
-      {selectedMessage && (
-        <div className="selected-message-options">
-          {(selectedMessage.sender === userId ||
-            selectedMessage.receiver === userId) && (
-            <button onClick={deleteMessage}>Xóa</button>
-          )}
-          {selectedMessage.sender === userId && (
-            <button onClick={recallMessage}>Thu hồi</button>
-          )}
-          {(selectedMessage.sender === userId ||
-            selectedMessage.receiver === userId) && (
-            <button onClick={shareMessage}>Chia sẻ</button>
-          )}
-        </div>
-      )}
+      
       <div className="chat-input">
         <button onClick={toggleEmojiPicker}>😀</button>
         <input

@@ -1,13 +1,13 @@
 import React from "react";
 import "../css/chat.css";
 import DanhSachBB from "./DanhSachBB";
-import { ToastContainer, toast } from 'react-toastify';
+//import { ToastContainer, toast } from 'react-toastify';
 
 const Chat = () => {
-  const notify = () => toast("bạn đã nhấn vào tin nhắn");
-  // if (!messages || !Array.isArray(messages)) {
-  //   return null; // Return null if messages is not an array or is undefined
-  // }
+  // const notify = () => toast("bạn đã nhấn vào tin nhắn");
+  // // if (!messages || !Array.isArray(messages)) {
+  // //   return null; // Return null if messages is not an array or is undefined
+  // // }
 
   return (
     <div>
@@ -17,9 +17,9 @@ const Chat = () => {
           <span className="message-time">{msg.time}</span>
         </div>
       ))} */}
+      
       <DanhSachBB />
-      <button onClick={notify}>Notify!</button>
-        <ToastContainer />
+      
     </div>
   );
 };
