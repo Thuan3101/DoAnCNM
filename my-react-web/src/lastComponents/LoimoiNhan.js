@@ -3,15 +3,19 @@ import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from 
 import { getAuth } from "firebase/auth";
 import "../css/loiMoiNhan.css";
 
+// Component để quản lý và hiển thị lời mời đã nhận
 const LoimoiNhan = () => {
+  // Khai báo state cho danh sách lời mời và thông tin người gửi
   const [invitations, setInvitations] = useState([]);
   const [senders, setSenders] = useState({});
   const auth = getAuth();
-  
+
+  // useEffect để tải dữ liệu khi component được mount
   useEffect(() => {
     const fetchInvitations = async () => {
       try {
         const db = getFirestore();
+        // Lấy dữ liệu lời mời từ Firestore dựa trên uid của người dùng hiện tại
         const invitationsRef = collection(db, "invitations");
         const q = query(invitationsRef, where("receiverId", "==", auth.currentUser.uid));
         const querySnapshot = await getDocs(q);
@@ -25,6 +29,7 @@ const LoimoiNhan = () => {
       }
     };
 
+    // Lấy thông tin người gửi từ Firestore
     const fetchSenders = async () => {
       try {
         const db = getFirestore();
@@ -44,13 +49,16 @@ const LoimoiNhan = () => {
     fetchSenders();
   }, [auth.currentUser.uid]);
 
+  // Hàm xác nhận lời mời
   const confirmInvitation = async (invitationId) => {
     try {
       const db = getFirestore();
       const invitationRef = doc(db, "invitations", invitationId);
+      // Cập nhật trạng thái lời mời trong Firestore
       await updateDoc(invitationRef, { status: "confirmed" });
       console.log("Invitation confirmed:", invitationId);
       
+      // Cập nhật state sau khi lời mời được xác nhận
       setInvitations(prevInvitations => {
         return prevInvitations.map(invitation => {
           if (invitation.id === invitationId) {
@@ -60,6 +68,7 @@ const LoimoiNhan = () => {
         });
       });
 
+      // Cập nhật thông tin bạn bè cho người gửi và người nhận
       const invitation = invitations.find(invitation => invitation.id === invitationId);
       const { senderId, receiverId } = invitation;
       const senderRef = doc(db, "users", senderId);
@@ -103,8 +112,6 @@ const LoimoiNhan = () => {
           ))}
         </ul>
       )}
-
-      {/* <DanhSachBB /> */}
     </div>
   );
 };

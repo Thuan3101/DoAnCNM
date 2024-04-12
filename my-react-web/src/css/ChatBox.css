@@ -20,6 +20,7 @@
   padding: 10px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  text-align: center;
 }
 
 /* CSS cho tiêu đề trong phần header của khung chat */
@@ -126,4 +127,11 @@
   /*left: 50%;*/
   /* transform: translateX(-50%);  Để căn giữa theo chiều ngang */
   z-index: 999; /* Đảm bảo emoji picker hiển thị trên tất cả các phần khác */
+}
+
+.choose-file {
+  text-align: 50px;
+}
+.send-message {
+  text-align: 50px;
 }
