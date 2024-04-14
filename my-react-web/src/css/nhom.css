@@ -1,0 +1,32 @@
+.nhom {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .nhom > div {
+      flex-grow: 1;
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+      align-items: center;
+    }
+    
+    .navBarNhom {
+      display: flex;
+      justify-content: space-around; 
+      border-bottom: 2px solid #ccc; 
+      padding-bottom: 10px;
+    }
+.taoNhom{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
+  
+}
+
+.dsNhom{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
+  margin-left:1px ;
+} 

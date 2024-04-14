@@ -1,0 +1,41 @@
+
+.container {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    
+    .title {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .groupList {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .groupItem {
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    
+    .groupItem:hover {
+      background-color: #f0f0f0;
+    }
+    
+    .groupItem strong {
+      color: #007bff;
+    }
+    
+    .showChat {
+      margin-top: 20px;
+    }
+    

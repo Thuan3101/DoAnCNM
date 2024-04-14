@@ -1,9 +1,7 @@
 /* CSS cho khung chat */
 .chat-box {
   position: absolute;
-  top: 52%;
-  left: 63%;
-  transform: translate(-50%, -50%);
+  margin-left: 310px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   z-index: 999;
@@ -11,6 +9,8 @@
   width: 52%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0px;
+  margin-top: -260px;
 }
 
 /* CSS cho phần header của khung chat */
@@ -20,7 +20,6 @@
   padding: 10px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  text-align: center;
 }
 
 /* CSS cho tiêu đề trong phần header của khung chat */
@@ -38,7 +37,6 @@
 /* CSS cho mỗi tin nhắn */
 .message {
   margin-bottom: 10px;
-  position: relative;
 }
 
 /* CSS cho tin nhắn gửi đi */
@@ -63,21 +61,18 @@
 .message-time {
   font-size: 12px;
   color: #666;
-  position: absolute;
-  left: 45%;
-  
 }
 
 /* CSS cho phần nhập tin nhắn */
 .chat-input {
-  padding: 5px;
+  padding: 5px; /* Điều chỉnh padding */
   border-top: 1px solid #ccc;
 }
 
 /* CSS cho ô nhập tin nhắn */
 .chat-input input[type="text"] {
   width: calc(90% - 80px);
-  padding: 5px;
+  padding: 5px; /* Điều chỉnh padding */
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -87,51 +82,24 @@
   background-color: #4267b2;
   color: #fff;
   border: none;
-  padding: 4px 10px;
+  padding: 4px 20px; /* Điều chỉnh padding */
   border-radius: 4px;
   margin-left: 10px;
   cursor: pointer;
-}
-
-/* CSS cho nút chọn tệp */
-.file-label {
-  background-color: #4267b2;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* CSS cho tên tệp đã chọn */
-.selected-file {
-  margin-left: 10px;
 }
 
 /* CSS cho hình ảnh trong tin nhắn */
 .chat-image {
   max-width: 100%;
-  max-height: 200px;
-  /*display: block;*/
-  margin: 5px 0;
+  max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+  display: block;
+  margin: auto;
 }
 
-.chat-videos{
- max-width: 50%;
- max-height: 60%;
- margin: 5px 0;
-}
 /* CSS cho video trong tin nhắn */
-
-.emoji-picker-container {
-  bottom: 10px; /*Đặt bottom để đặt emoji picker lên trên input */
-  /*left: 50%;*/
-  /* transform: translateX(-50%);  Để căn giữa theo chiều ngang */
-  z-index: 999; /* Đảm bảo emoji picker hiển thị trên tất cả các phần khác */
-}
-
-.choose-file {
-  text-align: 50px;
-}
-.send-message {
-  text-align: 50px;
+.chat-image video {
+  max-width: 50%; /* Sử dụng chiều rộng của viewport */
+  max-height: 30vh; /* Điều chỉnh chiều cao tối đa của video */
+  display: block;
+  margin: auto;
 }

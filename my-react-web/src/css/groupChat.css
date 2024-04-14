@@ -1,0 +1,119 @@
+/* CSS cho khung chat */
+.groupChat {
+      position: absolute;
+      margin-left: 200px;
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      z-index: 999;
+      height: 77%;
+      width: 52%;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0px;
+      margin-top: -330px;
+    }
+    
+    /*  header của khung chat */
+    .groupChat-header {
+      background-color: #4267b2;
+      color: #fff;
+      padding: 5px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      flex-direction: row;
+      display: flex;
+    }
+    
+    /*  tiêu đề trong phần header của khung chat */
+    .groupChat-header h3 {
+      margin: 0;
+    }
+    
+    /*  phần chứa tin nhắn trong khung chat */
+    .groupChat-messages {
+      overflow-y: auto;
+      height: calc(100% - 150px);
+      padding: 10px;
+    }
+    
+    /* cho mỗi tin nhắn */
+    .g-message {
+      margin-bottom: 10px;
+    }
+    
+    /*  tin nhắn gửi đi */
+    .g-message.sender {
+      text-align: right;
+    }
+    
+    /* tin nhắn nhận được */
+    .g-message.receiver {
+      text-align: left;
+    }
+    
+    /*  nội dung của tin nhắn */
+    .g-message-text {
+      background-color: #e1ffc7;
+      padding: 8px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    
+    /*  thời gian của tin nhắn */
+    .g-message-time {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    /*  phần nhập tin nhắn */
+    .gchat-input {
+      padding: 20px; /* Điều chỉnh padding */
+      border-top: 1px solid #ccc;
+      margin-top: 0px;
+    }
+    
+    /*  ô nhập tin nhắn */
+    .gchat-input input[type="text"] {
+      width: calc(90% - 60px);
+      padding: 5px; /* Điều chỉnh padding */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+    }
+    
+    /*  nút gửi tin nhắn */
+    .gchat-input button {
+      background-color: #4267b2;
+      color: #fff;
+      border: none;
+      padding: 4px 10px; /* Điều chỉnh padding */
+      border-radius: 4px;
+   
+
+    }
+    
+    /* CSS cho hình ảnh trong tin nhắn */
+    .gchat-image {
+      max-width: 100%;
+      max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+      display: block;
+      margin: auto;
+    }
+    
+    /* CSS cho video trong tin nhắn */
+    .gchat-image video {
+      max-width: 50%; /* Sử dụng chiều rộng của viewport */
+      max-height: 30vh; /* Điều chỉnh chiều cao tối đa của video */
+      display: block;
+      margin: auto;
+    }
+    .themnguoi{
+      list-style: none;
+      
+    }
+    .ipSearch{
+      border: none;
+      background-color: #5e8eed;
+      margin-left: 500px;
+    }
+    
