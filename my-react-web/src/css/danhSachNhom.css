@@ -19,17 +19,15 @@
     }
     
     .groupItem {
-      cursor: pointer;
+     
       padding: 10px;
       border: 1px solid #ddd;
       margin-bottom: 5px;
       border-radius: 5px;
-      transition: background-color 0.2s;
+      
     }
     
-    .groupItem:hover {
-      background-color: #f0f0f0;
-    }
+   
     
     .groupItem strong {
       color: #007bff;

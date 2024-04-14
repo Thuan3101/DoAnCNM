@@ -340,12 +340,15 @@ const GroupChat = ({ groupId }) => {
     <div className="groupChat">
       <div className="groupChat-header">
         <h3>Chat với {groupName}</h3>
+       
+       
         <input 
           placeholder="Thêm/Xóa..." 
           value={searchKeyword} 
           onChange={handleSearchInputChange} 
           className="ipSearch"
         />
+     
       </div>
       <div className="search-results">
         {searchResults.length > 0 && (
