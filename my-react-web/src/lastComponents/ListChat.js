@@ -5,8 +5,9 @@ import Avatar from "../components/Avatar";
 import DanhBa from "../lastComponents/DanhBa";
 import TimKiem from "./TimKiem";
 import CaiDat from "../components/CaiDat";
-import Messages from "./Messages";
+//import Messages from "./Messages";
 import Nhom from "../lastComponents/Nhom";
+import Chat from "./Chat";
 
 const ListChat = ({ currentTab }) => {
   return (
@@ -14,7 +15,7 @@ const ListChat = ({ currentTab }) => {
    
       <div>
         {/* Hiển thị component tương ứng với tab được chọn */}
-        {currentTab === "message" && <Messages />}
+        {currentTab === "chat" && <Chat />}
         {currentTab === "avatar" && <Avatar />}
         {currentTab === "danhBa" && <DanhBa />}
         {currentTab === "timKiem" && <TimKiem />}

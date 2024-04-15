@@ -5,7 +5,7 @@ import danhBa from "../image/tool2.png";
 import timKiem from "../image/search-259.png";
 import caiDat from "../image/tool7.png";
 import nhom from "../image/tool6.png";
-import { getAuth } from 'firebase/auth';
+import { getAuth ,onAuthStateChanged} from 'firebase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -33,6 +33,16 @@ const List = ({ setCurrentTab }) => {
     };
 
     fetchDataFromFirebase();
+
+    const unsubscribe = onAuthStateChanged(getAuth(), async (user) => {
+      if (user) {
+        await fetchDataFromFirebase(); // Fetch data whenever auth state changes
+      } else {
+        setUserData(null); // Reset user data if user is not authenticated
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup function to unsubscribe from auth state changes
   }, []);
 
   return (
