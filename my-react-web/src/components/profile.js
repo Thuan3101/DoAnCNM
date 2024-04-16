@@ -15,7 +15,7 @@ const Profile = () => {
     profileImageUrl: "",
   });
   const navigate = useNavigate();
-
+  // Xử lý thay đổi giá trị của trường dữ liệu
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -32,7 +32,7 @@ const Profile = () => {
       [name]: value,
     }));
   };
-
+  // Xử lý thay đổi hình ảnh
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     if (imageFile) {
@@ -44,7 +44,7 @@ const Profile = () => {
       }));
     }
   };
-
+  // Tải ảnh lên Firebase Storage
   const uploadImageAsync = async (imageFile, userId) => {
     try {
       if (!imageFile) {
@@ -68,7 +68,7 @@ const Profile = () => {
       throw error;
     }
   };
-
+  // Xử lý khi người dùng gửi form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

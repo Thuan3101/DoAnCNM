@@ -353,7 +353,7 @@ const ChatBox = ({ friendId }) => {
                   />
                 )}
                 {msg.fileType === "video" && (
-                  <video controls>
+                  <video controls className="chat-videos">
                     <source src={msg.fileUrl} type="video/mp4" />
                     Trình duyệt của bạn không hỗ trợ video.
                   </video>

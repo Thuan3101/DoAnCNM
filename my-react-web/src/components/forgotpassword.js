@@ -8,11 +8,11 @@ const ForgotPassScreen = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [error, setError] = useState(null);
   //const navigate = useNavigate();
-  
+  // Xử lý thay đổi email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+  // Xử lý gửi email xác nhận
   const handleResetPassword = () => {
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)

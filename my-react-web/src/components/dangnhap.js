@@ -11,19 +11,19 @@ const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const db = getFirestore();
-
+  // Xử lý thay đổi email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+  // Xử lý thay đổi mật khẩu
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+  // Xử lý hiển thị hoặc ẩn mật khẩu
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+  // Xử lý đăng nhập
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
@@ -47,7 +47,7 @@ const LoginScreen = () => {
       });
   };
   
-
+  // Xử lý đăng nhập bằng Google
   const handleGoogleLogin = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -65,7 +65,7 @@ const LoginScreen = () => {
         alert("Đăng nhập bằng Google không thành công. Vui lòng thử lại.");
       });
   };
-
+  // Xử lý đăng nhập bằng Facebook
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
     try {

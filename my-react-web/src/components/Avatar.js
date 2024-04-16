@@ -21,7 +21,7 @@ const Avatar = () => {
   const [newEmail, setNewEmail] = useState(""); 
   const [isEditing, setIsEditing] = useState(false);
   const [tempProfileImage, setTempProfileImage] = useState(null); 
-
+  // Lấy thông tin người dùng từ Firestore
   useEffect(() => {
     const fetchUserData = async () => {
       if (user) {
@@ -43,7 +43,7 @@ const Avatar = () => {
     };
     fetchUserData();
   }, [user, db, navigate]);
-
+  // Cập nhật thông tin người dùng
   const handleUpdateUserInfo = async () => {
     try {
       if (!user) {
@@ -95,13 +95,13 @@ const Avatar = () => {
       console.error("Error updating user info:", error);
     }
   };
-
+  // Xử lý khi click vào nút chỉnh sửa
   const handleEditClick = () => {
     setIsEditing(true);
     // Lưu trữ ảnh cũ vào state tạm thời
     setTempProfileImage(userData.profileImageUrl);
   };
-
+  // Xử lý khi thay đổi ảnh đại diện
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setNewProfileImage(imageFile);

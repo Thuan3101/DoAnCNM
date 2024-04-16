@@ -10,7 +10,8 @@ import DanhSachBB from "../lastComponents/DanhSachBB";
 function DanhBa() {
   const [currentPage, setCurrentPage] = useState("danhSachBanBe"); // Mặc định là "Danh sách bạn bè"
   //const [friendsMap, setFriendsMap] = useState({}); // Thêm state để lưu danh sách bạn bè
-
+  
+  //hàm thay đổi trang
   const changePage = (page) => {
     setCurrentPage(page);
   };

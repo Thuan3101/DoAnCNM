@@ -3,13 +3,15 @@ import { getFirestore, collection, query, where, getDocs, addDoc } from "firebas
 import { getAuth } from "firebase/auth"; 
 import "../css/timKiem.css";
 
+// Định nghĩa component TimKiem sử dụng React hooks
 const TimKiem = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [invitationSentMessage, setInvitationSentMessage] = useState("");
-  const auth = getAuth();
+  const [searchTerm, setSearchTerm] = useState(""); // Lưu trữ từ khóa tìm kiếm
+  const [searchResults, setSearchResults] = useState([]); // Lưu trữ kết quả tìm kiếm
+  const [currentUser, setCurrentUser] = useState(null); // Lưu trữ thông tin người dùng hiện tại
+  const [invitationSentMessage, setInvitationSentMessage] = useState(""); // Lưu trữ thông báo sau khi gửi lời mời
+  const auth = getAuth(); // Lấy thực thể xác thực từ Firebase
 
+  // Hook useEffect để lấy thông tin người dùng hiện tại
   useEffect(() => {
     const getCurrentUser = async () => {
       const user = auth.currentUser;
@@ -20,7 +22,8 @@ const TimKiem = () => {
   
     getCurrentUser();
   }, [auth.currentUser]);
-  
+
+  // Hàm kiểm tra hai người dùng đã là bạn bè chưa
   const checkIfFriends = async (userId) => {
     const db = getFirestore();
     const friendsRef = collection(db, "friends");
@@ -34,6 +37,7 @@ const TimKiem = () => {
     }
   };
 
+  // Xử lý tìm kiếm người dùng theo từ khóa
   const handleSearch = async () => {
     setSearchResults([]);
 
@@ -54,6 +58,7 @@ const TimKiem = () => {
     }
   };
 
+  // Gửi lời mời kết bạn
   const sendInvitation = async (userId, index) => {
     const db = getFirestore();
 
@@ -96,6 +101,7 @@ const TimKiem = () => {
     }
   };
 
+  // Render component
   return (
     <div className="timKiem">
       <input

@@ -5,8 +5,9 @@
       background-color: #ffffff;
       border: 1px solid #cccccc;
       z-index: 999;
+      top: 61%;
       height: 77%;
-      width: 52%;
+      width: 51%;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 0px;
@@ -116,4 +117,8 @@
       background-color: #5e8eed;
       margin-left: 450px;
     }
-    
+    .gchat-videos{
+      max-width: 50%;
+      max-height: 60%;
+      margin: 5px 0;
+     }

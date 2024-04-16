@@ -12,23 +12,23 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
-
+  // Xử lý thay đổi email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+  // Xử lý thay đổi mật khẩu
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+// Xử lý thay đổi mật khẩu xác nhận
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
-
+  // Xử lý hiển thị hoặc ẩn mật khẩu
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+// Xử lý đăng ký
   const handleRegister = () => {
     // Kiểm tra email và mật khẩu hợp lệ
     if (!isValidEmail(email)) {
@@ -61,7 +61,7 @@ const RegisterScreen = () => {
         alert('Đã có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.');
       });
   };
-
+  // Kiểm tra email hợp lệ
   const isValidEmail = (email) => {
     // Kiểm tra email có hợp lệ theo định dạng @gmail.com không
     return /\b[A-Za-z0-9._%+-]+@gmail\.com\b/.test(email);

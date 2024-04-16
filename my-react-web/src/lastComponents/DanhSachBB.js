@@ -10,7 +10,7 @@ const DanhSachBB = () => {
   const [selectedFriend, setSelectedFriend] = useState(null);
 
   const auth = getAuth();
-  
+  // Lấy danh sách bạn bè và người dùng từ Firestore
   useEffect(() => {
     const fetchUserFriends = async () => {
       try {
@@ -26,7 +26,7 @@ const DanhSachBB = () => {
         console.error("Lỗi khi lấy danh sách bạn bè:", error);
       }
     };
-  
+    
     const fetchSenders = async () => {
       try {
         const db = getFirestore();
@@ -46,7 +46,7 @@ const DanhSachBB = () => {
     fetchSenders();
   }, [auth.currentUser]); // Bao gồm auth.currentUser trong mảng phụ thuộc
   
-
+  // Xử lý khi click vào bạn bè
   const handleFriendClick = (friendId) => {
     setSelectedFriend(friendId);
   };
@@ -67,7 +67,7 @@ const DanhSachBB = () => {
         </ul>
       )}
       {selectedFriend && (
-        <ChatBox friendId={selectedFriend} /> // Truyền friendId vào phần chatbox mới
+        <ChatBox friendId={selectedFriend}  /> // Truyền friendId vào phần chatbox mới
       )}
     </div>
   );
