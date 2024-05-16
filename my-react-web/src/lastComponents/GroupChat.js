@@ -1,5 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getFirestore, doc,getDoc,setDoc,updateDoc,  arrayUnion, arrayRemove, onSnapshot,collection,  query,where,getDocs,} from "firebase/firestore";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
@@ -18,43 +32,83 @@ const GroupChat = ({ groupId }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
   const [actionMessage, setActionMessage] = useState("");
-  const [setAddedFriends] = useState([]); //addedFriends,
+  const [addedFriends, setAddedFriends] = useState([]);
+  const [confirmDissolve, setConfirmDissolve] = useState(false);
   const messagesEndRef = useRef(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [recallMessageStatus, setRecallMessageStatus] = useState("");
 
   useEffect(() => {
-    const fetchGroupName = async () => {
+    const fetchGroupData = async () => {
       try {
         if (!groupId) return;
 
         const db = getFirestore();
+
+        // Fetch group name
         const groupRef = doc(db, "groups", groupId);
         const groupDoc = await getDoc(groupRef);
         if (groupDoc.exists()) {
           setGroupName(groupDoc.data().name);
         }
+
+        // Fetch user ID
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+          setUserId(user.uid);
+        }
+
+        // Fetch group members
+        const groupMembersRef = doc(db, "groups", groupId);
+        const unsubscribeSnapshot = onSnapshot(groupMembersRef, (doc) => {
+          if (doc.exists()) {
+            setGroupMembers(doc.data().members || []);
+          }
+        });
+
+        // Fetch messages
+        const messagesRef = doc(db, "groupChats", groupId);
+        const unsubscribe = onSnapshot(messagesRef, (doc) => {
+          if (doc.exists()) {
+            setMessages(doc.data().messages || []);
+          } else {
+            setMessages([]);
+          }
+        });
+
+        // Return cleanup function
+        return () => {
+          unsubscribeSnapshot();
+          unsubscribe();
+        };
       } catch (error) {
-        console.error("Error fetching group's name:", error);
+        console.error("Error fetching group data:", error);
       }
     };
 
-    fetchGroupName();
+    fetchGroupData();
   }, [groupId]);
 
-  useEffect(() => {
-    const fetchUserId = () => {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (user) {
-        setUserId(user.uid);
+  const fetchUserName = useCallback(async (uid) => {
+    try {
+      const db = getFirestore();
+      const userRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        return userDoc.data().name;
+      } else {
+        return " ";
       }
-    };
-
-    fetchUserId();
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return " ";
+    }
   }, []);
 
   useEffect(() => {
-    const fetchMessages = async () => {
+    const fetchMessagesData = async () => {
       try {
         if (!userId || !groupId) return;
 
@@ -67,7 +121,6 @@ const GroupChat = ({ groupId }) => {
           : [];
 
         groupMessages.sort((a, b) => new Date(a.time) - new Date(b.time));
-
         setMessages(groupMessages);
 
         const uniqueSenders = Array.from(
@@ -86,74 +139,17 @@ const GroupChat = ({ groupId }) => {
       }
     };
 
-    fetchMessages();
-
-    const db = getFirestore();
-    const messagesRef = doc(db, "groupChats", groupId);
-    const unsubscribe = onSnapshot(messagesRef, (doc) => {
-      if (doc.exists()) {
-        setMessages(doc.data().messages || []);
-      } else {
-        setMessages([]);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [userId, groupId, userNames]);
+    fetchMessagesData();
+  }, [userId, groupId, userNames, fetchUserName]);
 
   useEffect(() => {
-    const fetchGroupMembers = async () => {
-      try {
-        if (!groupId) return;
-
-        const db = getFirestore();
-        const groupRef = doc(db, "groups", groupId);
-        const groupDoc = await getDoc(groupRef);
-        if (groupDoc.exists()) {
-          setGroupMembers(groupDoc.data().members || []);
-        }
-      } catch (error) {
-        console.error("Error fetching group members:", error);
-      }
-    };
-
-    fetchGroupMembers();
-  }, [groupId]);
-
-  useEffect(() => {
-    if (actionMessage) {
-      const newMessage = {
-        text: actionMessage,
-        sender: "system",
-        groupId: groupId,
-        time: new Date().toLocaleTimeString(),
-      };
-
-      const saveActionMessage = async () => {
-        try {
-          const db = getFirestore();
-          const messagesRef = doc(db, "groupChats", groupId);
-          const messagesDoc = await getDoc(messagesRef);
-          if (messagesDoc.exists()) {
-            await updateDoc(messagesRef, {
-              messages: arrayUnion(newMessage),
-            });
-          } else {
-            await setDoc(messagesRef, { messages: [newMessage] });
-          }
-        } catch (error) {
-          console.error("Error saving action message:", error);
-        }
-      };
-
-      saveActionMessage();
-    }
-  }, [actionMessage, groupId]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     try {
       if ((!messageInput.trim() && files.length === 0) || !userId || !groupId)
-       return;
+        return;
       let fileUrls = "";
       if (files.length > 0) {
         fileUrls = await Promise.all(
@@ -179,9 +175,16 @@ const GroupChat = ({ groupId }) => {
         text: messageInput,
         sender: userId,
         groupId: groupId,
-        time: new Date().toLocaleTimeString(),
         fileUrls: fileUrls,
         fileType: fileType,
+        time: new Date().toLocaleString("vi-VN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }),
       };
 
       const db = getFirestore();
@@ -253,7 +256,6 @@ const GroupChat = ({ groupId }) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
       setFiles((prevFiles) => {
-        // Kiểm tra nếu prevFiles không phải là mảng, thì khởi tạo nó là một mảng trống
         if (!Array.isArray(prevFiles)) {
           prevFiles = [];
         }
@@ -268,68 +270,6 @@ const GroupChat = ({ groupId }) => {
 
   const handleEmojiSelect = (emoji) => {
     setMessageInput((prevMessageInput) => prevMessageInput + emoji.emoji);
-  };
-
-  const deleteGroupMessage = async (message) => {
-    try {
-      const db = getFirestore();
-      const groupMessagesRef = doc(db, "groupChats", groupId);
-      const updatedMessages = messages.map((msg) => {
-        if (msg === message && msg.sender === userId) {
-          return { ...msg, text: "This message has been deleted." };
-        }
-        return msg;
-      });
-      await setDoc(groupMessagesRef, { messages: updatedMessages });
-    } catch (error) {
-      console.error("Error deleting message:", error);
-    }
-  };
-  
-  
-  const recallGroupMessage = async (message) => {
-    try {
-      const db = getFirestore();
-      const groupMessagesRef = doc(db, "groupChats", groupId);
-      await updateDoc(groupMessagesRef, {
-        messages: arrayRemove(message),
-      });
-    } catch (error) {
-      console.error("Lỗi khi thu hồi tin nhắn:", error);
-    }
-  };
-  
-  const shareGroupMessage = async (message) => {
-    try {
-      const db = getFirestore();
-      const shareTasks = groupMembers.map(async (memberId) => {
-        const memberMessagesRef = doc(db, "groupChats", memberId);
-        await updateDoc(memberMessagesRef, {
-          messages: arrayUnion(message),
-        });
-      });
-  
-      await Promise.all(shareTasks);
-    } catch (error) {
-      console.error("Lỗi khi chia sẻ tin nhắn:", error);
-    }
-  };
-  
-
-  const fetchUserName = async (uid) => {
-    try {
-      const db = getFirestore();
-      const userRef = doc(db, "users", uid);
-      const userDoc = await getDoc(userRef);
-      if (userDoc.exists()) {
-        return userDoc.data().name;
-      } else {
-        return " ";
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      return " ";
-    }
   };
 
   const searchFriends = async (keyword) => {
@@ -413,22 +353,85 @@ const GroupChat = ({ groupId }) => {
       console.error("Error updating group members:", error);
     }
   };
+  const deleteMessage = async () => {
+    try {
+      if (!selectedMessage) return;
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+      const db = getFirestore();
+      const groupMessagesRef = doc(db, "groupChats", groupId);
+      await updateDoc(groupMessagesRef, {
+        messages: arrayRemove(selectedMessage),
+      });
+
+      setSelectedMessage(null);
+    } catch (error) {
+      console.error("Lỗi khi xóa tin nhắn:", error);
+    }
+  };
+
+  const recallMessage = async () => {
+    try {
+      if (!userId || !selectedMessage) return;
+
+      const db = getFirestore();
+      const groupMessagesRef = doc(db, "groupChats", groupId);
+      await updateDoc(groupMessagesRef, {
+        messages: arrayRemove(selectedMessage),
+      });
+
+      setSelectedMessage(null);
+
+      // Cập nhật trạng thái để hiển thị thông báo thu hồi tin nhắn
+      setRecallMessageStatus("Tin nhắn đã được thu hồi");
+    } catch (error) {
+      console.error("Lỗi khi thu hồi tin nhắn:", error);
+    }
+  };
+
+  const dissolveGroup = async () => {
+    try {
+      const db = getFirestore();
+      const groupRef = doc(db, "groups", groupId);
+      const groupDoc = await getDoc(groupRef);
+
+      // Kiểm tra xem người dùng hiện tại có phải là người dẫn đầu của nhóm hay không
+      if (groupDoc.exists() && groupDoc.data().leader === userId) {
+        // Nếu là người dẫn đầu, thực hiện giải tán nhóm
+        const groupMessagesRef = doc(db, "groupChats", groupId);
+        await setDoc(groupMessagesRef, { messages: [] });
+
+        await deleteDoc(groupRef);
+
+        alert("Nhóm đã được giải tán thành công!");
+      } else {
+        // Nếu không phải là người dẫn đầu, hiển thị thông báo cho người dùng
+        alert("Chỉ người dẫn đầu nhóm mới có thể giải tán nhóm.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi giải tán nhóm:", error);
+    }
+  };
 
   return (
     <div className="groupChat">
       <div className="groupChat-header">
         <h3>Chat với {groupName}</h3>
-
         <input
           placeholder="Thêm/Xóa..."
           value={searchKeyword}
           onChange={handleSearchInputChange}
           className="ipSearch"
         />
+        {confirmDissolve ? (
+          <div className="dissolution-group">
+            <button onClick={dissolveGroup}>Xác nhận</button>
+            <button onClick={() => setConfirmDissolve(false)}>Hủy</button>
+          </div>
+        ) : (
+          <button onClick={() => setConfirmDissolve(true)}>
+            Giải tán nhóm
+          </button>
+        )}
       </div>
       <div className="search-results">
         {searchResults.length > 0 && (
@@ -450,6 +453,7 @@ const GroupChat = ({ groupId }) => {
           </ul>
         )}
       </div>
+
       <div className="groupChat-messages">
         {messages.map((msg, index) => (
           <div
@@ -457,8 +461,18 @@ const GroupChat = ({ groupId }) => {
             className={`g-message ${
               msg.sender === userId ? "sender" : "receiver"
             }`}
+            onClick={() => setSelectedMessage(msg)}
           >
-            <span className="message-sender">{userNames[msg.sender]}</span>{" "}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p className="g-message-time">{msg.time}</p>
+            </div>
+            <span className="message-sender">{userNames[msg.sender]}</span>
             <br></br>
             <span className="message-text">{msg.text}</span>
             {msg.fileUrls && (
@@ -482,7 +496,6 @@ const GroupChat = ({ groupId }) => {
                         Trình duyệt của bạn không hỗ trợ thẻ video.
                       </video>
                     )}
-                    {/* Hiển thị tên tệp chỉ khi không phải là hình ảnh hoặc video */}
                     {file.fileType !== "image" && file.fileType !== "video" && (
                       <a
                         href={file.url}
@@ -496,17 +509,40 @@ const GroupChat = ({ groupId }) => {
                 ))}
               </div>
             )}
-            <span className="g-message-time">{msg.time}</span>
-            {msg.sender === userId && (
-              <div>
-                <button onClick={() => deleteGroupMessage(msg)}>Xóa</button>
-                <button onClick={() => recallGroupMessage(msg)}>Thu hồi</button>
-              </div>
+          </div>
+        ))}
+        {selectedMessage && (
+          <div className="selected-message-options">
+            {selectedMessage.sender === userId && (
+              <button onClick={recallMessage}>Thu hồi</button>
             )}
-            <button onClick={() => shareGroupMessage(msg)}>Chia sẻ</button>
-              </div>
-            ))}
-        
+            {selectedMessage !== userId && (
+              <button onClick={deleteMessage}>Xóa</button>
+            )}
+          </div>
+        )}
+
+        {/* Hiển thị thông báo thu hồi tin nhắn */}
+        {recallMessageStatus && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              margin: "10px 0",
+              marginTop: "30px",
+              height: "auto",
+              width: "auto",
+              padding: "10px",
+              borderRadius: "10px",
+              fontWeight: "bold",
+              fontSize: "15px",
+            }}
+          >
+            <span className="message-text">{recallMessageStatus}</span>
+          </div>
+        )}
+
         {showEmojiPicker && (
           <EmojiPicker
             onEmojiClick={handleEmojiSelect}
@@ -525,7 +561,7 @@ const GroupChat = ({ groupId }) => {
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
         />
-        <input  type="file" multiple onChange={handleFileInputChange} />
+        <input type="file" multiple onChange={handleFileInputChange} />
         <button onClick={sendMessage}>Gửi</button>
       </div>
     </div>

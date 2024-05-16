@@ -18,14 +18,29 @@
       padding: 0;
     }
     
+  
     .groupItem {
-     
-      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px;
       border: 1px solid #ddd;
       margin-bottom: 5px;
       border-radius: 5px;
-      
     }
+    
+    .groupItemContent {
+      display: flex;
+      align-items: center;
+    }
+    
+    .groupImage {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
     
    
     

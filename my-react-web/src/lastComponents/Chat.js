@@ -1,25 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/chat.css";
-import DanhSachBB from "./DanhSachBB";
-//import { ToastContainer, toast } from 'react-toastify';
+import Banbe from "./Banbe";
+import Nhom2 from "./Nhom2";
 
 const Chat = () => {
-  // const notify = () => toast("bạn đã nhấn vào tin nhắn");
-  // // if (!messages || !Array.isArray(messages)) {
-  // //   return null; // Return null if messages is not an array or is undefined
-  // // }
+  const [currentPage, setCurrentPage] = useState("bb");
+
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPageContent = () => {
+    switch (currentPage) {
+      case "bb":
+        return <Banbe />;
+      case "Nhom2":
+        // Render Nhom2 và truyền props nếu cần
+        return <Nhom2 />;
+      default:
+        return <div></div>;
+    }
+  };
 
   return (
-    <div>
-      {/* {messages.map((msg, index) => (
-        <div key={index} className={`message ${msg.sender === msg.receiver ? "sender" : "receiver"}`}>
-          <span className="message-text">{msg.text}</span>
-          <span className="message-time">{msg.time}</span>
+    <div className="chat">
+      <div className="navBarChat">
+        <div className="bb" onClick={() => changePage("bb")}>
+          <p className="st" style={{fontWeight:'bold', fontSize:'14px'}}>Chat Với Bạn bè</p>
         </div>
-      ))} */}
-      
-      <DanhSachBB />
-      
+
+        <div className="Nhom2" onClick={() => changePage("Nhom2")}>
+          <p className="st" style={{fontWeight:'bold', fontSize:'14px'}}>Chat Với Nhóm</p>
+        </div>
+      </div>
+      {renderPageContent()}
     </div>
   );
 };

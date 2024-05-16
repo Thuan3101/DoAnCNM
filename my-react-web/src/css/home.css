@@ -5,23 +5,19 @@ body{
 }
 .homeContainer{
   flex: 1;
-  height:100vh;
-  width: 100%;
-  margin-top: 30px;
   justify-content: center;
   display: flex;
- 
-  margin-left: 50px;
+  height: 100%;
+  width: 111%;
   
 }
 
 .home{
-  height: 85%;
-  width: 90%;
+  height: 100vh;
+  width: 100%;
   border: 1px solid #418df8;
   background-color: #d9f1fb;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 3px;
   box-shadow:  10px 20px 50px rgb(83, 147, 236)8;
   
  
@@ -29,7 +25,7 @@ body{
 .home2{
   display: flex;
   flex-direction: row;
-  height: 90%;
+  height: 93%;
   width:  100%;
   padding: 5px;
 }

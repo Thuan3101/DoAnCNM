@@ -7,7 +7,7 @@ import "../css/taoNhom.css";
 const TaoNhom = () => {
   const [userFriends, setUserFriends] = useState({});
   const [senders, setSenders] = useState({});
-  const [selectedFriend, setSelectedFriend] = useState(null);
+  const [ selectedFriend,setSelectedFriend] = useState(null);//selectedFriend,
   const [selectedFriends, setSelectedFriends] = useState([]); // Danh sách bạn bè đã chọn để thêm vào nhóm
   const [groupName, setGroupName] = useState(""); // Tên của nhóm chat mới
   const [groupImage, setGroupImage] = useState(null); // Đường dẫn ảnh của nhóm
@@ -76,7 +76,13 @@ const TaoNhom = () => {
         alert("Vui lòng nhập tên nhóm");
         return;
       }
-
+  
+      // Kiểm tra xem có đủ người để tạo nhóm không (ít nhất 3 người)
+      if (selectedFriends.length < 2) {
+        alert("Vui lòng chọn ít nhất 2 người để tạo nhóm");
+        return;
+      }
+  
       // Upload file ảnh lên Firebase Storage (nếu có)
       let imageUrl = null;
       if (groupImage) {
@@ -85,45 +91,36 @@ const TaoNhom = () => {
         await uploadBytes(storageRef, groupImage);
         imageUrl = await getDownloadURL(storageRef);
       }
-
+  
       // Lưu thông tin nhóm vào Firestore
       const db = getFirestore();
       const groupsRef = collection(db, "groups");
       await addDoc(groupsRef, {
         name: groupName,
         image: imageUrl, // Lưu đường dẫn ảnh vào Firestore (nếu có)
-        members: [auth.currentUser.uid, ...selectedFriends]
+        members: [auth.currentUser.uid, ...selectedFriends],
+        leader: auth.currentUser.uid, // Người tạo nhóm
       });
-
+  
       // Thành công
+      console.log("Selected friends:", selectedFriend);
       console.log("Group created successfully!");
       alert("Nhóm tạo thành công");
     } catch (error) {
       console.error("Error creating group:", error);
     }
   };
+  
 
   return (
     <div className="danh-sach-bb">
+      
       <h2>Tạo nhóm từ bạn bè sau:</h2>
       {Object.keys(userFriends).length === 0 ? (
         <p>Bạn không có bạn bè nào</p>
       ) : (
         <ul>
-          {Object.keys(userFriends).map((friendId) => (
-            <li key={friendId} onClick={() => handleFriendClick(friendId)}>
-              <img style={{ width: '30px', height: '30px', borderRadius: '50%', padding:'10px' }} src={senders[friendId]?.profileImageUrl} alt={senders[friendId]?.name} className="avatar" />
-              {senders[friendId]?.name}
-              {selectedFriends.includes(friendId) ? (
-                <button className="xoa" onClick={() => handleRemoveFromGroup(friendId)}>Xóa</button>
-              ) : (
-                <button className="them" onClick={() => handleAddToGroup(friendId)}>Thêm </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-      {selectedFriends.length > 0 && (
+           {selectedFriends.length > 0 && (
         <div>
           <div className="tenAnh">
           <input className="tenNhom" type="text" value={groupName} onChange={handleGroupNameChange} placeholder="Nhập tên nhóm"  />
@@ -134,6 +131,20 @@ const TaoNhom = () => {
           <button className="taoNhommm" onClick={handleCreateGroup}>Tạo nhóm chat</button>
         </div>
       )}
+          {Object.keys(userFriends).map((friendId) => (
+            <li key={friendId} onClick={() => handleFriendClick(friendId)}>
+              <img style={{ width: '30px', height: '30px', borderRadius: '50%', padding:'10px' }} src={senders[friendId]?.photoURL} alt={senders[friendId]?.name} className="avatar" />
+              {senders[friendId]?.name}
+              {selectedFriends.includes(friendId) ? (
+                <button className="xoa" onClick={() => handleRemoveFromGroup(friendId)}>Xóa</button>
+              ) : (
+                <button className="them" onClick={() => handleAddToGroup(friendId)}>Thêm </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+     
     </div>
   );
 };

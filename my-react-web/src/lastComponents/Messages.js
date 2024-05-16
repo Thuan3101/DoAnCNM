@@ -3,7 +3,7 @@ import React from "react";
 const Messages = ({ messages }) => {
   if (!messages || messages.length === 0) {
     return (
-      <div className="no-messages">Không có tin nhắn.</div>
+      <div className="no-messages"></div>
     );
   }
 

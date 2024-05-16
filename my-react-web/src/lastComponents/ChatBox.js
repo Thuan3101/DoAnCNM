@@ -1,11 +1,19 @@
-import React, { useState, useEffect,useRef } from "react";
-import {getFirestore, doc, getDoc, setDoc,updateDoc,arrayUnion,arrayRemove,onSnapshot,} from "firebase/firestore";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase";
 import "../css/ChatBox.css";
 import EmojiPicker from "emoji-picker-react";
-
 
 const ChatBox = ({ friendId }) => {
   const [friendName, setFriendName] = useState("");
@@ -14,8 +22,8 @@ const ChatBox = ({ friendId }) => {
   const [userId, setUserId] = useState("");
   const [files, setFiles] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [selectedFriendsIds] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const chatMessagesRef = useRef(null);
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -83,9 +91,19 @@ const ChatBox = ({ friendId }) => {
           receiverSenderMessages
         );
 
+        // Sort messages by time after parsing them correctly
         allMessages.sort((a, b) => new Date(a.time) - new Date(b.time));
 
-        setMessages(allMessages);
+        const formattedMessages = allMessages.map((msg) => ({
+          ...msg,
+          time: msg.time instanceof Date
+            ? msg.time.toLocaleString("vi-VN")
+            : msg.time.toDate
+              ? msg.time.toDate().toLocaleString("vi-VN")
+              : new Date(msg.time).toLocaleString("vi-VN"),
+        }));
+
+        setMessages(formattedMessages);
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn:", error);
       }
@@ -94,17 +112,25 @@ const ChatBox = ({ friendId }) => {
     fetchMessages();
 
     const db = getFirestore();
-    const messagesRef = doc(db, "chats", `${friendId}_${userId}`);
-    const unsubscribe = onSnapshot(messagesRef, (doc) => {
-      if (doc.exists()) {
-        setMessages(doc.data().messages || []);
-      } else {
-        setMessages([]);
-      }
-    });
+  const messagesRef = doc(db, "chats", `${friendId}_${userId}`);
+  const unsubscribe = onSnapshot(messagesRef, (doc) => {
+    if (doc.exists()) {
+      const formattedMessages = (doc.data().messages || []).map((msg) => ({
+        ...msg,
+        time: msg.time instanceof Date
+          ? msg.time.toLocaleString("vi-VN")
+          : msg.time.toDate
+            ? msg.time.toDate().toLocaleString("vi-VN")
+            : new Date(msg.time).toLocaleString("vi-VN"),
+      }));
+      setMessages(formattedMessages);
+    } else {
+      setMessages([]);
+    }
+  });
 
-    return () => unsubscribe();
-  }, [userId, friendId]);
+  return () => unsubscribe();
+}, [friendId, userId]);
 
   const sendMessage = async () => {
     try {
@@ -138,13 +164,7 @@ const ChatBox = ({ friendId }) => {
           text: messageInput,
           sender: userId,
           receiver: friendId,
-          time: new Date().toLocaleString("vi-VN", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+          time: new Date().toISOString(),
         };
         newMessages.push(newMessage);
       }
@@ -153,13 +173,7 @@ const ChatBox = ({ friendId }) => {
         const newMessage = {
           sender: userId,
           receiver: friendId,
-          time: new Date().toLocaleString("vi-VN", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+          time: new Date().toISOString(),
           fileUrl: url,
           fileType: fileType,
           fileName: fileName,
@@ -192,45 +206,44 @@ const ChatBox = ({ friendId }) => {
       if (!otherFile) {
         throw new Error("Không có tệp nào được chọn");
       }
-  
+
       const storageRef = storage;
-      const filename = `chatFiles/${userId}_${friendId}/${otherFile.name}`; // Sửa đổi ở đây
+      const filename = `chatFiles/${userId}_${friendId}/${otherFile.name}`;
       const otherFileRef = ref(storageRef, filename);
-  
+
       await uploadBytes(otherFileRef, otherFile);
       const otherFileUrl = await getDownloadURL(otherFileRef);
-  
+
       return otherFileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên tệp khác:", error);
       throw error;
     }
   };
-  
+
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
         throw new Error("Không có tệp hình ảnh nào được chọn");
       }
-  
+
       const imageUrl = URL.createObjectURL(imageFile);
       const response = await fetch(imageUrl);
       const blob = await response.blob();
-  
+
       const storageRef = storage;
-      const filename = `chatFiles/${userId}_${friendId}/${imageFile.name}`; // Sửa đổi ở đây
+      const filename = `chatFiles/${userId}_${friendId}/${imageFile.name}`;
       const imageRef = ref(storageRef, filename);
-  
+
       await uploadBytes(imageRef, blob);
       const fileUrl = await getDownloadURL(imageRef);
-  
+
       return fileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên hình ảnh:", error);
       throw error;
     }
   };
-  
 
   const handleFileInputChange = (e) => {
     const selectedFiles = e.target.files;
@@ -285,28 +298,8 @@ const ChatBox = ({ friendId }) => {
     }
   };
 
-  const shareMessage = async () => {
-    try {
-      if (!userId || !selectedMessage) return;
-
-      const db = getFirestore();
-      const shareTasks = selectedFriendsIds.map(async (friendId) => {
-        const receiverSenderMessagesRef = doc(
-          db,
-          "chats",
-          `${friendId}_${userId}`
-        );
-        await updateDoc(receiverSenderMessagesRef, {
-          messages: arrayUnion(selectedMessage),
-        });
-      });
-
-      await Promise.all(shareTasks);
-
-      console.log("Tin nhắn đã được chia sẻ thành công cho bạn bè.");
-    } catch (error) {
-      console.error("Lỗi khi chia sẻ tin nhắn:", error);
-    }
+  const replyToMessage = (msg) => {
+    setMessageInput(` ${msg.text} Trả lời:`);
   };
 
   const toggleEmojiPicker = () => {
@@ -317,10 +310,10 @@ const ChatBox = ({ friendId }) => {
     setMessageInput((prevMessageInput) => prevMessageInput + emoji.emoji);
   };
 
-  const chatMessagesRef = useRef(null);
-
   useEffect(() => {
-    chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
   }, [messages]);
 
   return (
@@ -369,6 +362,23 @@ const ChatBox = ({ friendId }) => {
                 )}
               </div>
             )}
+            {selectedMessage && selectedMessage === msg && (
+              <div className="selected-message-options">
+                {(selectedMessage.sender === userId ||
+                  selectedMessage.receiver === userId) && (
+                  <button onClick={deleteMessage}>Xóa</button>
+                )}
+                {selectedMessage.sender === userId && (
+                  <button onClick={recallMessage}>Thu hồi</button>
+                )}
+                {(selectedMessage.sender === userId ||
+                  selectedMessage.receiver === userId) && (
+                  <button onClick={() => replyToMessage(selectedMessage)}>
+                    Trả lời
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         ))}
         {showEmojiPicker && (
@@ -381,21 +391,6 @@ const ChatBox = ({ friendId }) => {
         )}
       </div>
 
-      {selectedMessage && (
-        <div className="selected-message-options">
-          {(selectedMessage.sender === userId ||
-            selectedMessage.receiver === userId) && (
-            <button onClick={deleteMessage}>Xóa</button>
-          )}
-          {selectedMessage.sender === userId && (
-            <button onClick={recallMessage}>Thu hồi</button>
-          )}
-          {(selectedMessage.sender === userId ||
-            selectedMessage.receiver === userId) && (
-            <button onClick={shareMessage}>Chia sẻ</button>
-          )}
-        </div>
-      )}
       <div className="chat-input">
         <button onClick={toggleEmojiPicker}>😀</button>
         <input

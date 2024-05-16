@@ -33,9 +33,12 @@ function DanhBa() {
   return (
     <div className="danhBa">
       <div className="navBar">
-        <div className="lmDaGui" onClick={() => changePage("lmDaGui")}>Lời mời đã gửi</div>
-        <div className="lmDaNhan" onClick={() => changePage("lmDaNhan")}>Lời mời đã nhận</div>
-        <div className="dsBanBe" onClick={() => changePage("dsBanBe")}>Danh Sách Bạn Bè</div>
+        <div className="lmDaGui" style={{fontWeight:'bold', fontSize:'15px'}} onClick={() => changePage("lmDaGui")}>
+          <p>Lời mời đã gửi</p></div>
+        <div className="lmDaNhan" style={{fontWeight:'bold', fontSize:'15px'}} onClick={() => changePage("lmDaNhan")}>
+          <p>Lời mời đã nhận</p></div>
+        <div className="dsBanBe" style={{fontWeight:'bold', fontSize:'15px'}} onClick={() => changePage("dsBanBe")}>
+          <p>Danh Sách Bạn Bè</p></div>
        
       </div>
       {renderPageContent()}

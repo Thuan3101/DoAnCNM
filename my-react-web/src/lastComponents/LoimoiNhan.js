@@ -5,23 +5,22 @@ import "../css/loiMoiNhan.css";
 
 // Component để quản lý và hiển thị lời mời đã nhận
 const LoimoiNhan = () => {
-  // Khai báo state cho danh sách lời mời và thông tin người gửi
   const [invitations, setInvitations] = useState([]);
   const [senders, setSenders] = useState({});
   const auth = getAuth();
 
-  // useEffect để tải dữ liệu khi component được mount
   useEffect(() => {
     const fetchInvitations = async () => {
       try {
         const db = getFirestore();
-        // Lấy dữ liệu lời mời từ Firestore dựa trên uid của người dùng hiện tại
         const invitationsRef = collection(db, "invitations");
         const q = query(invitationsRef, where("receiverId", "==", auth.currentUser.uid));
         const querySnapshot = await getDocs(q);
         const invitationsData = [];
         querySnapshot.forEach((doc) => {
-          invitationsData.push({ id: doc.id, ...doc.data() });
+          // Ensure fetched invitations are translated to Vietnamese if stored in English
+          const status = doc.data().status === "confirmed" ? "đã xác nhận" : "đang chờ";
+          invitationsData.push({ id: doc.id, ...doc.data(), status });
         });
         setInvitations(invitationsData);
       } catch (error) {
@@ -29,7 +28,6 @@ const LoimoiNhan = () => {
       }
     };
 
-    // Lấy thông tin người gửi từ Firestore
     const fetchSenders = async () => {
       try {
         const db = getFirestore();
@@ -49,27 +47,23 @@ const LoimoiNhan = () => {
     fetchSenders();
   }, [auth.currentUser.uid]);
 
-  // Hàm xác nhận lời mời
   const confirmInvitation = async (invitationId) => {
     try {
       const db = getFirestore();
       const invitationRef = doc(db, "invitations", invitationId);
-      // Cập nhật trạng thái lời mời trong Firestore
-      await updateDoc(invitationRef, { status: "confirmed" });
+      await updateDoc(invitationRef, { status: "đã xác nhận" });
       console.log("Invitation confirmed:", invitationId);
       
-      // Cập nhật state sau khi lời mời được xác nhận
       setInvitations(prevInvitations => {
         return prevInvitations.map(invitation => {
           if (invitation.id === invitationId) {
-            return { ...invitation, status: "confirmed" };
+            return { ...invitation, status: "đã xác nhận" };
           }
           return invitation;
         });
       });
 
-      // Cập nhật thông tin bạn bè cho người gửi và người nhận
-      const invitation = invitations.find(invitation => invitation.id === invitationId);
+      const invitation = invitations.find(inv => inv.id === invitationId);
       const { senderId, receiverId } = invitation;
       const senderRef = doc(db, "users", senderId);
       const receiverRef = doc(db, "users", receiverId);
@@ -102,11 +96,11 @@ const LoimoiNhan = () => {
         <ul>
           {invitations.map((invitation) => (
             <li key={invitation.id}>
-                <img src={senders[invitation.senderId]?.profileImageUrl} alt="Người gửi" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
+                <img src={senders[invitation.senderId]?.photoURL} alt="Người gửi" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
                 <br></br>
               {senders[invitation.senderId]?.name}, Trạng thái: {invitation.status}{" "}
-              {invitation.status === "pending" && (
-                <button onClick={() => confirmInvitation(invitation.id)}>Xác nhận</button>
+              {invitation.status === "đang chờ" && (
+                <button onClick={() => confirmInvitation(invitation.id)} style={{backgroundColor:' #a0c3f5', border:'none', padding:'5px 10px'}}>Xác nhận</button>
               )}
             </li>
           ))}

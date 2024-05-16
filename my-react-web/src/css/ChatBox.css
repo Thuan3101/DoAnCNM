@@ -1,26 +1,27 @@
 /* CSS cho khung chat */
 .chat-box {
   position: absolute;
-  top: 52%;
-  left: 63%;
+  top: 55%;
+  left: 68%;
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   border: 1px solid #cccccc;
   z-index: 999;
-  height: 77%;
-  width: 52%;
+  height: 90%;
+  width: 60%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* CSS cho phần header của khung chat */
 .chat-header {
-  background-color: #4267b2;
-  color: #fff;
+  background-color: white;
+  color: #3c82f4;
   padding: 10px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   text-align: center;
+  border: 1px solid rgb(56, 123, 224);
 }
 
 /* CSS cho tiêu đề trong phần header của khung chat */
@@ -53,7 +54,7 @@
 
 /* CSS cho nội dung của tin nhắn */
 .message-text {
-  background-color: #e1ffc7;
+  background-color: #c7ebff;
   padding: 8px;
   border-radius: 8px;
   display: inline-block;
@@ -76,17 +77,17 @@
 
 /* CSS cho ô nhập tin nhắn */
 .chat-input input[type="text"] {
-  width: calc(90% - 80px);
+  width: calc(65% - 80px);
   padding: 5px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
 }
 
 /* CSS cho nút gửi tin nhắn */
 .chat-input button {
-  background-color: #4267b2;
-  color: #fff;
-  border: none;
+  background-color: white;
+  color: #3513f5;
+  border: 1px solid   #5577f3;
   padding: 4px 10px;
   border-radius: 4px;
   margin-left: 10px;

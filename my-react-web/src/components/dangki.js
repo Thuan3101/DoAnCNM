@@ -78,20 +78,22 @@ const RegisterScreen = () => {
       <div className="v1-dangki">
         <h2 className="h2-dangki">Đăng ký </h2>
         <div className="inputContainer-dangki">
-          <label>Email:</label>
-          <input placeholder='Email' type="text" value={email} onChange={handleEmailChange} className="input-dangki" />
+          <label  style={{ color: "black" }}>Email:</label>
+          <input placeholder='' type="text" value={email} onChange={handleEmailChange} className="input-dangki" />
         </div>
         <div className="inputContainer-dangki">
-          <label>Nhập mật khẩu :</label>
-          <input placeholder='Nhập mật Khẩu' type={showPassword ? "text" : "password"} value={password} onChange={handlePasswordChange} className="input-dangki" />
+          <label  style={{ color: "black" }}>Nhập mật khẩu :</label>
+          <input placeholder='' type={showPassword ? "text" : "password"} value={password} onChange={handlePasswordChange} className="input-dangki" />
           <span className="password-toggle" onClick={handleTogglePasswordVisibility}>{showPassword ? "Ẩn" : "Hiện"}</span>
         </div>
         <div className="inputContainer-dangki">
-          <label>Nhập lại mật khẩu :</label>
-          <input placeholder='Nhập lại mật Khẩu' type={showPassword ? "text" : "password"} value={confirmPassword} onChange={handleConfirmPasswordChange} className="input-dangki" />
+          <label  style={{ color: "black" }}>Nhập lại mật khẩu :</label>
+          <input placeholder='' type={showPassword ? "text" : "password"} value={confirmPassword} onChange={handleConfirmPasswordChange} className="input-dangki" />
         </div>
-        <button className='button-dangki' onClick={handleRegister}>Đăng ký</button>
-        <Link to="/" className="link-dangnhap">Đã có tài khoản</Link>
+        <button className='button-dangki' onClick={handleRegister}>
+         <text style={{fontSize:"14px", fontWeight:'bold'}}> Đăng ký</text></button> <br></br>
+        <Link to="/" className="link-dangnhap" style={{ textDecoration: 'none', color:'#418df8' , marginLeft:'80px', fontWeight:'bold'}}>
+          <text>Bạn đã có tài khoản? </text></Link>
       </div>
     </div>
   );

@@ -31,15 +31,20 @@ const ForgotPassScreen = () => {
   return (
     <div className="container-forgotpassword">
       <div className="v1-forgotpassword">
-        <h4 className="h2-forgotpassword">Vui lòng nhập lại email của bạn</h4>
+        <h4 className="h2-forgotpassword" style={{marginLeft:"30px"}}>Vui lòng nhập lại email của bạn</h4>
         <div className="inputContainer">
-          <label>Email:</label>
+          <label  style={{ color: "black" }}>Email:</label>
           <input type="email" value={email} onChange={handleEmailChange} className="input-forgotpassword" />
         </div>
-        <button className="button-forgotpassword" onClick={handleResetPassword}>Gửi</button>
+        <button className="button-forgotpassword" onClick={handleResetPassword}>
+          <text>Gửi</text>
+          </button>
+          <br></br>
         {error && <p className="error-message">{error}</p>}
         {isEmailSent && <p className="success-message">Email xác nhận đã được gửi.</p>}
-        <Link to="/">Quay lại</Link>
+        <Link style={{textDecoration:'none', color:' #418df8', fontWeight:'bold'}} to="/">
+          <text> Quay lại
+            </text></Link>
       </div>
     </div>
   );

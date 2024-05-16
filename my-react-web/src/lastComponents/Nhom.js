@@ -26,9 +26,13 @@ function DanhBa() {
   return (
     <div className="nhom">
       <div className="navBarNhom">
-        <div className="taoNhom" onClick={() => changePage("taoNhom")}>Tạo Nhóm</div>
+        <div className="taoNhom" style={{fontWeight:'bold', fontSize:'15px'}} onClick={() => changePage("taoNhom")}>
+          <p className="st">Tạo Nhóm</p>
+          </div>
   
-        <div className="dsNhom" onClick={() => changePage("dsNhom")}>Danh Sách Nhóm</div>
+        <div className="dsNhom" style={{fontWeight:'bold', fontSize:'15px'}} onClick={() => changePage("dsNhom")}>
+        <p className="st"> Danh Sách Nhóm</p>
+        </div>
        
       </div>
       {renderPageContent()}

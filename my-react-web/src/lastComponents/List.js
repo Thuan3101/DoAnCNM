@@ -4,7 +4,7 @@ import chat from "../image/tool1.png";
 import danhBa from "../image/tool2.png";
 import timKiem from "../image/search-259.png";
 import caiDat from "../image/tool7.png";
-import nhom from "../image/tool6.png";
+import nhom from "../image/groups2.png";
 import { getAuth ,onAuthStateChanged} from 'firebase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -49,7 +49,7 @@ const List = ({ setCurrentTab }) => {
     <div className="list">
       <div className="listContainer">
       <div onClick={() => setCurrentTab("avatar")}>
-      <img src={userData.profileImageUrl} alt=""  className="avatar" />
+      <img src={userData.photoURL} alt=""  className="avatar" />
     </div>
         <div onClick={() => setCurrentTab("chat")}>
           <img src={chat} alt="chat" className="chat" />

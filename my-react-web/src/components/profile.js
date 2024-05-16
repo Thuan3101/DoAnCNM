@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, storage } from "../config/firebase";
 import { setDoc, doc, getFirestore } from "firebase/firestore";
-import "../css/profile.css";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import "../css/profile.css";
 
 const Profile = () => {
   const db = getFirestore();
@@ -11,18 +11,17 @@ const Profile = () => {
     name: "",
     gender: "",
     dateOfBirth: "",
-    profileImage: null,
-    profileImageUrl: "",
+    photo: null,
+    photoURL: "",
   });
   const navigate = useNavigate();
-  // Xử lý thay đổi giá trị của trường dữ liệu
+  const [errorMessage, setErrorMessage] = useState(""); 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Kiểm tra giá trị của trường giới tính
     if (name === "gender") {
-      if (value !== "nam" && value !== "nữ" && value !== "khác") {
-        // Nếu giá trị không hợp lệ, không cập nhật state
+      if (value !== "Nam" && value !== "Nữ" && value !== "Khác") {
         return;
       }
     }
@@ -32,19 +31,19 @@ const Profile = () => {
       [name]: value,
     }));
   };
-  // Xử lý thay đổi hình ảnh
+
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     if (imageFile) {
       const imageUrl = URL.createObjectURL(imageFile);
       setFormData((prevData) => ({
         ...prevData,
-        profileImage: imageFile,
-        profileImageUrl: imageUrl,
+        photo: imageFile,
+        photoURL: imageUrl,
       }));
     }
   };
-  // Tải ảnh lên Firebase Storage
+
   const uploadImageAsync = async (imageFile, userId) => {
     try {
       if (!imageFile) {
@@ -56,7 +55,7 @@ const Profile = () => {
       const blob = await response.blob();
 
       const storageRef = storage;
-      const filename = `profileImages/${userId}/${Date.now()}`;
+      const filename = `photo/${userId}/${Date.now()}`;
       const imageRef = ref(storageRef, filename);
 
       await uploadBytes(imageRef, blob);
@@ -68,7 +67,7 @@ const Profile = () => {
       throw error;
     }
   };
-  // Xử lý khi người dùng gửi form
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -76,23 +75,33 @@ const Profile = () => {
         throw new Error("Không có người dùng đang đăng nhập");
       }
 
-      // Kiểm tra xem tất cả các trường đã được điền chưa
-      if (!formData.name || !formData.gender || !formData.dateOfBirth || !formData.profileImage) {
+      if (!formData.name || !formData.gender || !formData.dateOfBirth || !formData.photo) {
         throw new Error("Vui lòng điền đầy đủ thông tin");
       }
 
-      // Tải ảnh lên Firebase Storage
-      const imageUrl = await uploadImageAsync(formData.profileImage, auth.currentUser.uid);
+      const birthDate = new Date(formData.dateOfBirth);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
 
-      // Lưu dữ liệu vào Firestore
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      if (age < 16) {
+        setErrorMessage("Bạn phải đủ 16 tuổi trở lên để đăng ký");
+        return;
+      }
+
+      const imageUrl = await uploadImageAsync(formData.photo, auth.currentUser.uid);
+
       await setDoc(doc(db, "users", auth.currentUser.uid), {
         name: formData.name,
         gender: formData.gender,
         dateOfBirth: formData.dateOfBirth,
-        profileImageUrl: imageUrl,
+        photoURL: imageUrl,
       });
 
-      // Điều hướng đến trang "/home" sau khi gửi thành công
       navigate("/home");
     } catch (error) {
       console.error("Lỗi cập nhật hồ sơ người dùng:", error);
@@ -122,9 +131,9 @@ const Profile = () => {
             onChange={handleChange}
           >
             <option value="">Chọn giới tính</option>
-            <option value="nam">Nam</option>
-            <option value="nữ">Nữ</option>
-            <option value="khác">Khác</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Khác">Khác</option>
           </select>
         </div>
         <div className="form-group">
@@ -139,7 +148,7 @@ const Profile = () => {
           />
         </div>
         <div className="form-group">
-          <img className="avt-pf" src={formData.profileImageUrl} alt="Hình ảnh" />
+          <img className="avt-pf" src={formData.photoURL} alt="Hình ảnh" />
           <input
             className="input-field imgIp"
             type="file"
@@ -147,6 +156,9 @@ const Profile = () => {
             onChange={handleImageChange}
           />
         </div>
+        {errorMessage && (
+          <span style={{color:'red'}}>{errorMessage}</span>
+        )}
         <button className="btnSm" type="submit">
           Gửi
         </button>

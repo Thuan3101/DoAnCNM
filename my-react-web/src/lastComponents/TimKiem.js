@@ -109,13 +109,15 @@ const TimKiem = () => {
         placeholder="Nhập nội dung tìm kiếm..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        
       />
-      <button onClick={handleSearch}>Tìm kiếm</button>
+      <button onClick={handleSearch}>
+        <text>Tìm kiếm</text></button>
       <div className="search-results">
         {invitationSentMessage && <p>{invitationSentMessage}</p>}
         {searchResults.map((user, index) => (
           <div key={user.id} className="user-item" style={{borderBottom: '1px solid gray'}}>
-            <img src={user.profileImageUrl} alt="Avatar" style={{ width: '40px', height: '40px', marginTop: '10px', marginLeft: '10px', borderRadius:'50%' }} />
+            <img src={user.photoURL} alt="Avatar" style={{ width: '40px', height: '40px', marginTop: '10px', marginLeft: '10px', borderRadius:'50%' }} />
             <p style={{marginLeft:'15px', fontSize:'16px'}}>{user.name}</p>
             {currentUser && user.id !== currentUser.uid && (
               user.invitationSent ? (

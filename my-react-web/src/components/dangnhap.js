@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup,  GoogleAuthProvider } from "firebase/auth"; //FacebookAuthProvider,
 import { auth } from "../config/firebase";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
 import "../css/dangnhap.css";
@@ -66,22 +66,22 @@ const LoginScreen = () => {
       });
   };
   // Xử lý đăng nhập bằng Facebook
-  const handleFacebookLogin = async () => {
-    const provider = new FacebookAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        navigate("/home");
-      } else {
-        navigate("/profile");
-      }
-    } catch (error) {
-      console.error("Error during Facebook login:", error);
-      alert("Đăng nhập bằng Facebook không thành công. Vui lòng thử lại.");
-    }
-  };
+  // const handleFacebookLogin = async () => {
+  //   const provider = new FacebookAuthProvider();
+  //   try {
+  //     const result = await signInWithPopup(auth, provider);
+  //     const user = result.user;
+  //     const userDoc = await getDoc(doc(db, "users", user.uid));
+  //     if (userDoc.exists()) {
+  //       navigate("/home");
+  //     } else {
+  //       navigate("/profile");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during Facebook login:", error);
+  //     alert("Đăng nhập bằng Facebook không thành công. Vui lòng thử lại.");
+  //   }
+  // };
 
   return (
     <div className="container-dangnhap">
@@ -90,7 +90,7 @@ const LoginScreen = () => {
         <div className="v1-dangnhap">
           <h2 className="h2-dangnhap">Đăng Nhập </h2>
           <div className="inputContainer-dangnhap input-container">
-            <label>Email:</label>
+          <label style={{ color: "black" }}>Email:</label>
             <input
               placeholder="Tài khoản"
               type="email"
@@ -100,7 +100,7 @@ const LoginScreen = () => {
             />
           </div>
           <div className="inputContainer input-container">
-            <label>Mật khẩu :</label>
+            <label  style={{ color: "black" }}>Mật khẩu :</label>
             <input
               placeholder="Mật khẩu"
               type={showPassword ? "text" : "password"}
@@ -113,21 +113,22 @@ const LoginScreen = () => {
             </span>
           </div>
           <button className="button-dangnhap" onClick={handleLogin}>
-            Đăng Nhập
+          <text style={{fontWeight:'bold'}}>  Đăng Nhập </text> 
           </button>
-          <Link to="/forgot-password">
-            <h6 className="forgot-dangnhap">Quên mật khẩu?</h6>
+          <Link to="/forgot-password" style={{textDecoration:'none', marginTop:'0px'}}>
+            <h5 className="forgot-dangnhap">Quên mật khẩu?</h5>
           </Link>
-          <Link to="/register">
-            <span className="forgot-dangnhap">Đăng ký</span>
+         
+          <Link to="/register" style={{textDecoration:'none', fontWeight:'bold'}}>
+            <text className="dk">Bạn chưa có tài khoản ?</text>
           </Link>
           <div className="social-login-container">
             <button className="button-dangnhap google" onClick={handleGoogleLogin}>
-              Google
+             <text> Google </text> 
             </button>
-            <button className="button-dangnhap facebook" onClick={handleFacebookLogin}>
+            {/* <button className="button-dangnhap facebook" onClick={handleFacebookLogin}>
               Facebook
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, collection,  getDocs, doc,  getDoc } from "firebase/firestore"; //query, where,updateDoc,
 import { getAuth } from "firebase/auth";
+import ChatBox from "../lastComponents/ChatBox"; 
 import "../css/DanhSachBB.css";
-import ChatBox from "../lastComponents/ChatBox"; // Import phần chatbox mới
-
 const DanhSachBB = () => {
   const [userFriends, setUserFriends] = useState({});
   const [senders, setSenders] = useState({});
@@ -52,15 +51,15 @@ const DanhSachBB = () => {
   };
 
   return (
-    <div className="danh-sach-bb">
-      <h2>Bạn bè:</h2>
+    <div className="danh-sach-bb" style={{width:'80%'}}>
+      <p className="title"></p>
       {Object.keys(userFriends).length === 0 ? (
         <p>Bạn không có bạn bè nào</p>
       ) : (
         <ul>
           {Object.keys(userFriends).map((friendId) => (
             <li key={friendId} onClick={() => handleFriendClick(friendId)}>
-              <img style={{ width: '30px', height: '30px', borderRadius: '50%', padding:'10px' }} src={senders[friendId]?.profileImageUrl} alt={senders[friendId]?.name} className="avatar" />
+              <img style={{ width: '30px', height: '30px', borderRadius: '50%', padding:'10px' }} src={senders[friendId]?.photoURL} alt={senders[friendId]?.name} className="avatar" />
               {senders[friendId]?.name}
             </li>
           ))}

@@ -1,28 +1,40 @@
 
-.chat-avt{
+.chat {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chat > div {
+      flex-grow: 1;
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+      align-items: center;
+    }
+    
+    .navBarChat {
+      display: flex;
+      justify-content: space-around; 
+      border-bottom: 2px solid #ccc; 
+      padding-bottom: 10px;
+    }
+.bb{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
   
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      background-color: aliceblue;
+  
 }
-    .chat-list {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    
-    .chat-item {
-      padding: 10px;
-      border-bottom: 1px solid #38bfc6;
-    }
-    
-    .chat-sender {
-      font-weight: bold;
-    }
-    
-    .chat-message {
-      margin-top: 5px;
-      font-size: 14px;
-    }
-    
+
+.Nhom2{
+  height: 40px;
+  width: 40%;
+  background-color: rgb(121, 244, 249);
+  margin-left:1px ;
+} 
+
+
+  
+
+
     

@@ -29,11 +29,12 @@
   }
   
   .input-forgotpassword {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid #418df8;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 5px 20px;
     margin-bottom: 5px;
+    margin-left: 30px;
   }
   
   .button-forgotpassword {
