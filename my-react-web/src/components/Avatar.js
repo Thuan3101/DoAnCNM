@@ -149,7 +149,7 @@ const Avatar = () => {
           <div className="contentEdit">
             <div className="headerEdit">
               <div className="bio">
-                <span>Bio : </span>
+                <span>Tên : </span>
                 {isEditing ? (
                   <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
                 ) : (
@@ -157,7 +157,7 @@ const Avatar = () => {
                 )}
               </div>
               <div className="gioiTinh">
-                <span>Giới tính :</span>  
+                <span>Giới tính: </span>  
                 {isEditing ? (
                   <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
                     <option value="">Chọn giới tính</option>
@@ -170,7 +170,7 @@ const Avatar = () => {
                 )}
               </div>
               <div className="ngaySinh">
-                <span>Ngày sinh  : </span>
+                <span>Ngày sinh: </span>
                 {isEditing ? (
                   <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
                 ) : (
@@ -178,7 +178,7 @@ const Avatar = () => {
                 )}
               </div>
               <div className="userInfoRow">
-                <span>Email:</span>
+                <span>Email: </span>
                 {isEditing ? (
                   <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                 ) : (

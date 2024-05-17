@@ -96,6 +96,8 @@ const Profile = () => {
       const imageUrl = await uploadImageAsync(formData.photo, auth.currentUser.uid);
 
       await setDoc(doc(db, "users", auth.currentUser.uid), {
+        UID: auth.currentUser.uid,         // Thêm UID
+        email: auth.currentUser.email,     // Thêm email
         name: formData.name,
         gender: formData.gender,
         dateOfBirth: formData.dateOfBirth,
@@ -105,6 +107,7 @@ const Profile = () => {
       navigate("/home");
     } catch (error) {
       console.error("Lỗi cập nhật hồ sơ người dùng:", error);
+      setErrorMessage(error.message);  // Hiển thị thông báo lỗi cho người dùng
       // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo lỗi cho người dùng)
     }
   };

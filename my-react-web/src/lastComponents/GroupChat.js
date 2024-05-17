@@ -369,6 +369,39 @@ const GroupChat = ({ groupId }) => {
     }
   };
 
+  // const deleteMessage = async (messageId) => {
+  //   try {
+  //     const chatRoomId = RoomID;
+  //     const timeDelete_mess = new Date();
+  //     const uidDelete_mess = userData.UID;
+  //     const chatMessRef = doc(db, 'Chats', chatRoomId, 'chat_mess', messageId);
+  //  // Tạo đối tượng chứa timeDelete và uidDelete
+  //     const deleteDetail_mess = {
+  //       timeDelete: timeDelete_mess,
+  //       uidDelete: uidDelete_mess
+  //     };
+  // // Lấy dữ liệu hiện tại của tài liệu chatMessRef
+  //     const chatMessSnapshot = await getDoc(chatMessRef);
+  //     if (chatMessSnapshot.exists()) {
+  //       const chatMessData = chatMessSnapshot.data();
+  //       // Kiểm tra xem đã có mảng detailDelete chưa
+  //       const detailDelete_mess_Array = chatMessData.deleteDetail_mess || [];
+  //       // Thêm deleteDetail vào mảng detailDelete
+  //       detailDelete_mess_Array.push(deleteDetail_mess);
+  //       // Cập nhật tài liệu chatMessRef với mảng detailDelete mới
+  //       await updateDoc(chatMessRef, {
+  //         deleteDetail_mess: detailDelete_mess_Array
+  //       });
+  //       setModalVisible(false);
+  //       console.log("Successfully added timeDelete to Chat with chatRoomId:", chatRoomId);
+  //     } else {
+  //       console.log("Chat with chatRoomId:", chatRoomId, "does not exist.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding timeDelete to Chat:", error);
+  //   }
+  // };
+
   const recallMessage = async () => {
     try {
       if (!userId || !selectedMessage) return;
@@ -410,6 +443,10 @@ const GroupChat = ({ groupId }) => {
     } catch (error) {
       console.error("Lỗi khi giải tán nhóm:", error);
     }
+  };
+
+  const replyToMessage = (msg) => {
+    setMessageInput(`${msg.text} Trả lời:`);
   };
 
   return (
@@ -518,6 +555,9 @@ const GroupChat = ({ groupId }) => {
             )}
             {selectedMessage !== userId && (
               <button onClick={deleteMessage}>Xóa</button>
+            )}
+            {selectedMessage !== userId && (
+              <button onClick={() => replyToMessage(selectedMessage)}>Trả lời</button>
             )}
           </div>
         )}

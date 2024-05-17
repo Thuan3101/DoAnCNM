@@ -58,6 +58,7 @@
   padding: 8px;
   border-radius: 8px;
   display: inline-block;
+  max-width: 70%;
 }
 
 /* CSS cho thời gian của tin nhắn */
@@ -65,19 +66,22 @@
   font-size: 12px;
   color: #666;
   position: absolute;
-  left: 45%;
-  
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* CSS cho phần nhập tin nhắn */
 .chat-input {
   padding: 5px;
   border-top: 1px solid #ccc;
+  display: flex;
+  align-items: center;
 }
 
 /* CSS cho ô nhập tin nhắn */
 .chat-input input[type="text"] {
-  width: calc(65% - 80px);
+  flex-grow: 1;
   padding: 5px;
   border: none;
   border-radius: 4px;
@@ -87,7 +91,7 @@
 .chat-input button {
   background-color: white;
   color: #3513f5;
-  border: 1px solid   #5577f3;
+  border: 1px solid #5577f3;
   padding: 4px 10px;
   border-radius: 4px;
   margin-left: 10px;
@@ -111,21 +115,13 @@
 /* CSS cho hình ảnh trong tin nhắn */
 .chat-image {
   max-width: 100%;
-  max-height: 200px;
-  /*display: block;*/
+  max-height: 500px;
   margin: 5px 0;
 }
 
-.chat-videos{
- max-width: 50%;
- max-height: 60%;
- margin: 5px 0;
-}
 /* CSS cho video trong tin nhắn */
-
-/* .emoji-picker-container { */
-  /* bottom: 10px; Đặt bottom để đặt emoji picker lên trên input */
-  /*left: 50%;*/
-  /* transform: translateX(-50%);  Để căn giữa theo chiều ngang */
-  /* z-index: 999; Đảm bảo emoji picker hiển thị trên tất cả các phần khác */
-/* } */
+.chat-videos {
+  max-width: 100%;
+  max-height: 300px;
+  margin: 5px 0;
+}

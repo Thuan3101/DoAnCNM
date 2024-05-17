@@ -23,7 +23,6 @@ const ChatBox = ({ friendId }) => {
   const [files, setFiles] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const chatMessagesRef = useRef(null);
 
   useEffect(() => {
     const fetchFriendName = async () => {
@@ -91,19 +90,9 @@ const ChatBox = ({ friendId }) => {
           receiverSenderMessages
         );
 
-        // Sort messages by time after parsing them correctly
         allMessages.sort((a, b) => new Date(a.time) - new Date(b.time));
 
-        const formattedMessages = allMessages.map((msg) => ({
-          ...msg,
-          time: msg.time instanceof Date
-            ? msg.time.toLocaleString("vi-VN")
-            : msg.time.toDate
-              ? msg.time.toDate().toLocaleString("vi-VN")
-              : new Date(msg.time).toLocaleString("vi-VN"),
-        }));
-
-        setMessages(formattedMessages);
+        setMessages(allMessages);
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn:", error);
       }
@@ -112,25 +101,17 @@ const ChatBox = ({ friendId }) => {
     fetchMessages();
 
     const db = getFirestore();
-  const messagesRef = doc(db, "chats", `${friendId}_${userId}`);
-  const unsubscribe = onSnapshot(messagesRef, (doc) => {
-    if (doc.exists()) {
-      const formattedMessages = (doc.data().messages || []).map((msg) => ({
-        ...msg,
-        time: msg.time instanceof Date
-          ? msg.time.toLocaleString("vi-VN")
-          : msg.time.toDate
-            ? msg.time.toDate().toLocaleString("vi-VN")
-            : new Date(msg.time).toLocaleString("vi-VN"),
-      }));
-      setMessages(formattedMessages);
-    } else {
-      setMessages([]);
-    }
-  });
+    const messagesRef = doc(db, "chats", `${friendId}_${userId}`);
+    const unsubscribe = onSnapshot(messagesRef, (doc) => {
+      if (doc.exists()) {
+        setMessages(doc.data().messages || []);
+      } else {
+        setMessages([]);
+      }
+    });
 
-  return () => unsubscribe();
-}, [friendId, userId]);
+    return () => unsubscribe();
+  }, [userId, friendId]);
 
   const sendMessage = async () => {
     try {
@@ -164,7 +145,13 @@ const ChatBox = ({ friendId }) => {
           text: messageInput,
           sender: userId,
           receiver: friendId,
-          time: new Date().toISOString(),
+          time: new Date().toLocaleString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         };
         newMessages.push(newMessage);
       }
@@ -173,7 +160,13 @@ const ChatBox = ({ friendId }) => {
         const newMessage = {
           sender: userId,
           receiver: friendId,
-          time: new Date().toISOString(),
+          time: new Date().toLocaleString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
           fileUrl: url,
           fileType: fileType,
           fileName: fileName,
@@ -206,44 +199,45 @@ const ChatBox = ({ friendId }) => {
       if (!otherFile) {
         throw new Error("Không có tệp nào được chọn");
       }
-
+  
       const storageRef = storage;
       const filename = `chatFiles/${userId}_${friendId}/${otherFile.name}`;
       const otherFileRef = ref(storageRef, filename);
-
+  
       await uploadBytes(otherFileRef, otherFile);
       const otherFileUrl = await getDownloadURL(otherFileRef);
-
+  
       return otherFileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên tệp khác:", error);
       throw error;
     }
   };
-
+  
   const uploadImageAsync = async (imageFile) => {
     try {
       if (!imageFile) {
         throw new Error("Không có tệp hình ảnh nào được chọn");
       }
-
+  
       const imageUrl = URL.createObjectURL(imageFile);
       const response = await fetch(imageUrl);
       const blob = await response.blob();
-
+  
       const storageRef = storage;
       const filename = `chatFiles/${userId}_${friendId}/${imageFile.name}`;
       const imageRef = ref(storageRef, filename);
-
+  
       await uploadBytes(imageRef, blob);
       const fileUrl = await getDownloadURL(imageRef);
-
+  
       return fileUrl;
     } catch (error) {
       console.error("Lỗi khi tải lên hình ảnh:", error);
       throw error;
     }
   };
+  
 
   const handleFileInputChange = (e) => {
     const selectedFiles = e.target.files;
@@ -310,10 +304,10 @@ const ChatBox = ({ friendId }) => {
     setMessageInput((prevMessageInput) => prevMessageInput + emoji.emoji);
   };
 
+  const chatMessagesRef = useRef(null);
+
   useEffect(() => {
-    if (chatMessagesRef.current) {
-      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
-    }
+    chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
   }, [messages]);
 
   return (
@@ -362,7 +356,7 @@ const ChatBox = ({ friendId }) => {
                 )}
               </div>
             )}
-            {selectedMessage && selectedMessage === msg && (
+            {selectedMessage && (
               <div className="selected-message-options">
                 {(selectedMessage.sender === userId ||
                   selectedMessage.receiver === userId) && (
@@ -373,9 +367,7 @@ const ChatBox = ({ friendId }) => {
                 )}
                 {(selectedMessage.sender === userId ||
                   selectedMessage.receiver === userId) && (
-                  <button onClick={() => replyToMessage(selectedMessage)}>
-                    Trả lời
-                  </button>
+                  <button onClick={() => replyToMessage(selectedMessage)}>Trả lời</button>
                 )}
               </div>
             )}
