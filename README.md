@@ -1,17 +1,52 @@
- Công nghệ mới viết ứng dụng quản lý người dùng, cho phép quản lý được thông tin người dùng gồm những thông tin như trên ứng dụng Zalo
- -Cho phép đăng ký và đăng nhập tài khoản  
- - Cho phép quản lý danh bạ điện thoại của người dùng
- - Cho phép thực hiện cuộc chat 1-1 và chat group: text, image, video, document, emotion (tương tự zalo) 
-  Yêu cầu:
-   - Ứng dụng cần trải qua các công đoạn: requirement, design, code, test, deploy
-   - Release lên Cloud các module theo tuần
-   - Công nghệ sử dụng: Firebase, reactjs,react native, nodejs, javascript 
-   - Backend: javascript, nodejs
-   - Front-end: mobile (flutter/android/ios)/web (mvc/angular)
-Hướng dẫn
-  -git clone https://github.com/Thuan3101/DoAnCNM.git
-  -mở terminal gõ npm i
-  -Gõ npm start giao diện ứng dụng
+# Ứng dụng Quản Lý Người Dùng
+## Công nghệ sử dụng:
+- **Frontend**: ReactJS  
+- **Cơ sở dữ liệu**: Firebase 
+## Mô tả:
+Ứng dụng chat người dùng với các tính năng tương tự Zalo:
+- **Đăng ký và đăng nhập tài khoản.**
+- **Quản lý danh bạ điện thoại của người dùng.**
+- **Thực hiện cuộc trò chuyện 1-1 và nhóm (chat group):** 
+  - Hỗ trợ gửi **tin nhắn văn bản**, **hình ảnh**, **video**, **tài liệu**, và **biểu cảm cảm xúc**.
+
+## Yêu cầu:
+Ứng dụng cần trải qua các công đoạn:
+1. **Requirement:** Thu thập và phân tích yêu cầu.  
+2. **Design:** Thiết kế hệ thống và giao diện.  
+3. **Code:** Triển khai mã nguồn.  
+4. **Test:** Kiểm thử ứng dụng.  
+5. **Deploy:** Triển khai ứng dụng.
+
+### Lộ trình phát triển:
+- Release lên **Cloud** các module theo từng tuần.
+
+## Công nghệ sử dụng:
+- **Frontend:** 
+  - Mobile: Flutter/Android/iOS.  
+  - Web: MVC/Angular.  
+- **Backend:** JavaScript, Node.js.  
+- **Các công cụ hỗ trợ:** Firebase, ReactJS, React Native.
+
+## Hướng dẫn cài đặt và chạy ứng dụng:
+1. Clone repository về máy:
+   ```bash
+   git clone https://github.com/Thuan3101/DoAnCNM.git
+   ```
+
+2. Mở terminal và cài đặt các package cần thiết:
+   ```bash
+   npm install
+   ```
+
+3. Khởi động ứng dụng:
+   ```bash
+   npm start
+   ```
+
+Ứng dụng sẽ hiển thị giao diện người dùng.
+
+---
+
 ![image](https://github.com/user-attachments/assets/ad41b4d2-6dad-4a1e-832f-c0e04ad670c7)
 ![image](https://github.com/user-attachments/assets/81b858ff-b332-40d3-b360-fcc90684aca9)
 ![image](https://github.com/user-attachments/assets/717a0694-ddc9-4d9c-b498-cb7e190f1770)
